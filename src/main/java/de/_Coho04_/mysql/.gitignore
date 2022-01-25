@@ -1,2 +1,3 @@
-ID.java
-TestClass.java
+# Project exclude paths
+/TestClass.java
+/ID.java
