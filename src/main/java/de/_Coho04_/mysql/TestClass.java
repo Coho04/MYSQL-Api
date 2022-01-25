@@ -7,7 +7,11 @@ import de._Coho04_.mysql.entities.User;
 public class TestClass {
 
     public static void main(String[] bot) {
-        MYSQL mysql = new MYSQL("138.201.202.55", "Basti", "basti?hibst", 3306);
+        String hostname = ID.hostname;
+        String user = ID.user;
+        String password = ID.password;
+        int port = ID.port;
+        MYSQL mysql = new MYSQL(hostname, user, password, 3306);
 
         // DATABASE
         if (!mysql.existsDatabase("FISCH")) {

@@ -21,12 +21,12 @@ public class MYSQL {
     private static ResultSet resultSet = null;
 
     //mysql -h hostname -u root -p || To login (from unix shell) use -h only if needed.
-    public MYSQL(String hostname, String user, String password, int port) {
+    public MYSQL(String hostname, String username, String password, int port) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connect = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port, user, password);
+            connect = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port, username, password);
             statement = connect.createStatement();
-            System.out.println("MySQL Connected [Hostname]: " + hostname + " [Port]: " + port + " [User]: " + user + "  !");
+            System.out.println("MySQL Connected [Hostname]: " + hostname + " [Port]: " + port + " [Username]: " + username + "  !");
         } catch (Exception e) {
             e.printStackTrace();
         }
