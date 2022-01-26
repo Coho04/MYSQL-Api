@@ -7,6 +7,7 @@ package de._Coho04_.mysql;
  * */
 
 import de._Coho04_.mysql.entities.Database;
+import de._Coho04_.mysql.entities.Table;
 import de._Coho04_.mysql.entities.User;
 
 import java.sql.*;
@@ -19,7 +20,6 @@ public class MYSQL {
     public static Statement statement = null;
     private static ResultSet resultSet = null;
 
-    //mysql -h hostname -u root -p || To login (from unix shell) use -h only if needed.
     public MYSQL(String hostname, String username, String password, int port) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -31,16 +31,17 @@ public class MYSQL {
         }
     }
 
-/*    public String getVersion() {
+    public String getVersion() {
         try {
-//            ResultSet rs = statement.executeQuery("mysql --version ");
-            ResultSet rs = statement.executeQuery("VERSIONING ");
-            return rs.getString(1);
+            ResultSet rs = statement.executeQuery("SELECT @@VERSION AS 'SQL Server Version Details'");
+            if (rs.next()) {
+                return rs.getString(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
-    }*/
+    }
 
     public List<User> getUsers() {
         List<User> list = new ArrayList<>();

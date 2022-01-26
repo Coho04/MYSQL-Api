@@ -1,6 +1,7 @@
 package de._Coho04_.mysql;
 
 import de._Coho04_.mysql.entities.Database;
+import de._Coho04_.mysql.entities.Permissions;
 import de._Coho04_.mysql.entities.Table;
 import de._Coho04_.mysql.entities.User;
 
@@ -11,6 +12,7 @@ public class TestClass {
         String user = ID.user;
         String password = ID.password;
         int port = ID.port;
+
         MYSQL mysql = new MYSQL(hostname, user, password, 3306);
 
         // DATABASE
@@ -18,8 +20,8 @@ public class TestClass {
             mysql.createDatabase("FISCH");
         }
 
-        Database base = mysql.getDatabase("school_laravel");
-        for (Table t : base.getTables()) {
+        Database database = mysql.getDatabase("school_laravel");
+        for (Table t : database.getTables()) {
             System.out.println("[Name]: " + t.getName());
             System.out.println("[Rows]: " + t.countRow() + "\n");
         }
@@ -31,6 +33,8 @@ public class TestClass {
         //Create User without new Database
         mysql.createUser("One", "password", false);
         User One = mysql.getUser("One");
+        One.setPermission(Permissions.ALL);
+        One.setPermissionToDatabase(Permissions.ALL, database);
         One.setPassword("PASSWORD");
 
         //Create User with new Database
@@ -49,7 +53,7 @@ public class TestClass {
         //Drop User with Database
         mysql.getUser("Two").drop(true);
 
-//        System.out.println("[Version]: " + mysql.getVersion());
+        System.out.println(mysql.getVersion());
         // END
         mysql.disconnect();
     }
