@@ -11,7 +11,6 @@ import de._Coho04_.mysql.entities.User;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MYSQL {
@@ -171,16 +170,8 @@ public class MYSQL {
         return null;
     }
 
-    // mysql.getDatabase("NAME").getTable("NAME").getColumns();
-    // show columns from [table name]; || Returns the columns and column information pertaining to the designated table.
-    public ResultSet showColumnsFromTable(String name) {
-        try {
-            return statement.executeQuery("show columns from " + name + ";");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+    // mysql.getDatabase("NAME").getTable("NAME").getRow().getColumns();
+
 
     public void createUser(String username, String password, Boolean database) {
         try {
@@ -205,8 +196,8 @@ public class MYSQL {
 //    SELECT DISTINCT [column name] FROM [table name]; || Show unique records.
 //    SELECT [col1],[col2] FROM [table name] ORDER BY [col2] DESC; || Show selected records sorted in an ascending (asc) or descending (desc).
 //    INSERT INTO [table name] (Host,User,Password) VALUES('%','user',PASSWORD('password')); || Join tables on common columns.
-//    mysqladmin -u root -h hostname.blah.org -p password 'new-password'  || Switch to the mysql db. Create a new user
-//    SET PASSWORD FOR 'user'@'hostname' = PASSWORD('passwordhere');  || Change a users password.(from unix shell).
+//
+//
 //    INSERT INTO [table name] (Host,Db,User,Select_priv,Insert_priv,Update_priv,Delete_priv,Create_priv,Drop_priv) VALUES ('%','db','user','Y','Y','Y','Y','Y','N');  || Change a users password.(from MySQL prompt).
 //    UPDATE [table name] SET Select_priv = 'Y',Insert_priv = 'Y',Update_priv = 'Y' where [field name] = 'user';  || Switch to mysql db.Give user privilages for a db.
 //    DELETE from [table name] where [field name] = 'whatever';  || To update info already in a table.

@@ -18,7 +18,7 @@ public class Column {
         this.table = table;
     }
 
-    //    alter table [table name] drop column [column name]; ||
+    //alter table [table name] drop column [column name]; ||
     public void drop() {
         try {
             statement.execute("use " + db.getName() + ";");
@@ -38,7 +38,6 @@ public class Column {
             e.printStackTrace();
         }
     }
-
 
     public String getName() {
         return this.name;
