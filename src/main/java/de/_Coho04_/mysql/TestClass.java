@@ -25,6 +25,9 @@ public class TestClass {
             System.out.println("[Name]: " + t.getName());
             System.out.println("[Rows]: " + t.countRow() + "\n");
         }
+        Table table =  database.getTable("migrations");
+        System.out.println("Table Name:" + table.getName());
+
         if (mysql.existsDatabase("FISCH")) {
 //            base.drop();
         }
