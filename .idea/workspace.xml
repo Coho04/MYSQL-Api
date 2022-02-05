@@ -13,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="18550" />
+    <option name="totalTimeSeconds" value="18711" />
     <option name="gitIntegration" value="true" />
     <option name="naggedAbout" value="1" />
   </component>
@@ -31,6 +31,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -108,7 +109,7 @@
       <workItem from="1643657945303" duration="7964000" />
       <workItem from="1643991457912" duration="3838000" />
       <workItem from="1643995373321" duration="13896000" />
-      <workItem from="1644062249540" duration="16338000" />
+      <workItem from="1644062249540" duration="16499000" />
     </task>
     <task id="LOCAL-00003" summary="Added Code">
       <created>1644062274028</created>
@@ -166,7 +167,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644100835945</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Added Code">
+      <created>1644100886809</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1644100886809</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <option name="createBranch" value="false" />
     <option name="useBranch" value="true" />
     <servers />
