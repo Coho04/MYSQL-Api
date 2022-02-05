@@ -45,15 +45,14 @@ public class TestClass {
         table.getName();
         table.countRow();
         table.drop();
-        table.getRow("NAME");
-        table.getRowByItem("NAME", "NAME");
+//        table.getRowByItem("NAME", "NAME");
         table.showColumnsInTable();
         table.columnExists("NAME");
         table.addColumn("NAME", MysqlTypes.INT);
         table.addColumn("NAME", MysqlTypes.INT, 20);
         table.getDatabase();
         table.getColumn("NAME");
-        table.insert(new Row("", table, database).with("", "").with("", ""));
+        table.insert(new Row(table, database).with("", "").with("", ""));
 
         Column cmn = table.getColumn("NAME");
         cmn.drop();

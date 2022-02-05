@@ -3,16 +3,20 @@ package de._Coho04_.mysql.entities;
 import de._Coho04_.mysql.MYSQL;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
 public class Table {
 
     private String name;
+
     private Database db;
+
     private static Statement statement = MYSQL.statement;
 
     public Table(String name, Database database) {
@@ -43,11 +47,22 @@ public class Table {
         }
     }
 
-    public Row getRow(String name) {
-        return new Row(name, this, this.getDatabase());
+    public HashMap<String, Object> getRow(Column column, String item) {
+        HashMap<String, Object> map = new HashMap();
+        try {
+            ResultSet rs = statement.executeQuery("SELECT * FROM " + this.name + " WHERE " + column.getName() + " = '" + item + "';");
+            ResultSetMetaData rsmd = rs.getMetaData();
+            rs.next();
+            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                map.put(rsmd.getColumnName(i), rs.getString(rsmd.getColumnName(i)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return map;
     }
 
-    public List getRowByItem(String column, String name) {
+/*    public List getRowByItem(String column, String name) {
         List list = new ArrayList();
         try {
             statement.executeQuery("use " + this.getDatabase().getName() + ";");
@@ -59,7 +74,7 @@ public class Table {
             e.printStackTrace();
         }
         return list;
-    }
+    }*/
 
     public List<Column> showColumnsInTable() {
         List<Column> list = new ArrayList<>();
@@ -115,17 +130,17 @@ public class Table {
         }
     }
 
-    public void insert(Row r) {
+    public void insert(Row row) {
         String keys = "";
         String items = "";
-        for (String key : r.map.keySet()) {
+        for (String key : row.map.keySet()) {
             if (keys.isBlank()) {
                 keys = "`" + key +"`";
             } else {
                 keys = keys + ",`" + key +"`";
             }
         }
-        for(String item : r.map.values()) {
+        for(String item : row.map.values()) {
             if (items.isBlank()) {
                 items = "'" + item +"'";
             } else {
@@ -138,13 +153,6 @@ public class Table {
             e.printStackTrace();
         }
     }
-
-
-/*db.insert("hero",
-        new Row()
-  .with("name", "Sabriel")
-  .with("level", 19)
-  .with("alive", true));*/
 
     public Database getDatabase() {
         return this.db;

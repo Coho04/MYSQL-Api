@@ -36,12 +36,16 @@ public class Column {
 
     //TODO
     public void setNull() {
-
+        try {
+            statement.execute("UPDATE " + this.getTable() + " SET " + this.name + " = NULL");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setName(String name) {
         try {
-            statement.execute("alter table " + this.table.getName() + " change " + this.name + name + " varchar (50)");
+            statement.execute("ALTER TABLE " + this.getTable().getName() + " CHANGE " + this.name + name + " varchar (50)");
             this.name = name;
         } catch (SQLException e) {
             e.printStackTrace();
