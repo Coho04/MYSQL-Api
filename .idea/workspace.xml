@@ -4,14 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Added Code" />
+    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Added Code">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="18377" />
+    <option name="totalTimeSeconds" value="18550" />
     <option name="gitIntegration" value="true" />
     <option name="naggedAbout" value="1" />
   </component>
@@ -42,6 +44,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="24Tc6zOVelLlWQc4l8ftr39fmUR" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -105,7 +108,7 @@
       <workItem from="1643657945303" duration="7964000" />
       <workItem from="1643991457912" duration="3838000" />
       <workItem from="1643995373321" duration="13896000" />
-      <workItem from="1644062249540" duration="16167000" />
+      <workItem from="1644062249540" duration="16338000" />
     </task>
     <task id="LOCAL-00003" summary="Added Code">
       <created>1644062274028</created>
@@ -149,7 +152,21 @@
       <option name="project" value="LOCAL" />
       <updated>1644100630596</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Added Code">
+      <created>1644100807985</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1644100807985</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Added Code">
+      <created>1644100835945</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1644100835945</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <option name="createBranch" value="false" />
     <option name="useBranch" value="true" />
     <servers />
