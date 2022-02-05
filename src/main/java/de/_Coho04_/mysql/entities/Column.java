@@ -8,8 +8,11 @@ import java.sql.Statement;
 public class Column {
 
     private  String name;
+
     private  Table table;
+
     private  Database db;
+
     private static Statement statement = MYSQL.statement;
 
     public Column(String name, Table table, Database db) {

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Table {
 
@@ -82,7 +83,7 @@ public class Table {
 
     public Boolean columnExists(String name) {
         try {
-            statement.executeQuery("SELECT * FROM " + this.name + ";");
+            statement.executeQuery("SELECT "+ name + " FROM "+ this.name + ";");
             return true;
         } catch (SQLException e) {
             return false;
@@ -104,6 +105,46 @@ public class Table {
             e.printStackTrace();
         }
     }
+
+    public Boolean hasColumns() {
+        int a = this.showColumnsInTable().size();
+        if (a <= 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void insert(Row r) {
+        String keys = "";
+        String items = "";
+        for (String key : r.map.keySet()) {
+            if (keys.isBlank()) {
+                keys = "`" + key +"`";
+            } else {
+                keys = keys + ",`" + key +"`";
+            }
+        }
+        for(String item : r.map.values()) {
+            if (items.isBlank()) {
+                items = "'" + item +"'";
+            } else {
+                items = items + ",'" + item +"'";
+            }
+        }
+        try {
+            statement.execute("INSERT INTO " + this.name + " (" + keys +")VALUES (" + items + ");");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+/*db.insert("hero",
+        new Row()
+  .with("name", "Sabriel")
+  .with("level", 19)
+  .with("alive", true));*/
 
     public Database getDatabase() {
         return this.db;

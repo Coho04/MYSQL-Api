@@ -105,13 +105,13 @@ public class MYSQL {
     }
 
     //[mysql dir]/bin/mysqldump -u root -ppassword --opt >/tmp/alldatabases.sql
-    public void mysqldump() {
+/*    public void mysqldump() {
         try {
             statement.execute("");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void disconnect() {
         try {

@@ -11,6 +11,7 @@ import java.util.List;
 public class Database {
 
     private String name;
+
     private static Statement statement = MYSQL.statement;
 
     public Database(String name) {
@@ -74,6 +75,15 @@ public class Database {
         try {
             statement.execute("use " + this.name + ";");
             statement.execute("CREATE TABLE " + name + "(" + firstColumn + " " + MysqlTypes.getPermissionName(MysqlType) + ");");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createTable(String name, String firstColumn, Integer MysqlType, int size) {
+        try {
+            statement.execute("use " + this.name + ";");
+            statement.execute("CREATE TABLE " + name + "(" + firstColumn + " " + MysqlTypes.getPermissionName(MysqlType) + " (" + size + "));");
         } catch (SQLException e) {
             e.printStackTrace();
         }

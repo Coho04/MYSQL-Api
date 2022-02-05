@@ -4,7 +4,7 @@ import de._Coho04_.mysql.entities.*;
 
 public class TestClass {
 
-    public static void main(String[] bot) {
+    public static void TEST(String[] bot) {
         String hostname = ID.hostname;
         String user = ID.user;
         String password = ID.password;
@@ -20,7 +20,6 @@ public class TestClass {
         mysql.existsUser("NAME");
         mysql.customExecute("SQL");
         mysql.customQueryExecute("SQL");
-        mysql.mysqldump();
         mysql.getFrom("NAME", "NAME");
         mysql.onFlushPrivileges();
         mysql.showTables();
@@ -54,6 +53,7 @@ public class TestClass {
         table.addColumn("NAME", MysqlTypes.INT, 20);
         table.getDatabase();
         table.getColumn("NAME");
+        table.insert(new Row("", table, database).with("", "").with("", ""));
 
         Column cmn = table.getColumn("NAME");
         cmn.drop();
