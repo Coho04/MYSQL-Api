@@ -23,19 +23,17 @@ public class Table {
         return this.name;
     }
 
-    //SELECT COUNT(*) FROM [table name];  || Count rows.
     public Integer countRow() {
         try {
-           ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM " + this.name + ";" );
-           rs.next();
-           return rs.getInt(1);
+            ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM " + this.name + ";");
+            rs.next();
+            return rs.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
     }
 
-    // drop table [table name]; ||  To delete a table.
     public void drop() {
         try {
             statement.execute("DROP TABLE " + this.name);
@@ -46,6 +44,20 @@ public class Table {
 
     public Row getRow(String name) {
         return new Row(name, this, this.getDatabase());
+    }
+
+    public List getRowByItem(String column, String name) {
+        List list = new ArrayList();
+        try {
+            statement.executeQuery("use " + this.getDatabase().getName() + ";");
+            ResultSet rs = statement.executeQuery("SELECT * FROM " + this.name + " WHERE " + column + " = \"" + name + "\"");
+            if (rs.next()) {
+                list.add(rs.getString(3));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     public List<Column> showColumnsInTable() {
@@ -60,6 +72,39 @@ public class Table {
         }
         return list;
     }
+
+    public Column getColumn(String name) {
+        if (columnExists(name)) {
+            return new Column(name, this, this.db);
+        }
+        return null;
+    }
+
+    public Boolean columnExists(String name) {
+        try {
+            statement.executeQuery("SELECT * FROM " + this.name + ";");
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    public void addColumn(String name, Integer MysqlType) {
+        try {
+            statement.execute("ALTER TABLE " + this.name + " ADD `" + name + "` " + MysqlTypes.getPermissionName(MysqlType) + ";");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addColumn(String name, Integer MysqlType, int size) {
+        try {
+            statement.execute("ALTER TABLE " + this.name + " ADD `" + name + "` " + MysqlTypes.getPermissionName(MysqlType) + " (" + size + ");");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Database getDatabase() {
         return this.db;
     }

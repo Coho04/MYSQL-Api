@@ -21,7 +21,6 @@ public class Row {
         this.table = table;
     }
 
-    // show columns from [table name]; || Returns the columns and column information pertaining to the designated table.
     public List<Column> showColumns() {
         List<Column> list = new ArrayList<>();
         try {

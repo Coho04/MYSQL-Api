@@ -92,15 +92,22 @@ public class MYSQL {
         return null;
     }
 
-    //	show databases; || List all databases on the sql server.
     public Database getDatabase(String name) {
-         return new Database(name);
+        return new Database(name);
     }
 
-    //create database [databasename]; || Create a database on the sql server.
     public void createDatabase(String database) {
         try {
             statement.execute("CREATE DATABASE " + database);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //[mysql dir]/bin/mysqldump -u root -ppassword --opt >/tmp/alldatabases.sql
+    public void mysqldump() {
+        try {
+            statement.execute("");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -122,7 +129,6 @@ public class MYSQL {
         }
     }
 
-    // SELECT * FROM [table name]; || Show all data in a table.
     public Object getFrom(String item, String table) {
         try {
             resultSet = statement.executeQuery("SELECT " + item + " FROM " + table);
@@ -132,7 +138,6 @@ public class MYSQL {
         }
     }
 
-    //    FLUSH PRIVILEGES; || Update database permissions/privilages.
     public void onFlushPrivileges() {
         try {
             statement.execute("FLUSH PRIVILEGES");
@@ -141,7 +146,6 @@ public class MYSQL {
         }
     }
 
-    //	use [db name];  || Switch to a database.
     public void switchDatabase(String name) {
         try {
             statement.execute("use " + name + ";");
@@ -150,7 +154,6 @@ public class MYSQL {
         }
     }
 
-    // show tables; || To see all the tables in the db.
     public ResultSet showTables() {
         try {
             return statement.executeQuery("show tables;");
@@ -160,7 +163,6 @@ public class MYSQL {
         return null;
     }
 
-    // describe [table name]; || To see database's field formats.
     public ResultSet describeTable(String name) {
         try {
             return statement.executeQuery("describe " + name + ";");
@@ -170,12 +172,9 @@ public class MYSQL {
         return null;
     }
 
-    // mysql.getDatabase("NAME").getTable("NAME").getRow().getColumns();
-
-
     public void createUser(String username, String password, Boolean database) {
         try {
-            statement.execute("CREATE USER " +  "'" + username + "'@'localhost' IDENTIFIED BY '" + password + "';");
+            statement.execute("CREATE USER " + "'" + username + "'@'localhost' IDENTIFIED BY '" + password + "';");
             if (database) {
                 this.createDatabase(username);
             }
@@ -205,13 +204,12 @@ public class MYSQL {
 //    alter table [table name] add unique ([column name]);
 //    alter table [table name] modify [column name] VARCHAR(3);
 //    alter table [table name] drop index [colmn name];
+
 //    LOAD DATA INFILE '/tmp/filename.csv' replace INTO TABLE [table name] FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' (field1,field2,field3);
 //	  [mysql dir]/bin/mysqldump -u root -ppassword --opt >/tmp/alldatabases.sql
 //    [mysql dir]/bin/mysqldump -u username -ppassword --databases databasename >/tmp/databasename.sql
 //    [mysql dir]/bin/mysqldump -c -u username -ppassword databasename tablename > /tmp/databasename.tablename.sql
 //    [mysql dir]/bin/mysql -u username -ppassword databasename < /tmp/databasename.sql
-//    CREATE TABLE [table name] (firstname VARCHAR(20), middleinitial VARCHAR(3), lastname VARCHAR(35),suffix VARCHAR(3), officeid VARCHAR(10),userid VARCHAR(15),username VARCHAR(8),email VARCHAR(35),phone VARCHAR(25), groups VARCHAR(15),datestamp DATE,timestamp time,pgpemail VARCHAR(255));
-//    create table [table name] (personid int(50) not null auto_increment primary key,firstname varchar(35),middlename varchar(50),lastname varchar(50) default 'bato');
 }
 /*    private void writeResultSet(ResultSet resultSet) throws SQLException {
         while (resultSet.next()) {

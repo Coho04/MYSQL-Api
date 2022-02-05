@@ -1,9 +1,6 @@
 package de._Coho04_.mysql;
 
-import de._Coho04_.mysql.entities.Database;
-import de._Coho04_.mysql.entities.Permissions;
-import de._Coho04_.mysql.entities.Table;
-import de._Coho04_.mysql.entities.User;
+import de._Coho04_.mysql.entities.*;
 
 public class TestClass {
 
@@ -15,49 +12,95 @@ public class TestClass {
 
         MYSQL mysql = new MYSQL(hostname, user, password, 3306);
 
-        // DATABASE
-        if (!mysql.existsDatabase("FISCH")) {
-            mysql.createDatabase("FISCH");
-        }
+        String DatabaseNAME = "GERHARD";
+        String TableNAME = "UTA";
 
-        Database database = mysql.getDatabase("school_laravel");
-        for (Table t : database.getTables()) {
-            System.out.println("[Name]: " + t.getName());
-            System.out.println("[Rows]: " + t.countRow() + "\n");
-        }
-        Table table =  database.getTable("migrations");
-        System.out.println("Table Name:" + table.getName());
+        mysql.getVersion();
+        mysql.getUsers();
+        mysql.existsUser("NAME");
+        mysql.customExecute("SQL");
+        mysql.customQueryExecute("SQL");
+        mysql.mysqldump();
+        mysql.getFrom("NAME", "NAME");
+        mysql.onFlushPrivileges();
+        mysql.showTables();
+        mysql.describeTable("NAME");
+        mysql.createUser("NAME", "NAME",false);
+        mysql.getUser("NAME");
+        mysql.createDatabase(DatabaseNAME);
+        mysql.existsDatabase(DatabaseNAME);
+        mysql.switchDatabase(DatabaseNAME);
+        mysql.getDatabase(DatabaseNAME);
 
-        if (mysql.existsDatabase("FISCH")) {
-//            base.drop();
-        }
+        Database database = mysql.getDatabase(DatabaseNAME);
+        database.getName();
+        database.setName("BETTINA");
+        database.rename("HANS");
+        database.createTable(TableNAME, "", MysqlTypes.INT);
+        database.getTables();
+        database.tableExists(TableNAME);
+        database.drop();
+        database.getTable(TableNAME);
 
-        // User
-        //Create User without new Database
-        mysql.createUser("One", "password", false);
-        User One = mysql.getUser("One");
-        One.setPermission(Permissions.ALL);
-        One.setPermissionToDatabase(Permissions.ALL, database);
-        One.setPassword("PASSWORD");
+        Table table = database.getTable(TableNAME);
+        table.getName();
+        table.countRow();
+        table.drop();
+        table.getRow("NAME");
+        table.getRowByItem("NAME", "NAME");
+        table.showColumnsInTable();
+        table.columnExists("NAME");
+        table.addColumn("NAME", MysqlTypes.INT);
+        table.addColumn("NAME", MysqlTypes.INT, 20);
+        table.getDatabase();
+        table.getColumn("NAME");
 
-        //Create User with new Database
-        mysql.createUser("Two", "password", true);
-        User two = mysql.getUser("Two");
-        two.setPassword("PASSWORD");
+        Column cmn = table.getColumn("NAME");
+        cmn.drop();
+        cmn.setItemNull("NAME");
+        cmn.setNull();
+        cmn.setName("NAME");
+        cmn.getDatabase();
+        cmn.getTable();
+        cmn.getName();
 
-        //System.out.println(mysql.existsUser("ENTE"));
-        for (User u : mysql.getUsers()) {
-            System.out.println("[Username]: " + u.getName());
-        }
+        User usr = mysql.getUser("NAME");
+        usr.drop(true);
+        usr.setPermission(Permissions.ALL);
+        usr.setPermissionToDatabase(Permissions.EXECUTE, database);
+        usr.removePermission(Permissions.REFERENCES);
+        usr.removePermissionToDatabase(Permissions.EXECUTE, database);
+        usr.setPassword("PASSWORD");
+        usr.getName();
 
-        //Drop User without Database
-        mysql.getUser("One").drop(false);
-
-        //Drop User with Database
-        mysql.getUser("Two").drop(true);
-
-        System.out.println(mysql.getVersion());
-        // END
         mysql.disconnect();
+    }
+
+    public static void createColumns(Table table) {
+        table.addColumn("BIT", MysqlTypes.BIT);
+        table.addColumn("TINYINT", MysqlTypes.TINYINT);
+        table.addColumn("SMALLINT", MysqlTypes.SMALLINT);
+        table.addColumn("INT", MysqlTypes.INT);
+        table.addColumn("BIGINT", MysqlTypes.BIGINT);
+        table.addColumn("DECIMAL", MysqlTypes.DECIMAL);
+        table.addColumn("NUMERIC", MysqlTypes.NUMERIC);
+        table.addColumn("FLOAT", MysqlTypes.FLOAT);
+        table.addColumn("REAL", MysqlTypes.REAL);
+        table.addColumn("DOUBLE", MysqlTypes.DOUBLE);
+        table.addColumn("DATE", MysqlTypes.DATE);
+        table.addColumn("TIME", MysqlTypes.TIME);
+        table.addColumn("DATETIME", MysqlTypes.DATETIME);
+        table.addColumn("TIMESTAMP", MysqlTypes.TIMESTAMP);
+        table.addColumn("YEAR", MysqlTypes.YEAR);
+        table.addColumn("CHAR", MysqlTypes.CHAR);
+        table.addColumn("VARCHAR", MysqlTypes.VARCHAR, 20);
+        table.addColumn("TEXT", MysqlTypes.TEXT);
+        table.addColumn("NCHAR", MysqlTypes.NCHAR);
+        table.addColumn("NVARCHAR", MysqlTypes.NVARCHAR, 20);
+        table.addColumn("BINARY", MysqlTypes.BINARY);
+        table.addColumn("VARBINARY", MysqlTypes.VARBINARY, 20);
+        table.addColumn("BLOB", MysqlTypes.BLOB);
+        table.addColumn("JSON", MysqlTypes.JSON);
+        table.addColumn("BOOLEAN", MysqlTypes.BOOLEAN);
     }
 }
