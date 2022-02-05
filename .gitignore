@@ -1,5 +1,4 @@
 # Project exclude paths
 /target/
-.idea
 src/main/java/de/_Coho04_/mysql/TestClass.java
 src/main/java/de/_Coho04_/mysql/ID.java
