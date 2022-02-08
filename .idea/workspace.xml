@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Added Code">
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Fix dependency for other Projekts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/MYSQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/MYSQL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/TestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/TestClass.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="28525" />
+    <option name="totalTimeSeconds" value="28685" />
     <option name="gitIntegration" value="true" />
     <option name="naggedAbout" value="1" />
   </component>
@@ -82,7 +76,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="proofread" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager" selected="Application.MainClass">
     <configuration name="MainClass" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -126,11 +120,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.TestMain" />
+        <item itemvalue="Application.TestClass" />
         <item itemvalue="Application.MainClass" />
-        <item itemvalue="Application.TestMain" />
-        <item itemvalue="Application.TestClass" />
-        <item itemvalue="Application.TestClass" />
-        <item itemvalue="Application.TestMain" />
       </list>
     </recent_temporary>
   </component>
@@ -157,7 +149,7 @@
       <workItem from="1644273000315" duration="64000" />
       <workItem from="1644305759272" duration="4928000" />
       <workItem from="1644335960336" duration="440000" />
-      <workItem from="1644336424064" duration="9272000" />
+      <workItem from="1644336424064" duration="9481000" />
     </task>
     <task id="LOCAL-00003" summary="Added Code">
       <created>1644062274028</created>
@@ -222,7 +214,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644100886809</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Fix dependency for other Projekts">
+      <created>1644353431202</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1644353431202</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <option name="createBranch" value="false" />
     <option name="useBranch" value="true" />
     <servers />
@@ -243,7 +242,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added Code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Code" />
+    <MESSAGE value="Fix dependency for other Projekts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix dependency for other Projekts" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
