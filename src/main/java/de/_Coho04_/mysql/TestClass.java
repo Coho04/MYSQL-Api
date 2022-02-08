@@ -5,12 +5,7 @@ import de._Coho04_.mysql.entities.*;
 public class TestClass {
 
     public static void TEST(String[] bot) {
-        String hostname = ID.hostname;
-        String user = ID.user;
-        String password = ID.password;
-        int port = ID.port;
-
-        MYSQL mysql = new MYSQL(hostname, user, password, 3306);
+        MYSQL mysql = new MYSQL("hostname", "user", "password", 3306);
 
         String DatabaseNAME = "GERHARD";
         String TableNAME = "UTA";

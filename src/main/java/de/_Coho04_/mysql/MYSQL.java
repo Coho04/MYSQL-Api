@@ -195,8 +195,7 @@ public class MYSQL {
 //    SELECT DISTINCT [column name] FROM [table name]; || Show unique records.
 //    SELECT [col1],[col2] FROM [table name] ORDER BY [col2] DESC; || Show selected records sorted in an ascending (asc) or descending (desc).
 //    INSERT INTO [table name] (Host,User,Password) VALUES('%','user',PASSWORD('password')); || Join tables on common columns.
-//
-//
+
 //    INSERT INTO [table name] (Host,Db,User,Select_priv,Insert_priv,Update_priv,Delete_priv,Create_priv,Drop_priv) VALUES ('%','db','user','Y','Y','Y','Y','Y','N');  || Change a users password.(from MySQL prompt).
 //    UPDATE [table name] SET Select_priv = 'Y',Insert_priv = 'Y',Update_priv = 'Y' where [field name] = 'user';  || Switch to mysql db.Give user privilages for a db.
 //    DELETE from [table name] where [field name] = 'whatever';  || To update info already in a table.
@@ -224,4 +223,5 @@ public class MYSQL {
             System.out.println("Date: " + date);
             System.out.println("Comment: " + comment);
   }
-}*/
+
+ */
