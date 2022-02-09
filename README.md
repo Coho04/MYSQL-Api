@@ -1,9 +1,17 @@
 # MYSQL-Api
 JMA (Java MYSQL API)
 
-        MYSQL mysql = new MYSQL("hostname", "user", "password", 3306);
+Verbindung aufbauen:
 
-        String DatabaseNAME = "GERHARD";
+        String DatabaseNAME = "exampleDatabase";
+        
+        MYSQL mysql = new MYSQL("hostname", "user", "password", 3306);
+        if (mysql.existsDatabase(DatabaseNAME)) {
+                /** Your Code here **/
+        }
+      
+        
+        
         String TableNAME = "UTA";
 
         mysql.getVersion();
@@ -45,21 +53,29 @@ JMA (Java MYSQL API)
         table.insert(new Row(table, database).with("", "").with("", ""));
 
         Column cmn = table.getColumn("NAME");
-        cmn.drop();
         cmn.setItemNull("NAME");
         cmn.setNull();
         cmn.setName("NAME");
         cmn.getDatabase();
         cmn.getTable();
         cmn.getName();
+User (erstellen, getten)
 
         User usr = mysql.getUser("NAME");
-        usr.drop(true);
         usr.setPermission(Permissions.ALL);
         usr.setPermissionToDatabase(Permissions.EXECUTE, database);
         usr.removePermission(Permissions.REFERENCES);
         usr.removePermissionToDatabase(Permissions.EXECUTE, database);
         usr.setPassword("PASSWORD");
         usr.getName();
+        
+Löschen: 
+
+        user.drop();
+        table.drop();
+        database.drop();
+        column.drop();
+      
+Verbindung trennen:
 
         mysql.disconnect();
