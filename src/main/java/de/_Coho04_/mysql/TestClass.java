@@ -4,6 +4,7 @@ import de._Coho04_.mysql.entities.*;
 
 public class TestClass {
 
+
     public static void TEST(String[] bot) {
         MYSQL mysql = new MYSQL("hostname", "user", "password", 3306);
 
@@ -31,8 +32,9 @@ public class TestClass {
         database.setName("BETTINA");
         database.rename("HANS");
         database.createTable(TableNAME, "", MysqlTypes.INT);
+        database.createTable(TableNAME, "", MysqlTypes.VARCHAR, 20);
         database.getTables();
-        database.tableExists(TableNAME);
+        database.existsTable(TableNAME);
         database.drop();
         database.getTable(TableNAME);
 
@@ -42,7 +44,7 @@ public class TestClass {
         table.drop();
 //        table.getRowByItem("NAME", "NAME");
         table.showColumnsInTable();
-        table.columnExists("NAME");
+        table.existsColumn("NAME");
         table.addColumn("NAME", MysqlTypes.INT);
         table.addColumn("NAME", MysqlTypes.INT, 20);
         table.getDatabase();
@@ -70,31 +72,59 @@ public class TestClass {
         mysql.disconnect();
     }
 
-    public static void createColumns(Table table) {
-        table.addColumn("BIT", MysqlTypes.BIT);
-        table.addColumn("TINYINT", MysqlTypes.TINYINT);
-        table.addColumn("SMALLINT", MysqlTypes.SMALLINT);
-        table.addColumn("INT", MysqlTypes.INT);
-        table.addColumn("BIGINT", MysqlTypes.BIGINT);
-        table.addColumn("DECIMAL", MysqlTypes.DECIMAL);
-        table.addColumn("NUMERIC", MysqlTypes.NUMERIC);
-        table.addColumn("FLOAT", MysqlTypes.FLOAT);
-        table.addColumn("REAL", MysqlTypes.REAL);
-        table.addColumn("DOUBLE", MysqlTypes.DOUBLE);
-        table.addColumn("DATE", MysqlTypes.DATE);
-        table.addColumn("TIME", MysqlTypes.TIME);
-        table.addColumn("DATETIME", MysqlTypes.DATETIME);
-        table.addColumn("TIMESTAMP", MysqlTypes.TIMESTAMP);
-        table.addColumn("YEAR", MysqlTypes.YEAR);
-        table.addColumn("CHAR", MysqlTypes.CHAR);
-        table.addColumn("VARCHAR", MysqlTypes.VARCHAR, 20);
-        table.addColumn("TEXT", MysqlTypes.TEXT);
-        table.addColumn("NCHAR", MysqlTypes.NCHAR);
-        table.addColumn("NVARCHAR", MysqlTypes.NVARCHAR, 20);
-        table.addColumn("BINARY", MysqlTypes.BINARY);
-        table.addColumn("VARBINARY", MysqlTypes.VARBINARY, 20);
-        table.addColumn("BLOB", MysqlTypes.BLOB);
-        table.addColumn("JSON", MysqlTypes.JSON);
-        table.addColumn("BOOLEAN", MysqlTypes.BOOLEAN);
+    public static void DatabaseBeispiel() {
+        /* Get Database */
+        MYSQL mysql = new MYSQL("hostname", "user", "password", 3306);
+        String databaseName = "TestDatabase";
+        if (mysql.existsDatabase(databaseName)) {
+            Database database = mysql.getDatabase(databaseName);
+        }
+    }
+
+    public static void TableBeispiel() {
+        /* Get Table */
+        MYSQL mysql = new MYSQL("hostname", "user", "password", 3306);
+        String databaseName = "TestDatabase";
+        if (mysql.existsDatabase(databaseName)) {
+            Database database = mysql.getDatabase(databaseName);
+            String tableName = "TestTable";
+            if (database.existsTable(tableName)) {
+                Table table = database.getTable(tableName);
+            }
+        }
+    }
+
+    public static void ColumnBeispiel() {
+        /* Get Column */
+        MYSQL mysql = new MYSQL("hostname", "user", "password", 3306);
+        String databaseName = "TestDatabase";
+        if (mysql.existsDatabase(databaseName)) {
+            Database database = mysql.getDatabase(databaseName);
+            String tableName = "TestTable";
+            if (database.existsTable(tableName)) {
+                Table table = database.getTable(tableName);
+                String columnName = "TestColumn";
+                if (table.existsColumn(columnName)) {
+                    Column column = table.getColumn(columnName);
+                }
+            }
+        }
+    }
+
+    public static void InsertTableBeispiel() {
+        /* Insert Table */
+        MYSQL mysql = new MYSQL("hostname", "user", "password", 3306);
+        String databaseName = "TestDatabase";
+        if (mysql.existsDatabase(databaseName)) {
+            Database database = mysql.getDatabase(databaseName);
+            String tableName = "TestTable";
+            if (database.existsTable(tableName)) {
+                Table table = database.getTable(tableName);
+                String columnName = "TestColumn";
+                if (!table.existsColumn(columnName)) {
+                    table.insert(new Row(table,database).with(columnName, "TestItem"));
+                }
+            }
+        }
     }
 }

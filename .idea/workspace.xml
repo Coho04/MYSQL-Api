@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Remove Github Workflow">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_11_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_25.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/maven-publish.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/TestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/TestClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +26,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="repository" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -152,6 +156,7 @@
       <workItem from="1644335960336" duration="440000" />
       <workItem from="1644336424064" duration="9481000" />
       <workItem from="1644353555437" duration="1834000" />
+      <workItem from="1644392473108" duration="1098000" />
     </task>
     <task id="LOCAL-00003" summary="Added Code">
       <created>1644062274028</created>
@@ -237,7 +242,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644391430622</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Remove Github Workflow">
+      <created>1644391455171</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1644391455171</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <option name="createBranch" value="false" />
     <option name="useBranch" value="true" />
     <servers />

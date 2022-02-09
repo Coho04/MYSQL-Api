@@ -49,7 +49,7 @@ public class Database {
     }
 
     public Table getTable(String name) {
-        if (this.tableExists(name)) {
+        if (this.existsTable(name)) {
             return new Table(name, this);
         } else {
             return null;
@@ -89,7 +89,7 @@ public class Database {
         }
     }
 
-    public Boolean tableExists(String name) {
+    public Boolean existsTable(String name) {
         try {
             statement.execute("use " + this.name + ";");
             statement.executeQuery("SELECT * FROM " + name + ";");

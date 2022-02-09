@@ -90,13 +90,13 @@ public class Table {
     }
 
     public Column getColumn(String name) {
-        if (columnExists(name)) {
+        if (existsColumn(name)) {
             return new Column(name, this, this.db);
         }
         return null;
     }
 
-    public Boolean columnExists(String name) {
+    public Boolean existsColumn(String name) {
         try {
             statement.executeQuery("SELECT "+ name + " FROM "+ this.name + ";");
             return true;
