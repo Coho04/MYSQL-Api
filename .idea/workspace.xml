@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Fix dependency for other Projekts">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Remove Github Workflow">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_11_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_25.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/maven-publish.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="repository" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -43,7 +44,6 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/.github/workflows/maven-publish.yml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/TestClass.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/.m2/settings.xml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/pom.xml" root0="FORCE_HIGHLIGHTING" />
@@ -230,7 +230,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644353583259</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Remove Github Workflow">
+      <created>1644391430622</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1644391430622</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <option name="createBranch" value="false" />
     <option name="useBranch" value="true" />
     <servers />
@@ -252,7 +259,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added Code" />
     <MESSAGE value="Fix dependency for other Projekts" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix dependency for other Projekts" />
+    <MESSAGE value="Remove Github Workflow" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove Github Workflow" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
