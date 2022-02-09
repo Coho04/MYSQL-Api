@@ -42,13 +42,14 @@ public class TestClass {
         table.getName();
         table.countRow();
         table.drop();
-//        table.getRowByItem("NAME", "NAME");
-        table.showColumnsInTable();
+        table.getRow(table.getColumn("NAME"), "NAME");
+        table.getColumns();
         table.existsColumn("NAME");
         table.addColumn("NAME", MysqlTypes.INT);
         table.addColumn("NAME", MysqlTypes.INT, 20);
         table.getDatabase();
         table.getColumn("NAME");
+        table.getColumn("NAME").getAll();
         table.insert(new Row(table, database).with("", "").with("", ""));
 
         Column cmn = table.getColumn("NAME");
@@ -59,6 +60,7 @@ public class TestClass {
         cmn.getDatabase();
         cmn.getTable();
         cmn.getName();
+        cmn.getAll();
 
         User usr = mysql.getUser("NAME");
         usr.drop(true);

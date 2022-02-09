@@ -76,7 +76,7 @@ public class Table {
         return list;
     }*/
 
-    public List<Column> showColumnsInTable() {
+    public List<Column> getColumns() {
         List<Column> list = new ArrayList<>();
         try {
             ResultSet rs = statement.executeQuery("show columns from " + this.name + ";");
@@ -87,6 +87,10 @@ public class Table {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public List<Column> showColumns() {
+        return getColumns();
     }
 
     public Column getColumn(String name) {
@@ -130,7 +134,7 @@ public class Table {
     }
 
     public Boolean hasColumns() {
-        int a = this.showColumnsInTable().size();
+        int a = this.getColumns().size();
         if (a <= 0) {
             return false;
         } else {

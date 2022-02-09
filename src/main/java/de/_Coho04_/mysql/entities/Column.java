@@ -2,8 +2,11 @@ package de._Coho04_.mysql.entities;
 
 import de._Coho04_.mysql.MYSQL;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Column {
 
@@ -21,17 +24,34 @@ public class Column {
         this.table = table;
     }
 
+    public List<Object> getAll() {
+        List<Object> list = new ArrayList<>();
+        try {
+            ResultSet rs = statement.executeQuery("SELECT " + this.name + " FROM " + getTable().getName() + ";");
+            while (rs.next()) {
+                list.add(rs.getObject(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public void drop() {
         try {
-            statement.execute("alter table " + this.table.getName() + " drop COLUMN " + this.name + ";");
+            statement.execute("ALTER TABLE " + this.table.getName() + " DROP COLUMN " + this.name + ";");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     //TODO
-    public void setItemNull(String name) {
-
+    public void setItemNull(String item) {
+        try {
+            statement.execute("UPDATE " + this.getTable() + " SET " + this.name + " = NULL where " + this.getName() + " = " + name);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     //TODO
