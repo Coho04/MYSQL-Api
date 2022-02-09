@@ -113,6 +113,14 @@ public class Table {
         }
     }
 
+    public void addUniqueColumn(String name) {
+        try {
+            statement.execute("ALTER IGNORE TABLE " + this.name + " ADD UNIQUE (" + name + ");");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addColumn(String name, Integer MysqlType, int size) {
         try {
             statement.execute("ALTER TABLE " + this.name + " ADD `" + name + "` " + MysqlTypes.getPermissionName(MysqlType) + " (" + size + ");");

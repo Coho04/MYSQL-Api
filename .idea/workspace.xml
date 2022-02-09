@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Remove Github Workflow">
+    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Add Beispiele">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/TestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/TestClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Database.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -156,7 +154,9 @@
       <workItem from="1644335960336" duration="440000" />
       <workItem from="1644336424064" duration="9481000" />
       <workItem from="1644353555437" duration="1834000" />
-      <workItem from="1644392473108" duration="1098000" />
+      <workItem from="1644392473108" duration="1133000" />
+      <workItem from="1644393677497" duration="128000" />
+      <workItem from="1644394322495" duration="119000" />
     </task>
     <task id="LOCAL-00003" summary="Added Code">
       <created>1644062274028</created>
@@ -249,7 +249,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644391455171</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Add Beispiele">
+      <created>1644393599090</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1644393599090</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <option name="createBranch" value="false" />
     <option name="useBranch" value="true" />
     <servers />
@@ -272,7 +279,8 @@
     <MESSAGE value="Added Code" />
     <MESSAGE value="Fix dependency for other Projekts" />
     <MESSAGE value="Remove Github Workflow" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove Github Workflow" />
+    <MESSAGE value="Add Beispiele" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Beispiele" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
