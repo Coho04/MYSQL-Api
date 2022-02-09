@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Add Unique Column">
+    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Add getAll() items from Column">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/TestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/TestClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Column.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Column.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Row.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Row.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +158,7 @@
       <workItem from="1644394322495" duration="144000" />
       <workItem from="1644397239148" duration="14000" />
       <workItem from="1644402313426" duration="168000" />
-      <workItem from="1644402797490" duration="1240000" />
+      <workItem from="1644402797490" duration="1641000" />
     </task>
     <task id="LOCAL-00003" summary="Added Code">
       <created>1644062274028</created>
@@ -269,7 +265,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644394459817</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Add getAll() items from Column">
+      <created>1644404430386</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1644404430386</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <option name="createBranch" value="false" />
     <option name="useBranch" value="true" />
     <servers />
@@ -294,7 +297,8 @@
     <MESSAGE value="Remove Github Workflow" />
     <MESSAGE value="Add Beispiele" />
     <MESSAGE value="Add Unique Column" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Unique Column" />
+    <MESSAGE value="Add getAll() items from Column" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add getAll() items from Column" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
