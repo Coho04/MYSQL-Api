@@ -10,9 +10,9 @@ Verbindung aufbauen:
                 /** Your Code here **/
         }
       
+
         
-        
-        String TableNAME = "UTA";
+        String TableNAME = "testTable";
 
         mysql.getVersion();
         mysql.getUsers();
@@ -23,12 +23,14 @@ Verbindung aufbauen:
         mysql.onFlushPrivileges();
         mysql.showTables();
         mysql.describeTable("NAME");
-        mysql.createUser("NAME", "NAME",false);
+        
         mysql.getUser("NAME");
         mysql.createDatabase(DatabaseNAME);
         mysql.existsDatabase(DatabaseNAME);
         mysql.switchDatabase(DatabaseNAME);
         mysql.getDatabase(DatabaseNAME);
+       
+Database bekommen / bearbeiten: 
 
         Database database = mysql.getDatabase(DatabaseNAME);
         database.getName();
@@ -39,6 +41,8 @@ Verbindung aufbauen:
         database.tableExists(TableNAME);
         database.drop();
         database.getTable(TableNAME);
+        
+Tabelle bekommen / bearbeiten: 
 
         Table table = database.getTable(TableNAME);
         table.getName();
@@ -59,14 +63,23 @@ Verbindung aufbauen:
         cmn.getDatabase();
         cmn.getTable();
         cmn.getName();
-User (erstellen, getten)
-
+User:
+Erstellen / Passwort setzen: 
+        
+        mysql.createUser("NAME", "NAME",false);
+        user.setPassword("PASSWORD");
+         
+Getten:        
         User usr = mysql.getUser("NAME");
+Set Permissions:      
         usr.setPermission(Permissions.ALL);
         usr.setPermissionToDatabase(Permissions.EXECUTE, database);
+        
+Remove Permissions: 
         usr.removePermission(Permissions.REFERENCES);
         usr.removePermissionToDatabase(Permissions.EXECUTE, database);
-        usr.setPassword("PASSWORD");
+        
+    
         usr.getName();
         
 Löschen: 
