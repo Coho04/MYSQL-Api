@@ -1,10 +1,18 @@
 # MYSQL-Api
 JMA (Java MYSQL API)
 
-        MYSQL mysql = new MYSQL("hostname", "user", "password", 3306);
+Verbindung aufbauen:
 
-        String DatabaseNAME = "GERHARD";
-        String TableNAME = "UTA";
+        String DatabaseNAME = "exampleDatabase";
+        
+        MYSQL mysql = new MYSQL("hostname", "user", "password", 3306);
+        if (mysql.existsDatabase(DatabaseNAME)) {
+                /** Your Code here **/
+        }
+      
+
+        
+        String TableNAME = "testTable";
 
         mysql.getVersion();
         mysql.getUsers();
@@ -15,12 +23,14 @@ JMA (Java MYSQL API)
         mysql.onFlushPrivileges();
         mysql.showTables();
         mysql.describeTable("NAME");
-        mysql.createUser("NAME", "NAME",false);
+        
         mysql.getUser("NAME");
         mysql.createDatabase(DatabaseNAME);
         mysql.existsDatabase(DatabaseNAME);
         mysql.switchDatabase(DatabaseNAME);
         mysql.getDatabase(DatabaseNAME);
+       
+Database bekommen / bearbeiten: 
 
         Database database = mysql.getDatabase(DatabaseNAME);
         database.getName();
@@ -31,6 +41,8 @@ JMA (Java MYSQL API)
         database.tableExists(TableNAME);
         database.drop();
         database.getTable(TableNAME);
+        
+Tabelle bekommen / bearbeiten: 
 
         Table table = database.getTable(TableNAME);
         table.getName();
@@ -45,21 +57,38 @@ JMA (Java MYSQL API)
         table.insert(new Row(table, database).with("", "").with("", ""));
 
         Column cmn = table.getColumn("NAME");
-        cmn.drop();
         cmn.setItemNull("NAME");
         cmn.setNull();
         cmn.setName("NAME");
         cmn.getDatabase();
         cmn.getTable();
         cmn.getName();
-
+User:
+Erstellen / Passwort setzen: 
+        
+        mysql.createUser("NAME", "NAME",false);
+        user.setPassword("PASSWORD");
+         
+Getten:        
         User usr = mysql.getUser("NAME");
-        usr.drop(true);
+Set Permissions:      
         usr.setPermission(Permissions.ALL);
         usr.setPermissionToDatabase(Permissions.EXECUTE, database);
+        
+Remove Permissions: 
         usr.removePermission(Permissions.REFERENCES);
         usr.removePermissionToDatabase(Permissions.EXECUTE, database);
-        usr.setPassword("PASSWORD");
+        
+    
         usr.getName();
+        
+Löschen: 
+
+        user.drop();
+        table.drop();
+        database.drop();
+        column.drop();
+      
+Verbindung trennen:
 
         mysql.disconnect();
