@@ -62,6 +62,40 @@ public class Table {
         return map;
     }
 
+    public int countRows() {
+        try {
+            ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM " + this.name);
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int countColumn() {
+        return this.getColumns().size();
+    }
+
+    public boolean isEmpty() {
+        if (this.countRows() > 0) {
+            return false;
+        }
+        return true;
+    }
+
+    public Object getRandomFromColumn(String column) {
+        try {
+            ResultSet rs = statement.executeQuery("SELECT " + column + " FROM " + this.name + " ORDER BY RAND() LIMIT " + countRows());
+            rs.next();
+            return rs.getObject(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 /*    public List getRowByItem(String column, String name) {
         List list = new ArrayList();
         try {
@@ -102,7 +136,7 @@ public class Table {
 
     public Boolean existsColumn(String name) {
         try {
-            statement.executeQuery("SELECT "+ name + " FROM "+ this.name + ";");
+            statement.executeQuery("SELECT " + name + " FROM " + this.name + ";");
             return true;
         } catch (SQLException e) {
             return false;
@@ -147,20 +181,20 @@ public class Table {
         String items = "";
         for (String key : row.map.keySet()) {
             if (keys.isBlank()) {
-                keys = "`" + key +"`";
+                keys = "`" + key + "`";
             } else {
-                keys = keys + ",`" + key +"`";
+                keys = keys + ",`" + key + "`";
             }
         }
-        for(String item : row.map.values()) {
+        for (String item : row.map.values()) {
             if (items.isBlank()) {
-                items = "'" + item +"'";
+                items = "'" + item + "'";
             } else {
-                items = items + ",'" + item +"'";
+                items = items + ",'" + item + "'";
             }
         }
         try {
-            statement.execute("INSERT INTO " + this.name + " (" + keys +")VALUES (" + items + ");");
+            statement.execute("INSERT INTO " + this.name + " (" + keys + ")VALUES (" + items + ");");
         } catch (SQLException e) {
             e.printStackTrace();
         }

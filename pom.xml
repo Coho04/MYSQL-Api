@@ -6,7 +6,7 @@
 
     <groupId>de._Coho04_</groupId>
     <artifactId>MYSQL-Api</artifactId>
-    <version>1.0</version>
+    <version>1.5</version>
     <packaging>jar</packaging>
 
     <name>MYSQL-Api | JMA</name>
@@ -21,10 +21,10 @@
             <id>maven-release</id>
             <url>https://repo.coho04.de/repository/maven-releases</url>
         </repository>
-        <snapshotRepository>
+<!--        <snapshotRepository>
             <id>maven-snapshots</id>
             <url>https://repo.coho04.de/repository/maven-snapshots/</url>
-        </snapshotRepository>
+        </snapshotRepository>-->
     </distributionManagement>
 
     <build>
@@ -51,7 +51,7 @@
                 </executions>
                 <configuration>
                     <serverId>maven-release</serverId>
-                    <nexusUrl>https://repo.coho04.de/</nexusUrl>
+                    <nexusUrl>https://repo.coho04.de/repository/maven-releases</nexusUrl>
                     <skipStaging>true</skipStaging>
                 </configuration>
             </plugin>
