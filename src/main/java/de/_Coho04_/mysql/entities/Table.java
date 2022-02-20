@@ -184,18 +184,18 @@ public class Table {
         String keys = "";
         String items = "";
         for (String key : row.map.keySet()) {
-          /*  if (keys.isBlank()) {
+            if (keys.isBlank()) {
                 keys = "`" + key + "`";
             } else {
                 keys = keys + ",`" + key + "`";
-            }*/
+            }
         }
         for (String item : row.map.values()) {
-          /*  if (items.isBlank()) {
+            if (items.isBlank()) {
                 items = "'" + item + "'";
             } else {
                 items = items + ",'" + item + "'";
-            }*/
+            }
         }
         try {
             statement.execute("INSERT INTO " + this.name + " (" + keys + ")VALUES (" + items + ");");

@@ -31,7 +31,7 @@ public class User {
     }
 
     public void setPermission(int PERMISSION) {
- /*       try {
+        try {
             switch (PERMISSION) {
                 case 0 -> statement.execute("GRANT ALL PRIVILEGES ON * TO '" + this.name + "'@'localhost';");
                 case 1 -> statement.execute("GRANT DELETE ON * TO '" + this.name + "'@'localhost';");
@@ -44,11 +44,11 @@ public class User {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     public void setPermissionToDatabase(int PERMISSION, Database database) {
-/*        try {
+        try {
             switch (PERMISSION) {
                 case 0 -> statement.execute("GRANT ALL PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
                 case 1 -> statement.execute("GRANT DELETE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
@@ -61,11 +61,11 @@ public class User {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     public void removePermission(int PERMISSION) {
-/*        try {
+        try {
             switch (PERMISSION) {
                 case 0 -> statement.execute("REVOKE ALL PRIVILEGES ON * FROM '" + this.name + "'@'localhost';");
                 case 1 -> statement.execute("REVOKE DELETE ON * FROM '" + this.name + "'@'localhost';");
@@ -78,11 +78,11 @@ public class User {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     public void removePermissionToDatabase(int PERMISSION, Database database) {
-/*        try {
+        try {
             switch (PERMISSION) {
                 case 0 -> statement.execute("REVOKE ALL PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
                 case 1 -> statement.execute("REVOKE DELETE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
@@ -95,7 +95,7 @@ public class User {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     public void setPassword(String password) {
