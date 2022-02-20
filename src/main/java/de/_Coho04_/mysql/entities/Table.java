@@ -54,7 +54,11 @@ public class Table {
             ResultSetMetaData rsmd = rs.getMetaData();
             rs.next();
             for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                map.put(rsmd.getColumnName(i), rs.getString(rsmd.getColumnName(i)));
+                if ( rs.getString(rsmd.getColumnName(i)) != null) {
+                    map.put(rsmd.getColumnName(i), rs.getString(rsmd.getColumnName(i)));
+                } else {
+                    map.put(rsmd.getColumnName(i), null);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

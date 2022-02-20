@@ -2,10 +2,7 @@ package de._Coho04_.mysql.entities;
 
 import de._Coho04_.mysql.MYSQL;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,7 +35,32 @@ public class Row {
         return this;
     }
 
-    /*
+        /*
+        BIT
+TINYINT
+SMALLINT
+INT
+BIGINT
+DECIMAL
+NUMERIC
+FLOAT
+REAL
+DOUBLE
+DATE
+TIME
+DATETIME
+TIMESTAMP
+YEAR
+CHAR
+TEXT
+NCHAR
+NVARCHAR
+BINARY
+VARBINARY
+BLOB
+JSON
+BOOLEAN
+
     List<Row> rowList = res.getRows();
     for(Row r : rowList) {
         System.out.println(r.get("column1") + "   " + r.get("column2"));

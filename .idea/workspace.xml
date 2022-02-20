@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Add getAll() items from Column">
+      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Row.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Row.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -15,8 +17,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="30399" />
-    <option name="gitIntegration" value="true" />
+    <option name="totalTimeSeconds" value="33844" />
     <option name="naggedAbout" value="1" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -168,6 +169,13 @@
       <workItem from="1644408008862" duration="4000" />
       <workItem from="1644409004801" duration="485000" />
       <workItem from="1644496426359" duration="290000" />
+      <workItem from="1644657798435" duration="4427000" />
+      <workItem from="1644699717168" duration="30000" />
+      <workItem from="1644746789215" duration="2424000" />
+      <workItem from="1644779988399" duration="1537000" />
+      <workItem from="1644833182879" duration="406000" />
+      <workItem from="1644934608952" duration="691000" />
+      <workItem from="1645372825987" duration="3416000" />
     </task>
     <task id="LOCAL-00003" summary="Added Code">
       <created>1644062274028</created>
