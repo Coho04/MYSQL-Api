@@ -79,8 +79,6 @@
                 <configuration>
                     <source>16</source>
                     <target>16</target>
-                    <verbose>true</verbose>
-                    <fork>true</fork>
                 </configuration>
             </plugin>
             <plugin>
