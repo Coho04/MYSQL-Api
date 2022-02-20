@@ -30,7 +30,7 @@ public class MysqlTypes {
 
     public static String getPermissionName(Integer permission) {
         String type = "";
-        switch (permission) {
+/*        switch (permission) {
             case BIT -> type = "bit";
             case TINYINT -> type = "tinyint";
             case SMALLINT -> type = "smallint";
@@ -56,7 +56,7 @@ public class MysqlTypes {
             case JSON -> type = "JSON";
             case BOOLEAN -> type = "BOOLEAN";
             case DOUBLE -> type = "DOUBLE";
-        }
+        }*/
         return type;
     }
 }
