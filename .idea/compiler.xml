@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="MYSQL-Api" target="14" />
+      <module name="MYSQL-Api" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
