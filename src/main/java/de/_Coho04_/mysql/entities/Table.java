@@ -184,14 +184,14 @@ public class Table {
         String keys = "";
         String items = "";
         for (String key : row.map.keySet()) {
-            if (keys.isBlank()) {
+            if (keys.isEmpty()) {
                 keys = "`" + key + "`";
             } else {
                 keys = keys + ",`" + key + "`";
             }
         }
         for (String item : row.map.values()) {
-            if (items.isBlank()) {
+            if (items.isEmpty()) {
                 items = "'" + item + "'";
             } else {
                 items = items + ",'" + item + "'";
