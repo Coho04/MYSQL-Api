@@ -5,7 +5,7 @@ import de._Coho04_.mysql.entities.*;
 public class TestClass {
 
 
-    public static void TEST(String[] bot) {
+    public static void TEST(String[] args) {
         MYSQL mysql = new MYSQL("hostname", "user", "password", 3306);
 
         String DatabaseNAME = "GERHARD";
@@ -80,6 +80,7 @@ public class TestClass {
         String databaseName = "TestDatabase";
         if (mysql.existsDatabase(databaseName)) {
             Database database = mysql.getDatabase(databaseName);
+                /* Your Code here */
         }
     }
 
