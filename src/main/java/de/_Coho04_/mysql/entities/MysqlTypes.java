@@ -31,31 +31,81 @@ public class MysqlTypes {
     public static String getPermissionName(Integer permission) {
         String type = "";
         switch (permission) {
-            case BIT -> type = "bit";
-            case TINYINT -> type = "tinyint";
-            case SMALLINT -> type = "smallint";
-            case INT -> type = "int";
-            case BIGINT -> type = "bigint";
-            case DECIMAL -> type = "decimal";
-            case NUMERIC -> type = "numeric";
-            case FLOAT -> type = "float";
-            case REAL -> type = "real";
-            case DATE -> type = "DATE";
-            case TIME -> type = "TIME";
-            case DATETIME -> type = "DATETIME";
-            case TIMESTAMP -> type = "TIMESTAMP";
-            case YEAR -> type = "YEAR";
-            case CHAR -> type = "CHAR";
-            case VARCHAR -> type = "VARCHAR";
-            case TEXT -> type = "TEXT";
-            case NCHAR -> type = "NCHAR";
-            case NVARCHAR -> type = "NVARCHAR";
-            case BINARY -> type = "BINARY";
-            case VARBINARY -> type = "VARBINARY";
-            case BLOB -> type = "BLOB";
-            case JSON -> type = "JSON";
-            case BOOLEAN -> type = "BOOLEAN";
-            case DOUBLE -> type = "DOUBLE";
+            case BIT:
+                type = "bit";
+                break;
+            case TINYINT:
+                type = "tinyint";
+                break;
+            case SMALLINT:
+                type = "smallint";
+                break;
+            case INT:
+                type = "int";
+                break;
+            case BIGINT:
+                type = "bigint";
+                break;
+            case DECIMAL:
+                type = "decimal";
+                break;
+            case NUMERIC:
+                type = "numeric";
+                break;
+            case FLOAT:
+                type = "float";
+                break;
+            case REAL:
+                type = "real";
+                break;
+            case DATE:
+                type = "DATE";
+                break;
+            case TIME:
+                type = "TIME";
+                break;
+            case DATETIME:
+                type = "DATETIME";
+                break;
+            case TIMESTAMP:
+                type = "TIMESTAMP";
+                break;
+            case YEAR:
+                type = "YEAR";
+                break;
+            case CHAR:
+                type = "CHAR";
+                break;
+            case VARCHAR:
+                type = "VARCHAR";
+                break;
+            case TEXT:
+                type = "TEXT";
+                break;
+            case NCHAR:
+                type = "NCHAR";
+                break;
+            case NVARCHAR:
+                type = "NVARCHAR";
+                break;
+            case BINARY:
+                type = "BINARY";
+                break;
+            case VARBINARY:
+                type = "VARBINARY";
+                break;
+            case BLOB:
+                type = "BLOB";
+                break;
+            case JSON:
+                type = "JSON";
+                break;
+            case BOOLEAN:
+                type = "BOOLEAN";
+                break;
+            case DOUBLE:
+                type = "DOUBLE";
+                break;
         }
         return type;
     }
