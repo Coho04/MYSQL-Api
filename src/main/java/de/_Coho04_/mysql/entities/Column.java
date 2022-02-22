@@ -10,11 +10,11 @@ import java.util.List;
 
 public class Column {
 
-    private  String name;
+    private String name;
 
-    private  Table table;
+    private Table table;
 
-    private  Database db;
+    private Database db;
 
     private static Statement statement = MYSQL.statement;
 
@@ -45,7 +45,6 @@ public class Column {
         }
     }
 
-    //TODO
     public void setItemNull(String item) {
         try {
             statement.execute("UPDATE " + this.getTable() + " SET " + this.name + " = NULL where " + this.getName() + " = " + name);
@@ -54,7 +53,6 @@ public class Column {
         }
     }
 
-    //TODO
     public void setNull() {
         try {
             statement.execute("UPDATE " + this.getTable() + " SET " + this.name + " = NULL");
@@ -72,11 +70,11 @@ public class Column {
         }
     }
 
-    public Database getDatabase(){
+    public Database getDatabase() {
         return this.db;
     }
 
-    public Table getTable(){
+    public Table getTable() {
         return this.table;
     }
 

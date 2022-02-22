@@ -83,9 +83,10 @@ public class MYSQL {
         }
     }
 
-    public Object customQueryExecute(String SQL) {
+    public ResultSet customQueryExecute(String SQL) {
         try {
-            return statement.executeQuery(SQL);
+            ResultSet rs = statement.executeQuery(SQL);
+            return rs;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -187,7 +188,6 @@ public class MYSQL {
         return new User(name);
     }
 
-//    SELECT * FROM [table name] WHERE [field name] = "whatever"; ||  Show certain selected rows with the value "whatever".
 //    SELECT * FROM [table name] WHERE name = "Bob" AND phone_number = '3444444'; || Show all records containing the name "Bob" AND the phone number '3444444'.
 //    SELECT * FROM [table name] WHERE name != "Bob" AND phone_number = '3444444' order by phone_number; || Show all records not containing the name "Bob" AND the phone number '3444444' order by the phone_number field.
 //    SELECT * FROM [table name] WHERE name like "Bob%" AND phone_number = '3444444'; || Show all records starting with the letters 'bob' AND the phone number '3444444'.
@@ -198,9 +198,7 @@ public class MYSQL {
 
 //    INSERT INTO [table name] (Host,Db,User,Select_priv,Insert_priv,Update_priv,Delete_priv,Create_priv,Drop_priv) VALUES ('%','db','user','Y','Y','Y','Y','Y','N');  || Change a users password.(from MySQL prompt).
 //    UPDATE [table name] SET Select_priv = 'Y',Insert_priv = 'Y',Update_priv = 'Y' where [field name] = 'user';  || Switch to mysql db.Give user privilages for a db.
-//    DELETE from [table name] where [field name] = 'whatever';  || To update info already in a table.
 
-//    alter table [table name] add unique ([column name]);
 //    alter table [table name] modify [column name] VARCHAR(3);
 //    alter table [table name] drop index [colmn name];
 

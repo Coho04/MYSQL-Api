@@ -71,19 +71,46 @@ public class Database {
         return tables;
     }
 
-    public void createTable(String name, String firstColumn, Integer MysqlType) {
+    public void createTable(String name, String firstColumnName, Integer MysqlType) {
         try {
             statement.execute("use " + this.name + ";");
-            statement.execute("CREATE TABLE " + name + "(" + firstColumn + " " + MysqlTypes.getPermissionName(MysqlType) + ");");
+            statement.execute("CREATE TABLE " + name + "(" + firstColumnName + " " + MysqlTypes.getPermissionName(MysqlType) + ");");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void createTable(String name, String firstColumn, Integer MysqlType, int size) {
+    public void createTable(String name, String firstColumnName, Integer MysqlType, int size) {
         try {
-            statement.execute("use " + this.name + ";");
-            statement.execute("CREATE TABLE " + name + "(" + firstColumn + " " + MysqlTypes.getPermissionName(MysqlType) + " (" + size + "));");
+            statement.execute("use " + getName() + ";");
+            statement.execute("CREATE TABLE " + name + "(" + firstColumnName + " " + MysqlTypes.getPermissionName(MysqlType) + " (" + size + "));");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createTableWithPrimaryKey(String name, String firstColumnName) {
+        try {
+            statement.execute("use " + getName() + ";");
+            statement.execute("CREATE TABLE " + name + " (" + firstColumnName + " int NOT NULL, PRIMARY KEY (" + firstColumnName + "));");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createTableWithUnique(String name, String firstColumnName, Integer MysqlType, int size) {
+        try {
+            statement.execute("use " + getName() + ";");
+            statement.execute("CREATE TABLE " + name + "(" + firstColumnName + " " + MysqlTypes.getPermissionName(MysqlType) + " (" + size + "), UNIQUE);");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createTableWithUnique(String name, String firstColumnName, Integer MysqlType) {
+        try {
+            statement.execute("use " + getName() + ";");
+            statement.execute("CREATE TABLE " + name + "(" + firstColumnName + " " + MysqlTypes.getPermissionName(MysqlType) + " , UNIQUE);");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -91,7 +118,7 @@ public class Database {
 
     public Boolean existsTable(String name) {
         try {
-            statement.execute("use " + this.name + ";");
+            statement.execute("use " + getName() + ";");
             statement.executeQuery("SELECT * FROM " + name + ";");
             return true;
         } catch (SQLException e) {
