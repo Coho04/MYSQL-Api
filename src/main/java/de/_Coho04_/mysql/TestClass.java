@@ -2,6 +2,8 @@ package de._Coho04_.mysql;
 
 import de._Coho04_.mysql.entities.*;
 
+import java.util.HashMap;
+
 public class TestClass {
 
 
@@ -31,8 +33,7 @@ public class TestClass {
         database.getName();
         database.setName("BETTINA");
         database.rename("HANS");
-        database.createTable(TableNAME, "", MysqlTypes.INT);
-        database.createTable(TableNAME, "", MysqlTypes.VARCHAR, 20);
+        database.createTable(TableNAME);
         database.getTables();
         database.existsTable(TableNAME);
         database.drop();
@@ -51,6 +52,10 @@ public class TestClass {
         table.getColumn("NAME");
         table.getColumn("NAME").getAll();
         table.insert(new Row(table, database).with("", "").with("", ""));
+
+        // TODO
+//        table.setItemByID("ID", "COLUMN", "ITEM");
+
 
         Column cmn = table.getColumn("NAME");
         cmn.drop();

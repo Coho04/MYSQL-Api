@@ -71,46 +71,10 @@ public class Database {
         return tables;
     }
 
-    public void createTable(String name, String firstColumnName, Integer MysqlType) {
-        try {
-            statement.execute("use " + this.name + ";");
-            statement.execute("CREATE TABLE " + name + "(" + firstColumnName + " " + MysqlTypes.getPermissionName(MysqlType) + ");");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void createTable(String name, String firstColumnName, Integer MysqlType, int size) {
+    public void createTable(String name) {
         try {
             statement.execute("use " + getName() + ";");
-            statement.execute("CREATE TABLE " + name + "(" + firstColumnName + " " + MysqlTypes.getPermissionName(MysqlType) + " (" + size + "));");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void createTableWithPrimaryKey(String name, String firstColumnName) {
-        try {
-            statement.execute("use " + getName() + ";");
-            statement.execute("CREATE TABLE " + name + " (" + firstColumnName + " int NOT NULL, PRIMARY KEY (" + firstColumnName + "));");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void createTableWithUnique(String name, String firstColumnName, Integer MysqlType, int size) {
-        try {
-            statement.execute("use " + getName() + ";");
-            statement.execute("CREATE TABLE " + name + "(" + firstColumnName + " " + MysqlTypes.getPermissionName(MysqlType) + " (" + size + "), UNIQUE);");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void createTableWithUnique(String name, String firstColumnName, Integer MysqlType) {
-        try {
-            statement.execute("use " + getName() + ";");
-            statement.execute("CREATE TABLE " + name + "(" + firstColumnName + " " + MysqlTypes.getPermissionName(MysqlType) + " , UNIQUE);");
+            statement.execute("CREATE TABLE " + name + "CREATE TABLE Orders (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
         } catch (SQLException e) {
             e.printStackTrace();
         }
