@@ -3,12 +3,16 @@ JMA (Java MYSQL API)
 
 Maven Integration: 
 
+Repository:
+
 	<repository>
-                <id>jitpack.io</id>
+            <id>jitpack.io</id>
 	    <url>https://jitpack.io</url>
 	</repository>
             
-            <dependency>
+Dependency:
+
+        <dependency>
 	    <groupId>com.github.Golden-Developer</groupId>
 	    <artifactId>MYSQL-Api</artifactId>
 	    <version>{$version}</version>
