@@ -37,6 +37,14 @@ public class Column {
         return list;
     }
 
+    public void set(String item, int id) {
+        try {
+            statement.execute("UPDATE " + this.getTable().getName() + "; SET " + this.name + " = '5' WHERE id = " + id + ";");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void drop() {
         try {
             statement.execute("ALTER TABLE " + this.table.getName() + " DROP COLUMN " + this.name + ";");

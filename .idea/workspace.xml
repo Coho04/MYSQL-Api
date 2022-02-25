@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="ADD: Optimize Create Table">
+    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="ADD: hasColumn(String name)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/TestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/TestClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Column.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Column.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,7 +15,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="44320" />
+    <option name="totalTimeSeconds" value="44566" />
     <option name="naggedAbout" value="1" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -184,7 +185,7 @@
       <workItem from="1645556032071" duration="1305000" />
       <workItem from="1645636339018" duration="112000" />
       <workItem from="1645636982109" duration="746000" />
-      <workItem from="1645829273829" duration="1064000" />
+      <workItem from="1645829273829" duration="1453000" />
     </task>
     <task id="LOCAL-00003" summary="Added Code">
       <created>1644062274028</created>
@@ -417,7 +418,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645637694931</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="ADD: hasColumn(String name)">
+      <created>1645830363536</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1645830363536</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <option name="createBranch" value="false" />
     <option name="useBranch" value="true" />
     <servers />
@@ -459,7 +467,9 @@
     <MESSAGE value="ADD: Edit index.md" />
     <MESSAGE value="ADD: Fix Deploy" />
     <MESSAGE value="ADD: Optimize Create Table" />
-    <option name="LAST_COMMIT_MESSAGE" value="ADD: Optimize Create Table" />
+    <MESSAGE value="ADD: hasColumn" />
+    <MESSAGE value="ADD: hasColumn(String name)" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADD: hasColumn(String name)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
