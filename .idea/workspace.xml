@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="ADD: Fix Deploy">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="ADD: Optimize Create Table">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/TestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/TestClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,7 +14,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="44086" />
+    <option name="totalTimeSeconds" value="44320" />
     <option name="naggedAbout" value="1" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -185,7 +183,8 @@
       <workItem from="1645531379123" duration="9000" />
       <workItem from="1645556032071" duration="1305000" />
       <workItem from="1645636339018" duration="112000" />
-      <workItem from="1645636982109" duration="682000" />
+      <workItem from="1645636982109" duration="746000" />
+      <workItem from="1645829273829" duration="1064000" />
     </task>
     <task id="LOCAL-00003" summary="Added Code">
       <created>1644062274028</created>
@@ -411,7 +410,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645556677561</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="ADD: Optimize Create Table">
+      <created>1645637694931</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1645637694931</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <option name="createBranch" value="false" />
     <option name="useBranch" value="true" />
     <servers />
@@ -452,7 +458,8 @@
     <MESSAGE value="ADD: Create Table with Primary key" />
     <MESSAGE value="ADD: Edit index.md" />
     <MESSAGE value="ADD: Fix Deploy" />
-    <option name="LAST_COMMIT_MESSAGE" value="ADD: Fix Deploy" />
+    <MESSAGE value="ADD: Optimize Create Table" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADD: Optimize Create Table" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

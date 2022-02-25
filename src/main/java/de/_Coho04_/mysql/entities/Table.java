@@ -180,6 +180,15 @@ public class Table {
         }
     }
 
+    public Boolean hasColumn(String name) {
+        try {
+            statement.executeQuery("SELECT " + name + " FROM " + this.name + ";");
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
     public void insert(Row row) {
         String keys = "";
         String items = "";
