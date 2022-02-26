@@ -4,14 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="UPDATE: Version to 1.4" />
+    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="FIX: Syntax Error">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="45455" />
+    <option name="totalTimeSeconds" value="45630" />
     <option name="naggedAbout" value="1" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -184,7 +186,8 @@
       <workItem from="1645829273829" duration="2038000" />
       <workItem from="1645831656014" duration="1499000" />
       <workItem from="1645833873411" duration="344000" />
-      <workItem from="1645876686600" duration="2233000" />
+      <workItem from="1645876686600" duration="2521000" />
+      <workItem from="1645880130893" duration="899000" />
     </task>
     <task id="LOCAL-00003" summary="Added Code">
       <created>1644062274028</created>
@@ -473,7 +476,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645879545908</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="FIX: Syntax Error">
+      <created>1645880019815</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1645880019815</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <option name="createBranch" value="false" />
     <option name="useBranch" value="true" />
     <servers />
@@ -524,7 +534,8 @@
     <MESSAGE value="FIX: set Column" />
     <MESSAGE value="UPDATE: Version to 1.3" />
     <MESSAGE value="UPDATE: Version to 1.4" />
-    <option name="LAST_COMMIT_MESSAGE" value="UPDATE: Version to 1.4" />
+    <MESSAGE value="FIX: Syntax Error" />
+    <option name="LAST_COMMIT_MESSAGE" value="FIX: Syntax Error" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

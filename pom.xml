@@ -6,7 +6,7 @@
 
     <groupId>de._Coho04_</groupId>
     <artifactId>MYSQL-Api</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
     <packaging>jar</packaging>
 
     <name>MYSQL-Api | JMA</name>
