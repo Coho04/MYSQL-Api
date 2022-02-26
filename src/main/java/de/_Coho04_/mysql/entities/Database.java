@@ -74,7 +74,7 @@ public class Database {
     public void createTable(String name) {
         try {
             statement.execute("use " + getName() + ";");
-            statement.execute("CREATE TABLE " + name + "CREATE TABLE Orders (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
+            statement.execute("CREATE TABLE " + name + " (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
         } catch (SQLException e) {
             e.printStackTrace();
         }
