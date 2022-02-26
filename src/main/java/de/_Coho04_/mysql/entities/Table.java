@@ -53,12 +53,16 @@ public class Table {
             ResultSet rs = statement.executeQuery("SELECT * FROM " + this.name + " WHERE " + column.getName() + " = '" + item + "';");
             ResultSetMetaData rsmd = rs.getMetaData();
             rs.next();
-            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                if ( rs.getString(rsmd.getColumnName(i)) != null) {
-                    map.put(rsmd.getColumnName(i), rs.getString(rsmd.getColumnName(i)));
-                } else {
-                    map.put(rsmd.getColumnName(i), null);
+            if (rs != null) {
+                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                    if (rs.getString(rsmd.getColumnName(i)) != null) {
+                        map.put(rsmd.getColumnName(i), rs.getString(rsmd.getColumnName(i)));
+                    } else {
+                        map.put(rsmd.getColumnName(i), null);
+                    }
                 }
+            } else {
+                return null;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,20 +103,6 @@ public class Table {
 
         return null;
     }
-
-/*    public List getRowByItem(String column, String name) {
-        List list = new ArrayList();
-        try {
-            statement.executeQuery("use " + this.getDatabase().getName() + ";");
-            ResultSet rs = statement.executeQuery("SELECT * FROM " + this.name + " WHERE " + column + " = \"" + name + "\"");
-            if (rs.next()) {
-                list.add(rs.getString(3));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }*/
 
     public List<Column> getColumns() {
         List<Column> list = new ArrayList<>();
@@ -155,7 +145,7 @@ public class Table {
         }
     }
 
-    public void addUniqueColumn(String name) {
+    public void setUniqueColumn(String name) {
         try {
             statement.execute("ALTER IGNORE TABLE " + this.name + " ADD UNIQUE (" + name + ");");
         } catch (SQLException e) {
