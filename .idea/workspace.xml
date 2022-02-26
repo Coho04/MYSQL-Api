@@ -4,16 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="FIX: set Column">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-    </list>
+    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="UPDATE: Version to 1.4" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="45336" />
+    <option name="totalTimeSeconds" value="45455" />
     <option name="naggedAbout" value="1" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -186,7 +184,7 @@
       <workItem from="1645829273829" duration="2038000" />
       <workItem from="1645831656014" duration="1499000" />
       <workItem from="1645833873411" duration="344000" />
-      <workItem from="1645876686600" duration="1859000" />
+      <workItem from="1645876686600" duration="2233000" />
     </task>
     <task id="LOCAL-00003" summary="Added Code">
       <created>1644062274028</created>
@@ -461,7 +459,21 @@
       <option name="project" value="LOCAL" />
       <updated>1645879329085</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="UPDATE: Version to 1.3">
+      <created>1645879507798</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1645879507798</updated>
+    </task>
+    <task id="LOCAL-00043" summary="UPDATE: Version to 1.4">
+      <created>1645879545908</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1645879545908</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <option name="createBranch" value="false" />
     <option name="useBranch" value="true" />
     <servers />
@@ -510,7 +522,9 @@
     <MESSAGE value="FIX: Create Tables" />
     <MESSAGE value="FIX: get from Row" />
     <MESSAGE value="FIX: set Column" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIX: set Column" />
+    <MESSAGE value="UPDATE: Version to 1.3" />
+    <MESSAGE value="UPDATE: Version to 1.4" />
+    <option name="LAST_COMMIT_MESSAGE" value="UPDATE: Version to 1.4" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -39,7 +39,7 @@ public class Column {
 
     public void set(String item, int id) {
         try {
-            statement.execute("UPDATE " + this.getTable().getName() + "; SET " + this.name + " = '" + item + "' WHERE id = " + id + ";");
+            statement.execute("UPDATE " + this.getTable().getName() + " SET " + this.name + " = '" + item + "' WHERE id = " + id + ";");
         } catch (SQLException e) {
             e.printStackTrace();
         }
