@@ -4,17 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="FIX: Create Tables">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" afterDir="false" />
-    </list>
+    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="FIX: get from Row" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="44949" />
+    <option name="totalTimeSeconds" value="45194" />
     <option name="naggedAbout" value="1" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -187,7 +184,7 @@
       <workItem from="1645829273829" duration="2038000" />
       <workItem from="1645831656014" duration="1499000" />
       <workItem from="1645833873411" duration="344000" />
-      <workItem from="1645876686600" duration="1309000" />
+      <workItem from="1645876686600" duration="1548000" />
     </task>
     <task id="LOCAL-00003" summary="Added Code">
       <created>1644062274028</created>
@@ -448,7 +445,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645833623301</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="FIX: get from Row">
+      <created>1645879092399</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1645879092399</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <option name="createBranch" value="false" />
     <option name="useBranch" value="true" />
     <servers />
@@ -495,7 +499,8 @@
     <MESSAGE value="ADD: set Item to Column" />
     <MESSAGE value="ADD: Update to version 1.1" />
     <MESSAGE value="FIX: Create Tables" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIX: Create Tables" />
+    <MESSAGE value="FIX: get from Row" />
+    <option name="LAST_COMMIT_MESSAGE" value="FIX: get from Row" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
