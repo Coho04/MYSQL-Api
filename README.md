@@ -1,6 +1,8 @@
 # MYSQL-Api (English)
 JMA (Java MYSQL API)
 
+[![](https://jitci.com/gh/Golden-Developer/MYSQL-Api/svg)](https://jitci.com/gh/Golden-Developer/MYSQL-Api)
+
 Maven Integration: 
 
 Repository:
