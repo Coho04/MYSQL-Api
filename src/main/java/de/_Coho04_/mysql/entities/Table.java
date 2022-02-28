@@ -92,6 +92,14 @@ public class Table {
         return true;
     }
 
+    public void dropRow(int id) {
+        try {
+            statement.execute("DELETE FROM " + this.name + " where id = " + id + ";");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Object getRandomFromColumn(String column) {
         try {
             ResultSet rs = statement.executeQuery("SELECT " + column + " FROM " + this.name + " ORDER BY RAND() LIMIT " + countRows());
