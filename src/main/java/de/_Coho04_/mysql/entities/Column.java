@@ -11,12 +11,10 @@ import java.util.List;
 public class Column {
 
     private String name;
+    private final Table table;
+    private final Database db;
 
-    private Table table;
-
-    private Database db;
-
-    private static Statement statement = MYSQL.statement;
+    private static Statement statement = MYSQL.getStatement();
 
     public Column(String name, Table table, Database db) {
         this.name = name;

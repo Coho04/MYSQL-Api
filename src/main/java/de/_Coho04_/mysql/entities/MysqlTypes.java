@@ -18,18 +18,18 @@ public class MysqlTypes {
     public static final int TIMESTAMP = 13;
     public static final int YEAR = 14;
     public static final int CHAR = 15;
-    public static final int VARCHAR = 16; // (Mit größen angabe) zbs. (20)
+    public static final int VARCHAR = 16;
     public static final int TEXT = 17;
     public static final int NCHAR = 18;
-    public static final int NVARCHAR = 19; // (Mit größen angabe) zbs. (20)
+    public static final int NVARCHAR = 19;
     public static final int BINARY = 20;
-    public static final int VARBINARY = 21; // (Mit größen angabe) zbs. (20)
+    public static final int VARBINARY = 21;
     public static final int BLOB = 22;
     public static final int JSON = 23;
     public static final int BOOLEAN = 24;
 
-    public static String getPermissionName(Integer permission) {
-        String type = "";
+    public static String getMysqlTypeName(Integer permission) {
+        String type = null;
         switch (permission) {
             case BIT:
                 type = "bit";

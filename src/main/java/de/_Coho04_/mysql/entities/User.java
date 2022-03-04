@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class User {
 
-    private static Statement statement = MYSQL.statement;
+    private static Statement statement = MYSQL.getStatement();
     private String name;
 
     public User(String name) {

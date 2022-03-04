@@ -9,15 +9,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 public class Table {
 
-    private String name;
+    private final String name;
+    private final Database db;
 
-    private Database db;
-
-    private static Statement statement = MYSQL.statement;
+    private static Statement statement = MYSQL.getStatement();
 
     public Table(String name, Database database) {
         this.name = name;
@@ -147,7 +145,7 @@ public class Table {
 
     public void addColumn(String name, Integer MysqlType) {
         try {
-            statement.execute("ALTER TABLE " + this.name + " ADD `" + name + "` " + MysqlTypes.getPermissionName(MysqlType) + ";");
+            statement.execute("ALTER TABLE " + this.name + " ADD `" + name + "` " + MysqlTypes.getMysqlTypeName(MysqlType) + ";");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -163,7 +161,7 @@ public class Table {
 
     public void addColumn(String name, Integer MysqlType, int size) {
         try {
-            statement.execute("ALTER TABLE " + this.name + " ADD `" + name + "` " + MysqlTypes.getPermissionName(MysqlType) + " (" + size + ");");
+            statement.execute("ALTER TABLE " + this.name + " ADD `" + name + "` " + MysqlTypes.getMysqlTypeName(MysqlType) + " (" + size + ");");
         } catch (SQLException e) {
             e.printStackTrace();
         }

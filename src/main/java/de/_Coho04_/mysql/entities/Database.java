@@ -12,7 +12,7 @@ public class Database {
 
     private String name;
 
-    private static Statement statement = MYSQL.statement;
+    private static Statement statement = MYSQL.getStatement();
 
     public Database(String name) {
         this.name = name;

@@ -14,7 +14,7 @@ public class Row {
 
     public HashMap<String, String> map;
 
-    private static Statement statement = MYSQL.statement;
+    private static Statement statement = MYSQL.getStatement();
 
     public Row(Table table, Database db) {
         this.db = db;
@@ -34,38 +34,6 @@ public class Row {
         map.put(column, item);
         return this;
     }
-
-        /*
-        BIT
-TINYINT
-SMALLINT
-INT
-BIGINT
-DECIMAL
-NUMERIC
-FLOAT
-REAL
-DOUBLE
-DATE
-TIME
-DATETIME
-TIMESTAMP
-YEAR
-CHAR
-TEXT
-NCHAR
-NVARCHAR
-BINARY
-VARBINARY
-BLOB
-JSON
-BOOLEAN
-
-    List<Row> rowList = res.getRows();
-    for(Row r : rowList) {
-        System.out.println(r.get("column1") + "   " + r.get("column2"));
-    }
-*/
 
     public Database getDatabase() {
         return this.db;

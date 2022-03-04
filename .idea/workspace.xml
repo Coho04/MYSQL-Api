@@ -4,8 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="FIX: Syntax Error">
+    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Add dropRow and remove TestClass">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/MYSQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/MYSQL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Column.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Column.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/MysqlTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/MysqlTypes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Row.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Row.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +50,6 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/TestClass.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/.m2/settings.xml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/pom.xml" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -188,6 +194,8 @@
       <workItem from="1645833873411" duration="344000" />
       <workItem from="1645876686600" duration="2521000" />
       <workItem from="1645880130893" duration="899000" />
+      <workItem from="1646036768408" duration="305000" />
+      <workItem from="1646381834355" duration="1472000" />
     </task>
     <task id="LOCAL-00003" summary="Added Code">
       <created>1644062274028</created>
@@ -483,7 +491,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645880019815</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="Add dropRow and remove TestClass">
+      <created>1646036506555</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1646036506555</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <option name="createBranch" value="false" />
     <option name="useBranch" value="true" />
     <servers />
@@ -535,7 +550,8 @@
     <MESSAGE value="UPDATE: Version to 1.3" />
     <MESSAGE value="UPDATE: Version to 1.4" />
     <MESSAGE value="FIX: Syntax Error" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIX: Syntax Error" />
+    <MESSAGE value="Add dropRow and remove TestClass" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add dropRow and remove TestClass" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
