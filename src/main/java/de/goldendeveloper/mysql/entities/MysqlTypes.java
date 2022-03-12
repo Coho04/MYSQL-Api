@@ -1,4 +1,4 @@
-package de._Coho04_.mysql.entities;
+package de.goldendeveloper.mysql.entities;
 
 public class MysqlTypes {
 

@@ -1,6 +1,6 @@
-package de._Coho04_.mysql.entities;
+package de.goldendeveloper.mysql.entities;
 
-import de._Coho04_.mysql.MYSQL;
+import de.goldendeveloper.mysql.MYSQL;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

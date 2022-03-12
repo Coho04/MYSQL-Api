@@ -1,7 +1,7 @@
-package de._Coho04_.mysql;
+package de.goldendeveloper.mysql;
 
-import de._Coho04_.mysql.entities.Database;
-import de._Coho04_.mysql.entities.User;
+import de.goldendeveloper.mysql.entities.Database;
+import de.goldendeveloper.mysql.entities.User;
 
 import java.sql.*;
 import java.util.ArrayList;
