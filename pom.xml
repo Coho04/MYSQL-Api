@@ -6,7 +6,7 @@
 
     <groupId>de._Coho04_</groupId>
     <artifactId>MYSQL-Api</artifactId>
-    <version>1.7</version>
+    <version>1.8</version>
     <packaging>jar</packaging>
 
     <name>MYSQL-Api | JMA</name>
@@ -77,8 +77,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <source>14</source>
+                    <target>14</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -124,7 +124,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.25</version>
+            <version>8.0.28</version>
         </dependency>
     </dependencies>
 </project>

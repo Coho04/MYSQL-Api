@@ -50,8 +50,10 @@ public class Database {
 
     public Table getTable(String name) {
         if (this.existsTable(name)) {
+            System.out.println("name");
             return new Table(name, this);
         } else {
+            System.out.println("ERROR");
             return null;
         }
     }
@@ -70,11 +72,20 @@ public class Database {
         }
         return tables;
     }
+    public ResultSet describeTable(String name) {
+        try {
+            statement.execute("use " +  this.name + ";");
+            return statement.executeQuery("describe " + name + ";");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public void createTable(String name) {
         try {
             statement.execute("use " + getName() + ";");
-            statement.execute("CREATE TABLE " + name + " (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
+            statement.execute("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -83,9 +94,10 @@ public class Database {
     public Boolean existsTable(String name) {
         try {
             statement.execute("use " + getName() + ";");
-            statement.executeQuery("SELECT * FROM " + name + ";");
+            statement.executeQuery("SELECT * FROM `" + name + "`;");
             return true;
         } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }

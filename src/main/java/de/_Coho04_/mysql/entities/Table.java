@@ -49,14 +49,14 @@ public class Table {
         HashMap<String, Object> map = new HashMap();
         try {
             ResultSet rs = statement.executeQuery("SELECT * FROM " + this.name + " WHERE " + column.getName() + " = '" + item + "';");
-            ResultSetMetaData rsmd = rs.getMetaData();
+            ResultSetMetaData rsMetaData = rs.getMetaData();
             rs.next();
             if (rs != null) {
-                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                    if (rs.getString(rsmd.getColumnName(i)) != null) {
-                        map.put(rsmd.getColumnName(i), rs.getString(rsmd.getColumnName(i)));
+                for (int i = 1; i <= rsMetaData.getColumnCount(); i++) {
+                    if (rs.getString(rsMetaData.getColumnName(i)) != null) {
+                        map.put(rsMetaData.getColumnName(i), rs.getString(rsMetaData.getColumnName(i)));
                     } else {
-                        map.put(rsmd.getColumnName(i), null);
+                        map.put(rsMetaData.getColumnName(i), null);
                     }
                 }
             } else {

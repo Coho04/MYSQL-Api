@@ -36,7 +36,7 @@ public class MYSQL {
         }
     }
 
-    public static Connection getConnect() {
+    public  Connection getConnect() {
         return connect;
     }
 
@@ -44,7 +44,7 @@ public class MYSQL {
         return statement;
     }
 
-    public static ResultSet getResultSet() {
+    public ResultSet getResultSet() {
         return resultSet;
     }
 
@@ -145,7 +145,7 @@ public class MYSQL {
 
     public void createDatabase(String database) {
         try {
-            statement.execute("CREATE DATABASE " + database);
+            statement.execute("CREATE DATABASE " + database + ";");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -157,28 +157,19 @@ public class MYSQL {
                 resultSet.close();
             }
             if (statement != null) {
-                statement.close();
+                statement = null;/*.close();*/
             }
             if (connect != null) {
-                connect.close();
+                connect = null;/*.close();*/
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Object getFrom(String item, String table) {
-        try {
-            resultSet = statement.executeQuery("SELECT " + item + " FROM " + table);
-            return resultSet;
-        } catch (SQLException e) {
-            return null;
-        }
-    }
-
     public void onFlushPrivileges() {
         try {
-            statement.execute("FLUSH PRIVILEGES");
+            statement.execute("FLUSH PRIVILEGES;");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -190,24 +181,6 @@ public class MYSQL {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public ResultSet showTables() {
-        try {
-            return statement.executeQuery("show tables;");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public ResultSet describeTable(String name) {
-        try {
-            return statement.executeQuery("describe " + name + ";");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public void createUser(String username, String password, Boolean database) {

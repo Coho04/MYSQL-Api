@@ -5,14 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Add dropRow and remove TestClass">
+      <change beforePath="$PROJECT_DIR$/.idea/aws.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MYSQL-Api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MYSQL-Api.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/MYSQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/MYSQL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Column.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Column.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Database.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/MysqlTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/MysqlTypes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Row.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Row.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Table.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +21,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="45630" />
+    <option name="totalTimeSeconds" value="47941" />
     <option name="naggedAbout" value="1" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -87,7 +88,7 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
-  <component name="RunManager" selected="Application.MainClass">
+  <component name="RunManager" selected="Application.TestMain">
     <configuration name="MainClass" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="de._Coho04_.mysql.MainClass" />
       <module name="MYSQL-Api" />
