@@ -2,6 +2,7 @@
 JMA (Java MYSQL API)
 
 [![](https://jitci.com/gh/Golden-Developer/MYSQL-Api/svg)](https://jitci.com/gh/Golden-Developer/MYSQL-Api)
+[![Foresight Docs](https://foresight.service.thundra.io/public/api/v1/badge/test?repoId=4f0ed994-965f-4cb2-b4bc-395e525ef19d)](https://foresight.docs.thundra.io/)
 
 Maven Integration: 
 
