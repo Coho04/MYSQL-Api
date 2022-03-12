@@ -28,7 +28,7 @@ public class Table {
 
     public Integer countRow() {
         try {
-            ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM " + this.name + ";");
+            ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM `" + this.name + "`;");
             rs.next();
             return rs.getInt(1);
         } catch (SQLException e) {
@@ -39,7 +39,7 @@ public class Table {
 
     public void drop() {
         try {
-            statement.execute("DROP TABLE " + this.name);
+            statement.execute("DROP TABLE `" + this.name + "`;");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,7 +48,7 @@ public class Table {
     public HashMap<String, Object> getRow(Column column, String item) {
         HashMap<String, Object> map = new HashMap();
         try {
-            ResultSet rs = statement.executeQuery("SELECT * FROM " + this.name + " WHERE " + column.getName() + " = '" + item + "';");
+            ResultSet rs = statement.executeQuery("SELECT * FROM `" + this.name + "` WHERE " + column.getName() + " = '" + item + "';");
             ResultSetMetaData rsMetaData = rs.getMetaData();
             rs.next();
             if (rs != null) {
@@ -70,7 +70,7 @@ public class Table {
 
     public int countRows() {
         try {
-            ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM " + this.name);
+            ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM `" + this.name + "`;");
             rs.next();
             return rs.getInt(1);
         } catch (SQLException e) {
@@ -92,7 +92,7 @@ public class Table {
 
     public void dropRow(int id) {
         try {
-            statement.execute("DELETE FROM " + this.name + " where id = " + id + ";");
+            statement.execute("DELETE FROM `" + this.name + "` where id = `" + id + "`;");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -100,7 +100,7 @@ public class Table {
 
     public Object getRandomFromColumn(String column) {
         try {
-            ResultSet rs = statement.executeQuery("SELECT " + column + " FROM " + this.name + " ORDER BY RAND() LIMIT " + countRows());
+            ResultSet rs = statement.executeQuery("SELECT " + column + " FROM `" + this.name + "` ORDER BY RAND() LIMIT " + countRows());
             rs.next();
             return rs.getObject(1);
         } catch (SQLException e) {
@@ -113,7 +113,7 @@ public class Table {
     public List<Column> getColumns() {
         List<Column> list = new ArrayList<>();
         try {
-            ResultSet rs = statement.executeQuery("show columns from " + this.name + ";");
+            ResultSet rs = statement.executeQuery("show columns from `" + this.name + "`;");
             while (rs.next()) {
                 list.add(new Column(rs.getString(1), this, this.getDatabase()));
             }
@@ -136,7 +136,7 @@ public class Table {
 
     public Boolean existsColumn(String name) {
         try {
-            statement.executeQuery("SELECT " + name + " FROM " + this.name + ";");
+            statement.executeQuery("SELECT " + name + " FROM `" + this.name + "`;");
             return true;
         } catch (SQLException e) {
             return false;
@@ -145,7 +145,7 @@ public class Table {
 
     public void addColumn(String name, Integer MysqlType) {
         try {
-            statement.execute("ALTER TABLE " + this.name + " ADD `" + name + "` " + MysqlTypes.getMysqlTypeName(MysqlType) + ";");
+            statement.execute("ALTER TABLE `" + this.name + "` ADD `" + name + "` " + MysqlTypes.getMysqlTypeName(MysqlType) + ";");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -153,7 +153,7 @@ public class Table {
 
     public void setUniqueColumn(String name) {
         try {
-            statement.execute("ALTER IGNORE TABLE " + this.name + " ADD UNIQUE (" + name + ");");
+            statement.execute("ALTER IGNORE TABLE `" + this.name + "` ADD UNIQUE (" + name + ");");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -161,7 +161,7 @@ public class Table {
 
     public void addColumn(String name, Integer MysqlType, int size) {
         try {
-            statement.execute("ALTER TABLE " + this.name + " ADD `" + name + "` " + MysqlTypes.getMysqlTypeName(MysqlType) + " (" + size + ");");
+            statement.execute("ALTER TABLE `" + this.name + "` ADD `" + name + "` " + MysqlTypes.getMysqlTypeName(MysqlType) + " (" + size + ");");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -178,7 +178,7 @@ public class Table {
 
     public Boolean hasColumn(String name) {
         try {
-            statement.executeQuery("SELECT " + name + " FROM " + this.name + ";");
+            statement.executeQuery("SELECT " + name + " FROM `" + this.name + "`;");
             return true;
         } catch (SQLException e) {
             return false;
@@ -203,7 +203,7 @@ public class Table {
             }
         }
         try {
-            statement.execute("INSERT INTO " + this.name + " (" + keys + ")VALUES (" + items + ");");
+            statement.execute("INSERT INTO `" + this.name + "` (" + keys + ")VALUES (" + items + ");");
         } catch (SQLException e) {
             e.printStackTrace();
         }

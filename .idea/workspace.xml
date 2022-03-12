@@ -4,14 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Update: set language lvl to 8" />
+    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Update: set language lvl to 8">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Table.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="49858" />
+    <option name="totalTimeSeconds" value="50155" />
     <option name="naggedAbout" value="1" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -187,6 +190,8 @@
       <workItem from="1646036768408" duration="305000" />
       <workItem from="1646381834355" duration="1472000" />
       <workItem from="1647089801188" duration="1559000" />
+      <workItem from="1647091582001" duration="418000" />
+      <workItem from="1647093527754" duration="325000" />
     </task>
     <task id="LOCAL-00003" summary="Added Code">
       <created>1644062274028</created>
