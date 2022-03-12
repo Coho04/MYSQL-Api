@@ -4,18 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Update: Try to use Language lvl 14">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/User.java" afterDir="false" />
-    </list>
+    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Update: to Version 1.9" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="48863" />
+    <option name="totalTimeSeconds" value="49156" />
     <option name="naggedAbout" value="1" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -64,7 +60,7 @@
   <component name="ProjectId" id="24Tc6zOVelLlWQc4l8ftr39fmUR" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -191,6 +187,7 @@
       <workItem from="1645880130893" duration="899000" />
       <workItem from="1646036768408" duration="305000" />
       <workItem from="1646381834355" duration="1472000" />
+      <workItem from="1647089801188" duration="322000" />
     </task>
     <task id="LOCAL-00003" summary="Added Code">
       <created>1644062274028</created>
@@ -500,7 +497,21 @@
       <option name="project" value="LOCAL" />
       <updated>1647086512852</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Update: to Version 1.9">
+      <created>1647090047623</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1647090047623</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Update: to Version 1.9">
+      <created>1647090052955</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1647090052955</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <option name="createBranch" value="false" />
     <option name="useBranch" value="true" />
     <servers />
@@ -554,13 +565,14 @@
     <MESSAGE value="FIX: Syntax Error" />
     <MESSAGE value="Add dropRow and remove TestClass" />
     <MESSAGE value="Update: Try to use Language lvl 14" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update: Try to use Language lvl 14" />
+    <MESSAGE value="Update: to Version 1.9" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update: to Version 1.9" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/de/_Coho04_/mysql/entities/Database.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Database.java</url>
           <line>34</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
