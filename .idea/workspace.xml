@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Update: set language lvl to 8">
+    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Update: to Version 2.2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,7 +14,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="50155" />
+    <option name="totalTimeSeconds" value="51120" />
     <option name="naggedAbout" value="1" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -191,14 +191,8 @@
       <workItem from="1646381834355" duration="1472000" />
       <workItem from="1647089801188" duration="1559000" />
       <workItem from="1647091582001" duration="418000" />
-      <workItem from="1647093527754" duration="325000" />
-    </task>
-    <task id="LOCAL-00003" summary="Added Code">
-      <created>1644062274028</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1644062274028</updated>
+      <workItem from="1647093527754" duration="2031000" />
+      <workItem from="1647109257479" duration="663000" />
     </task>
     <task id="LOCAL-00004" summary="Added Code">
       <created>1644089741984</created>
@@ -536,7 +530,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647091029236</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="Update: to Version 2.2">
+      <created>1647094252552</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1647094252552</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <option name="createBranch" value="false" />
     <option name="useBranch" value="true" />
     <servers />
@@ -567,7 +568,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix dependency for other Projekts" />
     <MESSAGE value="Remove Github Workflow" />
     <MESSAGE value="Add Beispiele" />
     <MESSAGE value="Add Unique Column" />
@@ -592,7 +592,8 @@
     <MESSAGE value="Update: to Version 1.9" />
     <MESSAGE value="Update: to Version 2.0" />
     <MESSAGE value="Update: set language lvl to 8" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update: set language lvl to 8" />
+    <MESSAGE value="Update: to Version 2.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update: to Version 2.2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
