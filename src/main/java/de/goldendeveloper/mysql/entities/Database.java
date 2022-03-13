@@ -50,10 +50,8 @@ public class Database {
 
     public Table getTable(String name) {
         if (this.existsTable(name)) {
-            System.out.println("name");
             return new Table(name, this);
         } else {
-            System.out.println("ERROR");
             return null;
         }
     }

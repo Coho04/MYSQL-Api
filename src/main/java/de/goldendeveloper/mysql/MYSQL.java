@@ -29,6 +29,7 @@ public class MYSQL {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connect = DriverManager.getConnection("jdbc:mysql://" + this.hostname + ":" + this.port, this.username, this.password);
+            statement = null;
             statement = connect.createStatement();
             System.out.println("MySQL Connected [Hostname]: " + this.hostname + " [Port]: " + this.port + " [Username]: " + this.username + "  !");
         } catch (Exception e) {

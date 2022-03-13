@@ -25,7 +25,8 @@ public class Column {
     public List<Object> getAll() {
         List<Object> list = new ArrayList<>();
         try {
-            ResultSet rs = statement.executeQuery("SELECT " + this.name + " FROM " + getTable().getName() + ";");
+            statement.execute("use " + this.getDatabase().getName());
+            ResultSet rs = statement.executeQuery("SELECT " + this.name + " FROM `" + getTable().getName() + "`;");
             while (rs.next()) {
                 list.add(rs.getObject(1));
             }
@@ -37,7 +38,8 @@ public class Column {
 
     public void set(String item, int id) {
         try {
-            statement.execute("UPDATE " + this.getTable().getName() + " SET " + this.name + " = '" + item + "' WHERE id = " + id + ";");
+            statement.execute("use " + this.getDatabase().getName());
+            statement.execute("UPDATE `" + this.getTable().getName() + "` SET " + this.name + " = '" + item + "' WHERE id = " + id + ";");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -45,7 +47,8 @@ public class Column {
 
     public void drop() {
         try {
-            statement.execute("ALTER TABLE " + this.table.getName() + " DROP COLUMN " + this.name + ";");
+            statement.execute("use " + this.getDatabase().getName());
+            statement.execute("ALTER TABLE `" + this.table.getName() + "` DROP COLUMN " + this.name + ";");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -53,7 +56,8 @@ public class Column {
 
     public void setItemNull(String item) {
         try {
-            statement.execute("UPDATE " + this.getTable() + " SET " + this.name + " = NULL where " + this.getName() + " = " + name);
+            statement.execute("use " + this.getDatabase().getName());
+            statement.execute("UPDATE `" + this.getTable().getName() + "` SET " + this.name + " = NULL where " + this.getName() + " = " + name);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -61,7 +65,8 @@ public class Column {
 
     public void setNull() {
         try {
-            statement.execute("UPDATE " + this.getTable() + " SET " + this.name + " = NULL");
+            statement.execute("use " + this.getDatabase().getName());
+            statement.execute("UPDATE `" + this.getTable().getName() + "` SET " + this.name + " = NULL");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -69,7 +74,8 @@ public class Column {
 
     public void setName(String name) {
         try {
-            statement.execute("ALTER TABLE " + this.getTable().getName() + " CHANGE " + this.name + name + " varchar (50)");
+            statement.execute("use " + this.getDatabase().getName());
+            statement.execute("ALTER TABLE `" + this.getTable().getName() + "` CHANGE " + this.name + name + " varchar (50)");
             this.name = name;
         } catch (SQLException e) {
             e.printStackTrace();
