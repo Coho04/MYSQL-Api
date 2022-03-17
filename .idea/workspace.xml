@@ -4,12 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="Update: to Version 2.4">
+    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="FIX: Connection Error">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/7c9c1fcf-ec42-4c8c-859c-e5b32e67a39d.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/7c9c1fcf-ec42-4c8c-859c-e5b32e67a39d/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/7c9c1fcf-ec42-4c8c-859c-e5b32e67a39d/storage_v2/_src_/schema/mysql.osA4Bg.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/7c9c1fcf-ec42-4c8c-859c-e5b32e67a39d/storage_v2/_src_/schema/mysql.osA4Bg.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/7c9c1fcf-ec42-4c8c-859c-e5b32e67a39d/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/MYSQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/MYSQL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Column.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Column.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Row.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Row.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,8 +78,10 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -81,11 +94,24 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.notifications" />
   </component>
-  <component name="RunManager" selected="Application.TestMain">
+  <component name="RunManager" selected="Application.TestClass (1)">
     <configuration name="MainClass" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="de._Coho04_.mysql.MainClass" />
+      <module name="MYSQL-Api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="de.goldendeveloper.mysql.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestClass (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="de.goldendeveloper.mysql.TestClass" />
       <module name="MYSQL-Api" />
       <extension name="coverage">
         <pattern>
@@ -125,6 +151,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.TestClass (1)" />
         <item itemvalue="Application.TestMain" />
         <item itemvalue="Application.TestClass" />
         <item itemvalue="Application.MainClass" />
@@ -199,6 +226,13 @@
       <workItem from="1647169271724" duration="320000" />
       <workItem from="1647174000352" duration="768000" />
       <workItem from="1647179369220" duration="901000" />
+      <workItem from="1647504312087" duration="1366000" />
+      <workItem from="1647506763931" duration="620000" />
+      <workItem from="1647508184250" duration="1562000" />
+      <workItem from="1647509793942" duration="515000" />
+      <workItem from="1647511714654" duration="220000" />
+      <workItem from="1647512277617" duration="682000" />
+      <workItem from="1647516832334" duration="975000" />
     </task>
     <task id="LOCAL-00005" summary="Added Code">
       <created>1644099912065</created>
@@ -574,7 +608,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add Unique Column" />
     <MESSAGE value="Add getAll() items from Column" />
     <MESSAGE value="Change Deploy" />
     <MESSAGE value="ADD: Create Table with Primary key" />
@@ -599,18 +632,8 @@
     <MESSAGE value="Update: to Version 2.2" />
     <MESSAGE value="Update: to Version 2.3" />
     <MESSAGE value="Update: to Version 2.4" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update: to Version 2.4" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Database.java</url>
-          <line>34</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="FIX: Connection Error" />
+    <option name="LAST_COMMIT_MESSAGE" value="FIX: Connection Error" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

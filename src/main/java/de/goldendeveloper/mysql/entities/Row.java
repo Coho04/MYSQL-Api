@@ -8,13 +8,11 @@ import java.util.List;
 
 public class Row {
 
-    private Table table;
+    private final Table table;
 
-    private Database db;
+    private final Database db;
 
     public HashMap<String, String> map;
-
-    private static Statement statement = MYSQL.getStatement();
 
     public Row(Table table, Database db) {
         this.db = db;
