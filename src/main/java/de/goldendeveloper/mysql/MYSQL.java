@@ -1,6 +1,7 @@
 package de.goldendeveloper.mysql;
 
 import de.goldendeveloper.mysql.entities.Database;
+import de.goldendeveloper.mysql.entities.Table;
 import de.goldendeveloper.mysql.entities.User;
 
 import java.sql.*;
@@ -179,6 +180,25 @@ public class MYSQL {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Database> getDatabases() {
+        List<Database> dbs = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
+            Statement statement = connect.createStatement();
+            ResultSet rs = statement.executeQuery("SHOW DATABASES;");
+            rs.next();
+            while (rs.next()) {
+                Database db = new Database(rs.getString(1));
+                dbs.add(db);
+            }
+            MYSQL.close(null, connect, statement);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return dbs;
     }
 
     public User getUser(String name) {
