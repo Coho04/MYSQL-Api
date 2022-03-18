@@ -220,4 +220,19 @@ public class MYSQL {
             e.printStackTrace();
         }
     }
+
+    public static List<Object> stuff(String database) {
+        List<Object> stuff = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
+            Statement statement = connect.createStatement();
+            statement.execute("use `" + database + "`");
+            stuff.add(statement);
+            stuff.add(connect);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return stuff;
+    }
 }

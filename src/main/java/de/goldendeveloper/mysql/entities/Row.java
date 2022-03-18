@@ -1,8 +1,5 @@
 package de.goldendeveloper.mysql.entities;
 
-import de.goldendeveloper.mysql.MYSQL;
-
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 

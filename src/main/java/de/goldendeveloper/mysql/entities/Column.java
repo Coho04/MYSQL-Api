@@ -22,16 +22,14 @@ public class Column {
     public List<Object> getAll() {
         List<Object> list = new ArrayList<>();
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
-            ResultSet rs = statement.executeQuery("SELECT " + this.name + " FROM `" + getTable().getName() + "`;");
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
+            ResultSet rs = statement.executeQuery("SELECT `" + this.name + "` FROM `" + getTable().getName() + "`;");
             while (rs.next()) {
                 list.add(rs.getObject(1));
             }
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
@@ -39,66 +37,56 @@ public class Column {
 
     public void set(String item, int id) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
-            statement.execute("UPDATE `" + this.getTable().getName() + "` SET " + this.name + " = '" + item + "' WHERE id = " + id + ";");
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
+            statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + this.name + "` = '" + item + "' WHERE id = " + id + ";");
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void drop() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
-            statement.execute("ALTER TABLE `" + this.table.getName() + "` DROP COLUMN " + this.name + ";");
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
+            statement.execute("ALTER TABLE `" + this.table.getName() + "` DROP COLUMN `" + this.name + "`;");
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             e.printStackTrace();
         }
     }
 
-    public void setItemNull(String item) {
+    public void setItemNull(int ColumnID) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
-            statement.execute("UPDATE `" + this.getTable().getName() + "` SET " + this.name + " = NULL where " + this.getName() + " = " + name);
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
+            statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `id` = " + ColumnID + ";");
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void setNull() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
-            statement.execute("UPDATE `" + this.getTable().getName() + "` SET " + this.name + " = NULL");
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
+            statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `" + this.getName() + "` IS NOT NULL;");
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void setName(String name) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
             statement.execute("ALTER TABLE `" + this.getTable().getName() + "` CHANGE " + this.name + name + " varchar (50)");
             this.name = name;
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

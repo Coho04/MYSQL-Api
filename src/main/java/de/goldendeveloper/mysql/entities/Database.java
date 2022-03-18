@@ -19,16 +19,7 @@ public class Database {
     }
 
     public void setName(String name) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("ALTER DATABASE " + this.name + " MODIFY NAME = " + name + ";");
-            MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        this.name = name;
+        rename(name);
     }
 
     public void rename(String name) {
@@ -36,7 +27,7 @@ public class Database {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
             Statement statement = connect.createStatement();
-            statement.execute("ALTER DATABASE " + this.name + " Modify Name = " + name + ";");
+            statement.execute("ALTER DATABASE `" + this.name + "` Modify Name = `" + name + "`;");
             MYSQL.close(null, connect, statement);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -49,7 +40,7 @@ public class Database {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
             Statement statement = connect.createStatement();
-            statement.execute("DROP DATABASE " + this.name + ";");
+            statement.execute("DROP DATABASE `" + this.name + "`;");
             MYSQL.close(null, connect, statement);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -67,17 +58,15 @@ public class Database {
     public List<Table> getTables() {
         List<Table> tables = new ArrayList<>();
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.name + ";");
-            ResultSet rs = statement.executeQuery("show tables;");
+            Statement statement = (Statement) MYSQL.stuff(this.getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getName()).get(1);
+            ResultSet rs = statement.executeQuery("SHOW TABLES;");
             while (rs.next()) {
                 Table table = new Table(rs.getString(1), this);
                 tables.add(table);
             }
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return tables;
@@ -85,12 +74,10 @@ public class Database {
 
     public ResultSet describeTable(String name) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " +  this.name + ";");
-            return statement.executeQuery("describe " + name + ";");
-        } catch (SQLException | ClassNotFoundException e) {
+            Statement statement = (Statement) MYSQL.stuff(this.getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getName()).get(1);
+            return statement.executeQuery("DESCRIBE `" + name + "`;");
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
@@ -98,28 +85,23 @@ public class Database {
 
     public void createTable(String name) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + getName() + ";");
+            Statement statement = (Statement) MYSQL.stuff(this.getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getName()).get(1);
             statement.execute("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public Boolean existsTable(String name) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + getName() + ";");
+            Statement statement = (Statement) MYSQL.stuff(this.getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getName()).get(1);
             statement.executeQuery("SELECT * FROM `" + name + "`;");
             MYSQL.close(null, connect, statement);
             return true;
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
             return false;
         }
     }

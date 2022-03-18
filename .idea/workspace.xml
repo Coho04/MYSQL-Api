@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="FIX: Connection Error">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/MYSQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/MYSQL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Column.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Column.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Table.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,7 +18,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="51548" />
+    <option name="totalTimeSeconds" value="53335" />
     <option name="naggedAbout" value="1" />
   </component>
   <component name="FileTemplateManagerImpl">

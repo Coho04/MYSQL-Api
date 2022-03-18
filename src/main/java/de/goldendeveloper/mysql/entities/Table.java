@@ -23,24 +23,20 @@ public class Table {
 
     public void drop() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
             statement.execute("DROP TABLE `" + this.name + "`;");
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             e.printStackTrace();
         }
     }
 
     public HashMap<String, Object> getRow(Column column, String item) {
-        HashMap<String, Object> map = new HashMap();
+        HashMap<String, Object> map = new HashMap<>();
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
             ResultSet rs = statement.executeQuery("SELECT * FROM `" + this.name + "` WHERE " + column.getName() + " = '" + item + "';");
             ResultSetMetaData rsMetaData = rs.getMetaData();
             rs.next();
@@ -56,7 +52,7 @@ public class Table {
                 return null;
             }
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return map;
@@ -64,14 +60,11 @@ public class Table {
 
     public int countRows() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
             ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM `" + this.name + "`;");
             rs.next();
             return rs.getInt(1);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
@@ -90,27 +83,22 @@ public class Table {
 
     public void dropRow(int id) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
             statement.execute("DELETE FROM `" + this.name + "` where id = `" + id + "`;");
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public Object getRandomFromColumn(String column) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
             ResultSet rs = statement.executeQuery("SELECT " + column + " FROM `" + this.name + "` ORDER BY RAND() LIMIT " + countRows());
             rs.next();
             return rs.getObject(1);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -120,16 +108,14 @@ public class Table {
     public List<Column> getColumns() {
         List<Column> list = new ArrayList<>();
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
-            ResultSet rs = statement.executeQuery("show columns from `" + this.name + "`;");
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
+            ResultSet rs = statement.executeQuery("show columns from `" + this.name + "` ;");
             while (rs.next()) {
                 list.add(new Column(rs.getString(1), this, this.getDatabase()));
             }
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
@@ -144,76 +130,62 @@ public class Table {
 
     public Boolean existsColumn(String name) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
-            statement.executeQuery("SELECT " + name + " FROM `" + this.name + "`;");
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
+            statement.executeQuery("select `" + name + "` from `" + this.name + "`;");
             MYSQL.close(null, connect, statement);
             return true;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             return false;
         }
     }
 
     public void addColumn(String name, Integer MysqlType) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
             statement.execute("ALTER TABLE `" + this.name + "` ADD `" + name + "` " + MysqlTypes.getMysqlTypeName(MysqlType) + ";");
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void setUniqueColumn(String name) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
             statement.execute("ALTER IGNORE TABLE `" + this.name + "` ADD UNIQUE (" + name + ");");
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void addColumn(String name, Integer MysqlType, int size) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
             statement.execute("ALTER TABLE `" + this.name + "` ADD `" + name + "` " + MysqlTypes.getMysqlTypeName(MysqlType) + " (" + size + ");");
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public Boolean hasColumns() {
         int a = this.getColumns().size();
-        if (a <= 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return a > 0;
     }
 
     public Boolean hasColumn(String name) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
             statement.executeQuery("SELECT " + name + " FROM `" + this.name + "`;");
             MYSQL.close(null, connect, statement);
             return true;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             return false;
         }
     }
@@ -236,14 +208,11 @@ public class Table {
             }
         }
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
-            statement.execute("use " + this.getDatabase().getName());
-
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
             statement.execute("INSERT INTO `" + this.name + "` (" + keys + ")VALUES (" + items + ");");
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             e.printStackTrace();
         }
     }
