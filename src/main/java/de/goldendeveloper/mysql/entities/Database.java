@@ -72,17 +72,6 @@ public class Database {
         return tables;
     }
 
-    public ResultSet describeTable(String name) {
-        try {
-            Statement statement = (Statement) MYSQL.stuff(this.getName()).get(0);
-            Connection connect = (Connection) MYSQL.stuff(this.getName()).get(1);
-            return statement.executeQuery("DESCRIBE `" + name + "`;");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public void createTable(String name) {
         try {
             Statement statement = (Statement) MYSQL.stuff(this.getName()).get(0);

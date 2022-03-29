@@ -25,8 +25,8 @@ public class Row {
         return table.getColumns();
     }
 
-    public Row with(String column, String item) {
-        map.put(column, item);
+    public Row with(Column column, String item) {
+        map.put(column.getName(), item);
         return this;
     }
 

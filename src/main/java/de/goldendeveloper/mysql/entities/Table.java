@@ -17,6 +17,16 @@ public class Table {
         this.db = database;
     }
 
+    public ResultSet describe() {
+        try {
+            Statement statement = (Statement) MYSQL.stuff(this.getName()).get(0);
+            return statement.executeQuery("DESCRIBE `" + this.name + "`;");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public String getName() {
         return this.name;
     }

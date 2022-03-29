@@ -1,7 +1,6 @@
 package de.goldendeveloper.mysql;
 
 import de.goldendeveloper.mysql.entities.Database;
-import de.goldendeveloper.mysql.entities.Table;
 import de.goldendeveloper.mysql.entities.User;
 
 import java.sql.*;
@@ -23,8 +22,6 @@ public class MYSQL {
         MYSQL.port = port;
         System.out.println("MySQL Created [Hostname]: " + MYSQL.hostname + " [Port]: " + MYSQL.port + " [Username]: " + MYSQL.username + "  !");
     }
-
-    // TODO: GET DATABASES
 
     public void setPassword(String password) {
         MYSQL.password = password;

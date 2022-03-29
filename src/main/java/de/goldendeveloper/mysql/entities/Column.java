@@ -35,7 +35,7 @@ public class Column {
         return list;
     }
 
-    public void set(String item, int id) {
+    public void set(int id, String item) {
         try {
             Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
             Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
@@ -52,16 +52,16 @@ public class Column {
             Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
             statement.execute("ALTER TABLE `" + this.table.getName() + "` DROP COLUMN `" + this.name + "`;");
             MYSQL.close(null, connect, statement);
-        } catch (SQLException  e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void setItemNull(int ColumnID) {
+    public void setItemNull(int ID) {
         try {
             Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
             Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
-            statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `id` = " + ColumnID + ";");
+            statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `id` = " + ID + ";");
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,6 +77,42 @@ public class Column {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Boolean getAsBoolean(int id) {
+        try {
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
+            ResultSet rs = statement.executeQuery("SELECT `" + this.name + "` FROM `" + getTable().getName() + "`;");
+            while (rs.next()) {
+                if (rs.getObject(1).toString().equalsIgnoreCase("true")) {
+                    return true;
+                } else if (rs.getObject(1).toString().equalsIgnoreCase("false")) {
+                    return false;
+                } else {
+                    return null;
+                }
+            }
+            MYSQL.close(null, connect, statement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getAsString(int id) {
+        try {
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
+            ResultSet rs = statement.executeQuery("SELECT `" + this.name + "` FROM `" + getTable().getName() + "`;");
+            while (rs.next()) {
+                return "" + rs.getObject(1) + "";
+            }
+            MYSQL.close(null, connect, statement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void setName(String name) {
