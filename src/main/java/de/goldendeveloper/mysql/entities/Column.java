@@ -13,9 +13,9 @@ public class Column {
     private final Database db;
 
 
-    public Column(String name, Table table, Database db) {
+    public Column(String name, Table table) {
         this.name = name;
-        this.db = db;
+        this.db = table.getDatabase();
         this.table = table;
     }
 

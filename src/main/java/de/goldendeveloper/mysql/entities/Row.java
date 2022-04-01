@@ -11,8 +11,8 @@ public class Row {
 
     public HashMap<String, String> map;
 
-    public Row(Table table, Database db) {
-        this.db = db;
+    public Row(Table table) {
+        this.db = table.getDatabase();
         this.table = table;
         map = new HashMap<>();
     }

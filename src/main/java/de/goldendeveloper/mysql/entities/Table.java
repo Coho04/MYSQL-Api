@@ -122,7 +122,7 @@ public class Table {
             Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
             ResultSet rs = statement.executeQuery("show columns from `" + this.name + "` ;");
             while (rs.next()) {
-                list.add(new Column(rs.getString(1), this, this.getDatabase()));
+                list.add(new Column(rs.getString(1), this));
             }
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
@@ -133,7 +133,7 @@ public class Table {
 
     public Column getColumn(String name) {
         if (existsColumn(name)) {
-            return new Column(name, this, this.db);
+            return new Column(name, this);
         }
         return null;
     }

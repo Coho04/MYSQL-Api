@@ -4,11 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="FIX: Connection Error">
+    <list default="true" id="064d81b4-d841-4ead-9813-bd7975ccaf5f" name="Changes" comment="ADD: getAsBoolean to Mysql">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_jcraft_jsch_0_1_55.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/MYSQLDump.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/MYSQLDumpBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7c9c1fcf-ec42-4c8c-859c-e5b32e67a39d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/7c9c1fcf-ec42-4c8c-859c-e5b32e67a39d.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/MYSQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/MYSQL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MYSQL-Api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MYSQL-Api.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Column.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Column.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Database.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Row.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Row.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/goldendeveloper/mysql/entities/Table.java" afterDir="false" />
     </list>
@@ -162,13 +167,8 @@
       <workItem from="1647512277617" duration="682000" />
       <workItem from="1647516832334" duration="1175000" />
       <workItem from="1647604785884" duration="752000" />
-    </task>
-    <task id="LOCAL-00006" summary="Added Code">
-      <created>1644100481430</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1644100481430</updated>
+      <workItem from="1648812313966" duration="1277000" />
+      <workItem from="1648813703678" duration="1185000" />
     </task>
     <task id="LOCAL-00007" summary="Added Code">
       <created>1644100508863</created>
@@ -506,7 +506,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647517864995</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="ADD: getAsBoolean to Mysql">
+      <created>1648544313233</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1648544313233</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <option name="createBranch" value="false" />
     <option name="useBranch" value="true" />
     <servers />
@@ -537,7 +544,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add getAll() items from Column" />
     <MESSAGE value="Change Deploy" />
     <MESSAGE value="ADD: Create Table with Primary key" />
     <MESSAGE value="ADD: Edit index.md" />
@@ -562,7 +568,8 @@
     <MESSAGE value="Update: to Version 2.3" />
     <MESSAGE value="Update: to Version 2.4" />
     <MESSAGE value="FIX: Connection Error" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIX: Connection Error" />
+    <MESSAGE value="ADD: getAsBoolean to Mysql" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADD: getAsBoolean to Mysql" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
