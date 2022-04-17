@@ -12,7 +12,6 @@ public class Column {
     private final Table table;
     private final Database db;
 
-
     public Column(String name, Table table) {
         this.name = name;
         this.db = table.getDatabase();
@@ -55,6 +54,19 @@ public class Column {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Object getRandom() {
+        try {
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            ResultSet rs = statement.executeQuery("SELECT " + this.name + " FROM `" + this.getTable().getName() + "` ORDER BY RAND() LIMIT " + this.getTable().countRows());
+            rs.next();
+            return rs.getObject(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public void setItemNull(int ID) {

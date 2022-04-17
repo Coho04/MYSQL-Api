@@ -4,7 +4,6 @@ import de.goldendeveloper.mysql.MYSQL;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Table {
@@ -42,30 +41,8 @@ public class Table {
         }
     }
 
-    public HashMap<String, Object> getRow(Column column, String item) {
-        HashMap<String, Object> map = new HashMap<>();
-        try {
-            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
-            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
-            ResultSet rs = statement.executeQuery("SELECT * FROM `" + this.name + "` WHERE " + column.getName() + " = '" + item + "';");
-            ResultSetMetaData rsMetaData = rs.getMetaData();
-            rs.next();
-            if (rs != null) {
-                for (int i = 1; i <= rsMetaData.getColumnCount(); i++) {
-                    if (rs.getString(rsMetaData.getColumnName(i)) != null) {
-                        map.put(rsMetaData.getColumnName(i), rs.getString(rsMetaData.getColumnName(i)));
-                    } else {
-                        map.put(rsMetaData.getColumnName(i), null);
-                    }
-                }
-            } else {
-                return null;
-            }
-            MYSQL.close(null, connect, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return map;
+    public Row getRow(Column column, String item) {
+        return new Row(this, column, item);
     }
 
     public int countRows() {
@@ -102,18 +79,6 @@ public class Table {
         }
     }
 
-    public Object getRandomFromColumn(String column) {
-        try {
-            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
-            ResultSet rs = statement.executeQuery("SELECT " + column + " FROM `" + this.name + "` ORDER BY RAND() LIMIT " + countRows());
-            rs.next();
-            return rs.getObject(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 
     public List<Column> getColumns() {
         List<Column> list = new ArrayList<>();
