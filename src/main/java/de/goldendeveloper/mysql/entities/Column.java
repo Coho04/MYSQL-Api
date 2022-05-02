@@ -34,17 +34,6 @@ public class Column {
         return list;
     }
 
-    public void set(int id, String item) {
-        try {
-            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
-            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
-            statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + this.name + "` = '" + item + "' WHERE id = " + id + ";");
-            MYSQL.close(null, connect, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void drop() {
         try {
             Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);

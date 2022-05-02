@@ -9,13 +9,9 @@ import java.util.List;
 public class Row {
 
     private final Table table;
-
     private final Database db;
-
     private final Column column;
     private final String item;
-
-    public HashMap<String, String> insertMap;
     public HashMap<String, Object> exportMap;
 
     public Row(Table table, Column column, String item) {
@@ -23,30 +19,7 @@ public class Row {
         this.table = table;
         this.column = column;
         this.item = item;
-        this.insertMap = new HashMap<>();
         this.exportMap = new HashMap<>();
-    }
-
-    public List<Column> showColumns() {
-        return table.getColumns();
-    }
-
-    public List<Column> getColumns() {
-        return table.getColumns();
-    }
-
-    public Row with(Column column, String item) {
-        this.insertMap.put(column.getName(), item);
-        return this;
-    }
-
-    public Database getDatabase() {
-        return this.db;
-    }
-
-    public Row where(Column column, String item) {
-
-        return this;
     }
 
     public HashMap<String, Object> get() {
@@ -74,6 +47,29 @@ public class Row {
             }
         }
         return this.exportMap;
+    }
+
+    public void set(Column column, String item) {
+        try {
+            Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
+            Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
+            statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + column + "` = '" + item + "' WHERE " + column.getName() + " = " + this.item + ";");
+            MYSQL.close(null, connect, statement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Column> showColumns() {
+        return table.getColumns();
+    }
+
+    public List<Column> getColumns() {
+        return table.getColumns();
+    }
+
+    public Database getDatabase() {
+        return this.db;
     }
 
     public Table getTable() {

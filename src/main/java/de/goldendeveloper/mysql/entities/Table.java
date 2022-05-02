@@ -4,6 +4,7 @@ import de.goldendeveloper.mysql.MYSQL;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Table {
@@ -165,17 +166,17 @@ public class Table {
         }
     }
 
-    public void insert(Row row) {
+    public void insert(HashMap<String, String> rowBuilder) {
         String keys = "";
         String items = "";
-        for (String key : row.map.keySet()) {
+        for (String key : rowBuilder.keySet()) {
             if (keys.isEmpty()) {
                 keys = "`" + key + "`";
             } else {
                 keys = keys + ",`" + key + "`";
             }
         }
-        for (String item : row.map.values()) {
+        for (String item : rowBuilder.values()) {
             if (items.isEmpty()) {
                 items = "'" + item + "'";
             } else {
