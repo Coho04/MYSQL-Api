@@ -53,7 +53,7 @@ public class Row {
         try {
             Statement statement = (Statement) MYSQL.stuff(this.getDatabase().getName()).get(0);
             Connection connect = (Connection) MYSQL.stuff(this.getDatabase().getName()).get(1);
-            statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + column + "` = '" + item + "' WHERE " + column.getName() + " = " + this.item + ";");
+            statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + column.getName() + "` = '" + item + "' WHERE `" + this.column.getName() + "` = '" + this.item + "';");
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
             e.printStackTrace();
