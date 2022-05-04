@@ -218,7 +218,7 @@ public class MYSQL {
         }
     }
 
-    public static List<Object> stuff(String database) {
+    public static List<Object> connection(String database) {
         List<Object> stuff = new ArrayList<>();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

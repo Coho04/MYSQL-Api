@@ -58,8 +58,8 @@ public class Database {
     public List<Table> getTables() {
         List<Table> tables = new ArrayList<>();
         try {
-            Statement statement = (Statement) MYSQL.stuff(this.getName()).get(0);
-            Connection connect = (Connection) MYSQL.stuff(this.getName()).get(1);
+            Statement statement = (Statement) MYSQL.connection(this.getName()).get(0);
+            Connection connect = (Connection) MYSQL.connection(this.getName()).get(1);
             ResultSet rs = statement.executeQuery("SHOW TABLES;");
             while (rs.next()) {
                 Table table = new Table(rs.getString(1), this);
@@ -74,8 +74,8 @@ public class Database {
 
     public void createTable(String name) {
         try {
-            Statement statement = (Statement) MYSQL.stuff(this.getName()).get(0);
-            Connection connect = (Connection) MYSQL.stuff(this.getName()).get(1);
+            Statement statement = (Statement) MYSQL.connection(this.getName()).get(0);
+            Connection connect = (Connection) MYSQL.connection(this.getName()).get(1);
             statement.execute("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
@@ -85,8 +85,8 @@ public class Database {
 
     public Boolean existsTable(String name) {
         try {
-            Statement statement = (Statement) MYSQL.stuff(this.getName()).get(0);
-            Connection connect = (Connection) MYSQL.stuff(this.getName()).get(1);
+            Statement statement = (Statement) MYSQL.connection(this.getName()).get(0);
+            Connection connect = (Connection) MYSQL.connection(this.getName()).get(1);
             statement.executeQuery("SELECT * FROM `" + name + "`;");
             MYSQL.close(null, connect, statement);
             return true;
