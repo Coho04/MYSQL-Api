@@ -8,13 +8,13 @@ Maven Integration:
 Repository:
 
 	<repository>
-            <id>jitpack.io</id>
+        <id>jitpack.io</id>
 	    <url>https://jitpack.io</url>
 	</repository>
             
 Dependency:
 
-        <dependency>
+    <dependency>
 	    <groupId>com.github.Golden-Developer</groupId>
 	    <artifactId>MYSQL-Api</artifactId>
 	    <version>{$version}</version>
@@ -54,7 +54,7 @@ To get or edit a database see code below:
         database.getName();
         database.setName("BETTINA");
         database.rename("HANS");
-        database.createTable(TableNAME, "", MysqlTypes.INT);
+        database.createTable(TableName);
         database.getTables();
         database.tableExists(TableNAME);
         database.drop();
@@ -72,11 +72,16 @@ To get or edit tables a database instance is needed (see above).:
         table.addColumn("NAME", MysqlTypes.INT, 20);
         table.getDatabase();
         table.getColumn("NAME");
-        table.insert(new Row(table, database).with("ColumnNameOne", "ColumnTwoWert").with("ColumnNameTwo", "ColumnTwoWert"));
+        table.insert(new RowBuilder()
+                        .with(table.getColumn("ColumnNameOne"), "ColumnTwoWert")
+                        .with(table.getColumn("ColumnNameTwo"), "ColumnTwoWert")
+                    .build();        
+                    );
 
         Column cmn = table.getColumn("NAME");
         cmn.setItemNull("NAME");
         cmn.setNull();
+        cmn.getRandom().toString();
         cmn.setName("NAME");
         cmn.getDatabase();
         cmn.getTable();
@@ -139,19 +144,19 @@ Um mit der MYSQL-Api eine verbindung aufzubauen wird eine neue MYSQL instance er
         mysql.switchDatabase(DatabaseNAME);
         mysql.getDatabase(DatabaseNAME);
        
-Um eine Datenbank zu bekommen beziehungsweise zu bearbeiten siehe code unten: 
+Um eine Datenbank zu bekommen, beziehungsweise zu bearbeiten siehe code unten: 
 
         Database database = mysql.getDatabase(DatabaseNAME);
         database.getName();
         database.setName("BETTINA");
         database.rename("HANS");
-        database.createTable(TableNAME, "", MysqlTypes.INT);
+        database.createTable(TableName);
         database.getTables();
         database.tableExists(TableNAME);
         database.drop();
         database.getTable(TableNAME);
         
-Um Tabellen zu bekommen beziehungsweise zu bearbeiten wird eine Database instance benötigt (siehe oben): 
+Um Tabellen zu bekommen, beziehungsweise zu bearbeiten wird eine Database instance benötigt (siehe oben): 
 
         Table table = database.getTable(TableNAME);
         table.getName();
@@ -163,12 +168,17 @@ Um Tabellen zu bekommen beziehungsweise zu bearbeiten wird eine Database instanc
         table.addColumn("NAME", MysqlTypes.INT, 20);
         table.getDatabase();
         table.getColumn("NAME");
-        table.insert(new Row(table, database).with("", "").with("", ""));
+        table.insert(new RowBuilder()
+                        .with(table.getColumn("ColumnNameOne"), "ColumnTwoWert")
+                        .with(table.getColumn("ColumnNameTwo"), "ColumnTwoWert")
+                    .build();        
+                    );
 
         Column cmn = table.getColumn("NAME");
         cmn.setItemNull("NAME");
         cmn.setNull();
         cmn.setName("NAME");
+        cmn.getRandom().toString();
         cmn.getDatabase();
         cmn.getTable();
         cmn.getName();
