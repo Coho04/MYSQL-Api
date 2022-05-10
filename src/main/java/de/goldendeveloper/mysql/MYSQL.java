@@ -20,7 +20,7 @@ public class MYSQL {
         MYSQL.username = username;
         MYSQL.password = password;
         MYSQL.port = port;
-        System.out.println("MySQL Created [Hostname]: " + MYSQL.hostname + " [Port]: " + MYSQL.port + " [Username]: " + MYSQL.username + "  !");
+        System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + MYSQL.hostname + " [Port]: " + MYSQL.port + " [Username]: " + MYSQL.username + "  !");
     }
 
     public void setPassword(String password) {

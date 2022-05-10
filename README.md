@@ -1,7 +1,10 @@
-# MYSQL-Api (English)
+ MYSQL-Api (English)
 JMA (Java MYSQL API)
 
+[![](https://img.shields.io/badge/License-BSD--2-informational.svg)](LICENSE)
 [![](https://jitpack.io/v/Golden-Developer/MYSQL-Api.svg)](https://jitpack.io/#Golden-Developer/MYSQL-Api)
+[![](https://img.shields.io/badge/Java-18-success?logo=java)](https://www.oracle.com/java/technologies/javase-downloads.html)
+[![](https://img.shields.io/badge/Golden--Developer-Mysql--Api-brightgreen?logo=golden-developer.de/img/Golden-Developer-logo.png)](https://www.golden-developer.de/)
 
 Maven Integration: 
 
