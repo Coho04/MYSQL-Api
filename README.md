@@ -1,4 +1,5 @@
- MYSQL-Api (English)
+MYSQL-Api (English)
+
 JMA (Java MYSQL API)
 
 [![](https://img.shields.io/badge/License-BSD--2-informational.svg)](LICENSE)
