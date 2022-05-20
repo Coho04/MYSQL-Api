@@ -1,6 +1,5 @@
 package de.goldendeveloper.mysql;
 
-import java.io.File;
 
 public class MYSQLDumpBuilder {
 

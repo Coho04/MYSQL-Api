@@ -1,6 +1,10 @@
 package de.goldendeveloper.mysql.entities;
 
+import com.google.inject.Inject;
 import de.goldendeveloper.mysql.MYSQL;
+import jdk.jfr.DataAmount;
+import org.codehaus.plexus.component.annotations.Requirement;
+import org.sonatype.guice.bean.reflect.IgnoreSetters;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -113,6 +117,19 @@ public class Table {
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             statement.executeQuery("select `" + name + "` from `" + this.name + "`;");
+            MYSQL.close(null, connect, statement);
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    public Boolean existsRow(Column column, String item) {
+        try {
+            List<Object> conn =  MYSQL.connection(this.getDatabase().getName());
+            Statement statement = (Statement) conn.get(0);
+            Connection connect = (Connection) conn.get(1);
+            statement.executeQuery("select `" + item + "` from `" + column.getName() + "`;");
             MYSQL.close(null, connect, statement);
             return true;
         } catch (SQLException e) {
