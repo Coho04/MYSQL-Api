@@ -1,6 +1,5 @@
 package de.goldendeveloper.mysql;
 
-
 public class MYSQLDumpBuilder {
 
     private String hostname;

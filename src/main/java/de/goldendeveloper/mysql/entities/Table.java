@@ -1,10 +1,6 @@
 package de.goldendeveloper.mysql.entities;
 
-import com.google.inject.Inject;
 import de.goldendeveloper.mysql.MYSQL;
-import jdk.jfr.DataAmount;
-import org.codehaus.plexus.component.annotations.Requirement;
-import org.sonatype.guice.bean.reflect.IgnoreSetters;
 
 import java.sql.*;
 import java.util.ArrayList;
