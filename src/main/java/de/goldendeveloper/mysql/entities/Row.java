@@ -12,7 +12,7 @@ public class Row {
     private final Database db;
     private final Column column;
     private final String item;
-    public HashMap<String, Object> exportMap;
+    private HashMap<String, Object> exportMap;
 
     public Row(Table table, Column column, String item) {
         this.db = table.getDatabase();
@@ -48,6 +48,10 @@ public class Row {
             }
         }
         return this.exportMap;
+    }
+
+    public void setExportMap(HashMap<String, Object> newMap) {
+        exportMap = newMap;
     }
 
     public void set(Column column, String item) {
