@@ -12,7 +12,7 @@ public class Row {
     private final Database db;
     private final Column column;
     private final String item;
-    private HashMap<String, Object> exportMap;
+    private HashMap<String, SearchResult> exportMap;
 
     public Row(Table table, Column column, String item) {
         this.db = table.getDatabase();
@@ -22,7 +22,7 @@ public class Row {
         this.exportMap = new HashMap<>();
     }
 
-    public HashMap<String, Object> get() {
+    public HashMap<String, SearchResult> get() {
         if (exportMap.isEmpty()) {
             try {
                 List<Object> conn =  MYSQL.connection(this.getDatabase().getName());
@@ -34,7 +34,7 @@ public class Row {
                 if (rs != null) {
                     for (int i = 1; i <= rsMetaData.getColumnCount(); i++) {
                         if (rs.getString(rsMetaData.getColumnName(i)) != null) {
-                            exportMap.put(rsMetaData.getColumnName(i), rs.getString(rsMetaData.getColumnName(i)));
+                            exportMap.put(rsMetaData.getColumnName(i), new SearchResult( rs.getString(rsMetaData.getColumnName(i))));
                         } else {
                             exportMap.put(rsMetaData.getColumnName(i), null);
                         }
@@ -50,7 +50,7 @@ public class Row {
         return this.exportMap;
     }
 
-    public void setExportMap(HashMap<String, Object> newMap) {
+    public void setExportMap(HashMap<String, SearchResult> newMap) {
         exportMap = newMap;
     }
 

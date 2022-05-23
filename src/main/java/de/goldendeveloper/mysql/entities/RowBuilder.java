@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class RowBuilder {
 
-    public HashMap<String, String> insertMap;
+    private final HashMap<String, String> insertMap;
 
     public RowBuilder() {
         this.insertMap = new HashMap<>();

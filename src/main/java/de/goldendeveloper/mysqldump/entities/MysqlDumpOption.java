@@ -1,60 +1,104 @@
-package de.goldendeveloper.mysql;
+package de.goldendeveloper.mysqldump.entities;
 
-public class MYSQLDumpBuilder {
+public class MysqlDumpOption {
 
-    private String hostname;
-    private String username;
-    private String password;
-    private int port;
+    private final String cmd;
+    private final String name;
 
-    private Boolean withAllDatabase = null;
+    public MysqlDumpOption allDatabases = new MysqlDumpOption("all-Databases", "--all-Databases");
+    public MysqlDumpOption allTableSpaces = new MysqlDumpOption("all-TableSpaces", "--all-tablespaces");
+    public int noTableSpaces = 2;
+    public int addDropDatabase =3;
+    public int addDropTable = 4;
+    public int addDropTrigger =5;
+    public int addLocks = 6;
+    public int allowKeywords = 7;
+    public int applySlaveStatements = 8;
+    public int characterSetsDir = 9;
+    public int comments = 10;
+    public int compatible = 11;
+    public int compact = 12;
+    public int completeInsert = 13;
+    public int compress = 14;
+    public int createOptions = 15;
+    public int databases = 16;
+    public int debugCheck = 17;
+    public int debugInfo = 18;
+    public int defaultCharacterSet = 19;//utf8mb4
+    public int delayedInsert = 20;
+    public int deleteMasterLogs = 21;
+    public int disableKeys = 22;
+    public int dumpSlave = 23;
+    public int events = 24;
+    public int extendedInsert = 25;
+    public int fieldsTerminatedBy = 26;
+    public int fieldsEnclosedBy = 27;
+    public int fieldsOptionallyEnclosedBy = 28;
+    public int fieldsEscapedBy = 29;
+    public int flushLogs = 30;
+    public int flushPrivileges = 31;
+    public int force = 32;
+    public int gtid = 33;
+    public int hexBlob = 34;
+    public int host = 35;
+    public int includeMasterHostPort = 36;
+    public int insertIgnore = 37;
+    public int linesTerminatedBy = 38;
+    public int lockAllTables = 39;
+    public int lockTables = 40;
+    public int logError = 41;
+    public int logQueries = 42;
+    public int masterData = 43;
+    public int maxAllowedPacket = 44;
+    public int netBufferLength = 45;
+    public int noAutocommit = 46;
+    public int noCreateDb = 47;
+    public int noCreateInfo = 48;
+    public int noData = 49;
+    public int noDataMed = 50;
+    public int orderByPrimary = 51;
+    public int port = 52;
+    public int quick = 53;
+    public int quoteNames = 0;
+    public int replace = 0;
+    public int routines = 0;
+    public int setCharset = 0;
+    public int singleTransaction = 0;
+    public int dumpDate = 0;
+    public int socket = 0;              //var/run/mysqld/mysqld.sock
+    public int ssl = 0;
+    public int sslCa = 0;
+    public int sslCapath = 0;
+    public int sslCert = 0;
+    public int sslCipher = 0;
+    public int sslKey = 0;
+    public int sslCrl = 0;
+    public int sslCrlPath = 0;
+    public int sslVerifyServerCert = 0;
+    public int system = 0;
+    public int tab = 0;
+    public int triggers = 0;
+    public int tzUtc = 0;
+    public int user = 0;
+    public int verbose = 0;
+    public int where = 0;
+    public int pluginDir = 0;
+    public int defaultAuth = 0;
 
-    public MYSQLDumpBuilder(String hostname, String username, String password, int port) {
-        this.hostname = hostname;
-        this.username = username;
-        this.password = password;
-        this.port = port;
+    public MysqlDumpOption(String name, String cmd) {
+        this.name = name;
+        this.cmd = cmd;
     }
 
-    public void allDatabase(Boolean all) {
-        this.withAllDatabase = all;
+    public String getName() {
+        return name;
     }
 
-    public MYSQLDump build() {
-        return new MYSQLDump(this.hostname, this.username, this.password, this.port, null);
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    public void setHostname(String hostname) {
-        this.hostname = hostname;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getHostname() {
-        return hostname;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public String getUsername() {
-        return username;
+    public String getCmd() {
+        return cmd;
     }
 
     /*
-    *
-    *
     * Dumping structure and contents of MySQL databases and tables.
 Usage: mysqldump [OPTIONS] database [tables]
 OR     mysqldump [OPTIONS] --databases DB1 [DB2 DB3...]
@@ -69,26 +113,17 @@ The following specify which files/extra groups are read (specified before remain
 --defaults-extra-file=#   Read this file after the global files are read.
 --defaults-group-suffix=# Additionally read default groups with # appended as a suffix.
 
-  -A, --all-databases Dump all the databases. This will be same as --databases
-                      with all databases selected.
-  -Y, --all-tablespaces
-                      Dump all the tablespaces.
-  -y, --no-tablespaces
-                      Do not dump any tablespace information.
+  -A, --all-databases Dump all the databases. This will be same as --databases with all databases selected.
+  -Y, --all-tablespaces Dump all the tablespaces.
+  -y, --no-tablespaces Do not dump any tablespace information.
   --add-drop-database Add a DROP DATABASE before each create.
-  --add-drop-table    Add a DROP TABLE before each create.
-                      (Defaults to on; use --skip-add-drop-table to disable.)
+  --add-drop-table    Add a DROP TABLE before each create. (Defaults to on; use --skip-add-drop-table to disable.)
   --add-drop-trigger  Add a DROP TRIGGER before each create.
-  --add-locks         Add locks around INSERT statements.
-                      (Defaults to on; use --skip-add-locks to disable.)
+  --add-locks         Add locks around INSERT statements. (Defaults to on; use --skip-add-locks to disable.)
   --allow-keywords    Allow creation of column names that are keywords.
-  --apply-slave-statements
-                      Adds 'STOP SLAVE' prior to 'CHANGE MASTER' and 'START
-                      SLAVE' to bottom of dump.
-  --character-sets-dir=name
-                      Directory for character set files.
-  -i, --comments      Write additional information.
-                      (Defaults to on; use --skip-comments to disable.)
+  --apply-slave-statements Adds 'STOP SLAVE' prior to 'CHANGE MASTER' and 'START SLAVE' to bottom of dump.
+  --character-sets-dir=name Directory for character set files.
+  -i, --comments      Write additional information. (Defaults to on; use --skip-comments to disable.)
   --compatible=name   Change the dump to be compatible with a given mode. By
                       default tables are dumped in a format optimized for
                       MySQL. Legal modes are: ansi, mysql323, mysql40,
@@ -101,11 +136,9 @@ The following specify which files/extra groups are read (specified before remain
                       structure comments and header/footer constructs.  Enables
                       options --skip-add-drop-table --skip-add-locks
                       --skip-comments --skip-disable-keys --skip-set-charset.
-  -c, --complete-insert
-                      Use complete insert statements.
+  -c, --complete-insert Use complete insert statements.
   -C, --compress      Use compression in server/client protocol.
-  -a, --create-options
-                      Include all MySQL specific create options.
+  -a, --create-options Include all MySQL specific create options.
                       (Defaults to on; use --skip-create-options to disable.)
   -B, --databases     Dump several databases. Note the difference in usage; in
                       this case no tables are given. All name arguments are
@@ -114,16 +147,10 @@ The following specify which files/extra groups are read (specified before remain
   -#, --debug[=#]     This is a non-debug version. Catch this and exit.
   --debug-check       Check memory and open file usage at exit.
   --debug-info        Print some debug info at exit.
-  --default-character-set=name
-                      Set the default character set.
+  --default-character-set=name Set the default character set.
   --delayed-insert    Insert rows with INSERT DELAYED.
-  --delete-master-logs
-                      Delete logs on master after backup. This automatically
-                      enables --master-data.
-  -K, --disable-keys  '!40000 ALTER TABLE tb_name DISABLE KEYS ; and
-                      '!40000 ALTER TABLE tb_name ENABLE KEYS ; will be put
-    in the output.
-            (Defaults to on; use --skip-disable-keys to disable.)
+  --delete-master-logs Delete logs on master after backup. This automatically enables --master-data.
+  -K, --disable-keys  '!40000 ALTER TABLE tb_name DISABLE KEYS ; and '!40000 ALTER TABLE tb_name ENABLE KEYS ; will be put in the output. (Defaults to on; use --skip-disable-keys to disable.)
             --dump-slave[=#]    This causes the binary log position and filename of the
     master to be appended to the dumped data output. Setting
     the value to 1, will printit as a CHANGE MASTER command
@@ -174,7 +201,6 @@ The following specify which files/extra groups are read (specified before remain
     file/offset will appear only as a comment. When disabled,
     the GTID position will still appear in the output, but
     only commented.
-            -?, --help          Display this help message and exit.
             --hex-blob          Dump binary strings (BINARY, VARBINARY, BLOB) in
     hexadecimal format.
             -h, --host=name     Connect to host.
@@ -323,87 +349,87 @@ The following specify which files/extra groups are read (specified before remain
             --default-auth=name Default authentication client-side plugin to use.
 
     Variables (--variable-name=value)
-    and boolean options {FALSE|TRUE}  Value (after reading options)
+    and int options {0;|0;}  Value (after reading options)
 --------------------------------- ----------------------------------------
-    all-databases                     FALSE
-    all-tablespaces                   FALSE
-    no-tablespaces                    FALSE
-    add-drop-database                 FALSE
-    add-drop-table                    TRUE
-    add-drop-trigger                  FALSE
-    add-locks                         TRUE
-    allow-keywords                    FALSE
-    apply-slave-statements            FALSE
-    character-sets-dir                (No default value)
-    comments                          TRUE
-    compatible                        (No default value)
-    compact                           FALSE
-    complete-insert                   FALSE
-    compress                          FALSE
-    create-options                    TRUE
-    databases                         FALSE
-    debug-check                       FALSE
-    debug-info                        FALSE
+    all-databases                     0;
+    all-tablespaces                   0;
+    no-tablespaces                    0;
+    add-drop-database                 0;
+    add-drop-table                    0;
+    add-drop-trigger                  0;
+    add-locks                         0;
+    allow-keywords                    0;
+    apply-slave-statements            0;
+    character-sets-dir                0;
+    comments                          0;
+    compatible                        0;
+    compact                           0;
+    complete-insert                   0;
+    compress                          0;
+    create-options                    0;
+    databases                         0;
+    debug-check                       0;
+    debug-info                        0;
     default-character-set             utf8mb4
-    delayed-insert                    FALSE
-    delete-master-logs                FALSE
-    disable-keys                      TRUE
+    delayed-insert                    0;
+    delete-master-logs                0;
+    disable-keys                      0;
     dump-slave                        0
-    events                            FALSE
-    extended-insert                   TRUE
-    fields-terminated-by              (No default value)
-    fields-enclosed-by                (No default value)
-    fields-optionally-enclosed-by     (No default value)
-    fields-escaped-by                 (No default value)
-    flush-logs                        FALSE
-    flush-privileges                  FALSE
-    force                             FALSE
-    gtid                              FALSE
-    hex-blob                          FALSE
-    host                              (No default value)
-    include-master-host-port          FALSE
-    insert-ignore                     FALSE
-    lines-terminated-by               (No default value)
-    lock-all-tables                   FALSE
-    lock-tables                       TRUE
-    log-error                         (No default value)
-    log-queries                       TRUE
+    events                            0;
+    extended-insert                   0;
+    fields-terminated-by              0;
+    fields-enclosed-by                0;
+    fields-optionally-enclosed-by     0;
+    fields-escaped-by                 0;
+    flush-logs                        0;
+    flush-privileges                  0;
+    force                             0;
+    gtid                              0;
+    hex-blob                          0;
+    host                              0;
+    include-master-host-port          0;
+    insert-ignore                     0;
+    lines-terminated-by               0;
+    lock-all-tables                   0;
+    lock-tables                       0;
+    log-error                         0;
+    log-queries                       0;
     master-data                       0
     max-allowed-packet                16777216
     net-buffer-length                 1046528
-    no-autocommit                     FALSE
-    no-create-db                      FALSE
-    no-create-info                    FALSE
-    no-data                           FALSE
-    no-data-med                       TRUE
-    order-by-primary                  FALSE
+    no-autocommit                     0;
+    no-create-db                      0;
+    no-create-info                    0;
+    no-data                           0;
+    no-data-med                       0;
+    order-by-primary                  0;
     port                              0
-    quick                             TRUE
-    quote-names                       TRUE
-    replace                           FALSE
-    routines                          FALSE
-    set-charset                       TRUE
-    single-transaction                FALSE
-    dump-date                         TRUE
+    quick                             0;
+    quote-names                       0;
+    replace                           0;
+    routines                          0;
+    set-charset                       0;
+    single-transaction                0;
+    dump-date                         0;
     socket                            /var/run/mysqld/mysqld.sock
-    ssl                               FALSE
-    ssl-ca                            (No default value)
-    ssl-capath                        (No default value)
-    ssl-cert                          (No default value)
-    ssl-cipher                        (No default value)
-    ssl-key                           (No default value)
-    ssl-crl                           (No default value)
-    ssl-crlpath                       (No default value)
-    ssl-verify-server-cert            FALSE
+    ssl                               0;
+    ssl-ca                            0;
+    ssl-capath                        0;
+    ssl-cert                          0;
+    ssl-cipher                        0;
+    ssl-key                           0;
+    ssl-crl                           0;
+    ssl-crlpath                       0;
+    ssl-verify-server-cert            0;
     system
-    tab                               (No default value)
-    triggers                          TRUE
-    tz-utc                            TRUE
-    user                              (No default value)
-    verbose                           FALSE
-    where                             (No default value)
-    plugin-dir                        (No default value)
-    default-auth                      (No default value)
+    tab                               0;
+    triggers                          0;
+    tz-utc                            0;
+    user                              0;
+    verbose                           0;
+    where                             0;
+    plugin-dir                        0;
+    default-auth                      0;
 
     * */
 }

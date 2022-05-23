@@ -1,13 +1,15 @@
-package de.goldendeveloper.mysql;
+package de.goldendeveloper.mysqldump;
 
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import de.goldendeveloper.mysqldump.entities.MysqlDumpOption;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
 public class MYSQLDump {
 
@@ -15,11 +17,11 @@ public class MYSQLDump {
     private final String username;
     private final String password;
     private final int port;
-    private final HashMap<String, Boolean> options;
+    private final List<MysqlDumpOption> options;
 
     private String Command;
 
-    public MYSQLDump(String hostname, String username, String password, int port, HashMap<String, Boolean> options) {
+    public MYSQLDump(String hostname, String username, String password, int port, List<MysqlDumpOption> options) {
         this.hostname = hostname;
         this.username = username;
         this.password = password;
@@ -28,7 +30,7 @@ public class MYSQLDump {
     }
 
     private void setupCommand() {
-        for (Boolean b : options.values()) {
+        for (MysqlDumpOption b : options) {
 
         }
     }
