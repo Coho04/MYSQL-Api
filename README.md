@@ -30,7 +30,7 @@ Dependency:
 
 The MYSQL api also called JMA is responsible for communication between a MYSQL server and your Java project. Important: To be able to use the Api optimally SQL knowledge is recommended but not necessary.
 
-To connect to the MYSQL-Api a new MYSQL instance is created with the server Ip, the user name, a password, and the port:
+To connect to the MYSQL-Api a new MYSQL instance is created with the server Ip, the username, a password, and the port:
             
         MYSQL mysql = new MYSQL("hostname", "user", "password", 3306);
         
@@ -93,6 +93,12 @@ To get or edit tables a database instance is needed (see above).:
         cmn.getDatabase();
         cmn.getTable();
         cmn.getName();
+
+To read the data from the table see the following figure:
+
+    HashMap<String, SearchResult> row = table.getRow(table.getColumn(EXAMPLE_COLUMN_NAME), VALUE_IN_COLUMN).get()
+    int i = row.get(EXAMPLE_COLUMN_NAME).getAsInt();
+    System.out.println(i);
         
 when creating a user a password is set and a true / false query if the corresponding database should be created. This means that both a password and a username are required: 
         
@@ -126,7 +132,7 @@ To terminate the connection to the server the method disconnect is appended to M
 JMA (Java MYSQL API)
 Die MYSQL-Api auch genannt JMA ist zu kommunikation zwischen einem MYSQL Server und deinem Java Projekt zuständig. Wichtig: Um die Api optimal nutzen zu können sind SQL vorwissen empfohlen aber nicht nötig
 
-Um mit der MYSQL-Api eine verbindung aufzubauen wird eine neue MYSQL instance erstellet mit der Server Ip dem User name, einem passwort, und dem port:
+Um mit der MYSQL-Api eine verbindung aufzubauen wird eine neue MYSQL instance erstellt mit der Server Ip dem User name, einem passwort, und dem port:
         
         MYSQL mysql = new MYSQL("hostname", "user", "password", 3306);        
         
@@ -190,7 +196,13 @@ Um Tabellen zu bekommen, beziehungsweise zu bearbeiten wird eine Database instan
         cmn.getTable();
         cmn.getName();
 
-Beim erstellen eines Benutzers wird ein Passwort gesetzt und eine true /false abfrage ob die dazu gehörige Datenbank erstellt werden soll. Dass bedeutet das sowohl ein Passwort als auch ein Benutzername benötigt wird: 
+Um die Daten aus der Tabelle auslesen zu können siehe folgende Abbildung:
+    
+    HashMap<String, SearchResult> row = table.getRow(table.getColumn(EXAMPLE_COLUMN_NAME), WERT_IN_COLUMN).get()
+    int i = row.get(EXAMPLE_COLUMN_NAME).getAsInt();
+    System.out.println(i);
+
+Beim Erstellen eines Benutzers wird ein Passwort gesetzt und eine true /false abfrage, ob die dazugehörige Datenbank erstellt werden soll. Dass bedeutet das sowohl ein Passwort als auch ein Benutzername benötigt wird: 
         
         mysql.createUser("NAME", "NAME",false);
         user.setPassword("PASSWORD");
