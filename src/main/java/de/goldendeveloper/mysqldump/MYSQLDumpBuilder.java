@@ -20,8 +20,13 @@ public class MYSQLDumpBuilder {
         this.port = port;
     }
 
-    public MYSQLDumpBuilder setOption(List<MysqlDumpOption> options) {
+    public MYSQLDumpBuilder setOptions(List<MysqlDumpOption> options) {
         this.options = options;
+        return this;
+    }
+
+    public MYSQLDumpBuilder setOption(MysqlDumpOption option) {
+        this.options.add(option);
         return this;
     }
 
@@ -30,7 +35,7 @@ public class MYSQLDumpBuilder {
     }
 
     public MYSQLDump build() {
-        return new MYSQLDump(this.hostname, this.username, this.password, this.port, null);
+        return new MYSQLDump(this.hostname, this.username, this.password, this.port, options);
     }
 
     public void setUsername(String username) {

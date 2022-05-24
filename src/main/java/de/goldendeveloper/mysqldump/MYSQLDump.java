@@ -8,7 +8,6 @@ import de.goldendeveloper.mysqldump.entities.MysqlDumpOption;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
 
 public class MYSQLDump {
@@ -19,7 +18,7 @@ public class MYSQLDump {
     private final int port;
     private final List<MysqlDumpOption> options;
 
-    private String Command;
+    private String command;
 
     public MYSQLDump(String hostname, String username, String password, int port, List<MysqlDumpOption> options) {
         this.hostname = hostname;
@@ -27,16 +26,18 @@ public class MYSQLDump {
         this.password = password;
         this.port = port;
         this.options = options;
+        this.command = "mysqldump -u " + username + " –p " + password;
+        setupCommand();
     }
 
     private void setupCommand() {
         for (MysqlDumpOption b : options) {
-
+            command = command + b.getCmd();
         }
     }
 
     public File getFile() {
-        return run(this.hostname, this.username, this.password, this.port, this.Command);
+        return run(this.hostname, this.username, this.password, this.port, this.command);
     }
 
     private File run(String hostname, String username, String password, int port, String command) {
