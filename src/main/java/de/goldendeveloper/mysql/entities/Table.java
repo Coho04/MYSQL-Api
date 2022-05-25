@@ -49,14 +49,18 @@ public class Table {
 
     public List<Row> getRows() {
         List<Row> rows = new ArrayList<>();
-        for (int i = 1; i <= this.countRows(); i++) {
+        int ro = 0;
+        int i = 0;
+        while (i <= this.countRows()) {
             Column column = this.getColumn("id");
-            if (this.existsRow(column, String.valueOf(i))) {
+            if (this.existsRow(column, String.valueOf(ro))) {
                 HashMap<String, SearchResult> row = this.getRow(column, String.valueOf(i)).get();
                 Row r = new Row(this, column, String.valueOf(i));
                 r.setExportMap(row);
                 rows.add(r);
+                i++;
             }
+            ro++;
         }
         return rows;
     }
