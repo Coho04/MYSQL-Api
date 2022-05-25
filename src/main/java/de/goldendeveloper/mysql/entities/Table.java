@@ -49,20 +49,57 @@ public class Table {
 
     public List<Row> getRows() {
         List<Row> rows = new ArrayList<>();
-        int ro = 0;
+        Column column = this.getColumn("id");
+        List<Object> conn = MYSQL.connection(this.getDatabase().getName());
+        Statement statement = (Statement) conn.get(0);
+        Connection connect = (Connection) conn.get(1);
+        int ro = 1;
         int i = 0;
-        while (i <= this.countRows()) {
-            Column column = this.getColumn("id");
-            if (this.existsRow(column, String.valueOf(ro))) {
-                HashMap<String, SearchResult> row = this.getRow(column, String.valueOf(i)).get();
-                Row r = new Row(this, column, String.valueOf(i));
-                r.setExportMap(row);
-                rows.add(r);
-                i++;
+        int countRows = this.countRows();
+        while (i < countRows) {
+            boolean b = true;
+            try {
+                statement.executeQuery("SELECT * FROM `" + this.getName() + "` where " + column.getName() + " = " + ro + ";");
+            } catch (SQLException e) {
+                b = false;
             }
-            ro++;
+            if (b) {
+                Row r = new Row(this, column, String.valueOf(i));
+                r.setExportMap(getMap(statement, column, ro));
+                rows.add(r);
+                ro++;
+            }
+            i++;
         }
+        MYSQL.close(null, connect, statement);
         return rows;
+    }
+
+    public HashMap<String, SearchResult> getMap(Statement statement, Column column, int item) {
+        HashMap<String, SearchResult> exportMap = new HashMap<>();
+        if (exportMap.isEmpty()) {
+            try {
+                ResultSet rs = statement.executeQuery("SELECT * FROM `" + this.getName() + "` WHERE " + column.getName() + " = '" + item + "';");
+                ResultSetMetaData rsMetaData = rs.getMetaData();
+                rs.next();
+                if (rs != null) {
+                    for (int i = 1; i <= this.countColumn(); i++) {
+                        if (!rsMetaData.getColumnName(i).isEmpty()) {
+                            if (rs.getString(rsMetaData.getColumnName(i)) != null) {
+                                exportMap.put(rsMetaData.getColumnName(i), new SearchResult(rs.getString(rsMetaData.getColumnName(i))));
+                            } else {
+                                exportMap.put(rsMetaData.getColumnName(i), null);
+                            }
+                        }
+                    }
+                } else {
+                    return null;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return exportMap;
     }
 
     public int countRows() {
