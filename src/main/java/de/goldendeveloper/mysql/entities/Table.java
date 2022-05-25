@@ -50,10 +50,13 @@ public class Table {
     public List<Row> getRows() {
         List<Row> rows = new ArrayList<>();
         for (int i = 1; i <= this.countRows(); i++) {
-            HashMap<String, SearchResult> row = this.getRow(this.getColumn("id"), String.valueOf(i)).get();
-            Row r = new Row(this, this.getColumn("id"), String.valueOf(i));
-            r.setExportMap(row);
-            rows.add(r);
+            Column column = this.getColumn("id");
+            if (this.existsRow(column, String.valueOf(i))) {
+                HashMap<String, SearchResult> row = this.getRow(column, String.valueOf(i)).get();
+                Row r = new Row(this, column, String.valueOf(i));
+                r.setExportMap(row);
+                rows.add(r);
+            }
         }
         return rows;
     }
