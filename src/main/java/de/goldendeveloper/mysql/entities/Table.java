@@ -53,23 +53,31 @@ public class Table {
         List<Object> conn = MYSQL.connection(this.getDatabase().getName());
         Statement statement = (Statement) conn.get(0);
         Connection connect = (Connection) conn.get(1);
-        int ro = 1;
-        int i = 0;
-        int countRows = this.countRows();
-        while (i < countRows) {
-            boolean b = true;
+        for (int i = 1; i < countRows(); i++) {
+            HashMap<String, SearchResult> exportMap = new HashMap<>();
             try {
-                statement.executeQuery("SELECT * FROM `" + this.getName() + "` where " + column.getName() + " = " + ro + ";");
+                String columns = "";
+                for (Column clm : this.getColumns()) {
+                    columns = columns + "," + clm.getName();
+                }
+                ResultSet rs = statement.executeQuery("Select  " + columns.replaceFirst(",", "") + " From (Select *, Row_Number() Over (Order By `id`) As RowNum From `" + this.name + "`) t2 Where RowNum = " + i + ";");
+                ResultSetMetaData rsMetaData = rs.getMetaData();
+                rs.next();
+                for (int b = 1; b <= this.countColumn(); b++) {
+                    if (!rsMetaData.getColumnName(b).isEmpty()) {
+                        if (rs.getString(rsMetaData.getColumnName(b)) != null && !rs.getString(rsMetaData.getColumnName(b)).isEmpty()) {
+                            exportMap.put(rsMetaData.getColumnName(b), new SearchResult(rs.getString(rsMetaData.getColumnName(b))));
+                        } else {
+                            exportMap.put(rsMetaData.getColumnName(b), null);
+                        }
+                    }
+                }
             } catch (SQLException e) {
-                b = false;
+                e.printStackTrace();
             }
-            if (b) {
-                Row r = new Row(this, column, String.valueOf(i));
-                r.setExportMap(getMap(statement, column, ro));
-                rows.add(r);
-                ro++;
-            }
-            i++;
+            Row r = new Row(this, column, String.valueOf(i));
+            r.setExportMap(exportMap);
+            rows.add(r);
         }
         MYSQL.close(null, connect, statement);
         return rows;
@@ -100,6 +108,16 @@ public class Table {
             }
         }
         return exportMap;
+    }
+
+
+    public Boolean s(Statement statement, Column column, int item) {
+        try {
+            statement.executeQuery("SELECT * FROM `" + this.getName() + "` where " + column.getName() + " = " + item + ";");
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
     }
 
     public int countRows() {
