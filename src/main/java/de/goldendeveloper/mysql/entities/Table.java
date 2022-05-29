@@ -198,7 +198,7 @@ public class Table {
             List<Object> conn = MYSQL.connection(this.getDatabase().getName());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
-            statement.executeQuery("select `" + item + "` from `" + column.getName() + "`;");
+            statement.executeQuery("SELECT * FROM `" + this.getName() + "` where `" + column.getName() + "` = " +  item  + ";");
             MYSQL.close(null, connect, statement);
             return true;
         } catch (SQLException e) {
