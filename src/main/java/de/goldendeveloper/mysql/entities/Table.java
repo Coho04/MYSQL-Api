@@ -137,10 +137,7 @@ public class Table {
     }
 
     public boolean isEmpty() {
-        if (this.countRows() > 0) {
-            return false;
-        }
-        return true;
+        return this.countRows() <= 0;
     }
 
     public void dropRow(int id) {
@@ -198,9 +195,11 @@ public class Table {
             List<Object> conn = MYSQL.connection(this.getDatabase().getName());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
-            statement.executeQuery("SELECT * FROM `" + this.getName() + "` where `" + column.getName() + "` = " +  item  + ";");
-            MYSQL.close(null, connect, statement);
-            return true;
+            ResultSet rs = statement.executeQuery("SELECT EXISTS(SELECT * FROM `" + this.getName() + "` WHERE `" + column.getName() + "` = " + item + ");");
+            rs.next();
+            Boolean result = rs.getBoolean(1);
+            MYSQL.close(rs, connect, statement);
+            return result;
         } catch (SQLException e) {
             return false;
         }
@@ -243,8 +242,7 @@ public class Table {
     }
 
     public Boolean hasColumns() {
-        int a = this.getColumns().size();
-        return a > 0;
+        return this.getColumns().size() > 0;
     }
 
     public Boolean hasColumn(String name) {
