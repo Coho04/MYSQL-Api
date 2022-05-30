@@ -25,7 +25,7 @@ public class Row {
     public HashMap<String, SearchResult> get() {
         if (exportMap.isEmpty()) {
             try {
-                List<Object> conn =  MYSQL.connection(this.getDatabase().getName());
+                List<Object> conn = MYSQL.connection(this.getDatabase().getName());
                 Statement statement = (Statement) conn.get(0);
                 Connection connect = (Connection) conn.get(1);
                 ResultSet rs = statement.executeQuery("SELECT * FROM `" + this.getTable().getName() + "` WHERE " + this.column.getName() + " = '" + this.item + "';");
@@ -33,19 +33,11 @@ public class Row {
                 rs.next();
                 if (rs != null) {
                     for (int i = 1; i <= rsMetaData.getColumnCount(); i++) {
-                        boolean b = true;
-                        try {
-                            statement.executeQuery("SELECT * FROM `" + this.getTable().getName() + "` where " + column.getName() + " = " + i + ";");
-                        } catch (SQLException e) {
-                            b = false;
-                        }
-                        if (b) {
-                            if (!rs.isClosed()) {
-                                if (rs.getString(rsMetaData.getColumnName(i)) != null) {
-                                    exportMap.put(rsMetaData.getColumnName(i), new SearchResult(rs.getString(rsMetaData.getColumnName(i))));
-                                } else {
-                                    exportMap.put(rsMetaData.getColumnName(i), null);
-                                }
+                        if (!rs.isClosed()) {
+                            if (rs.getString(rsMetaData.getColumnName(i)) != null) {
+                                exportMap.put(rsMetaData.getColumnName(i), new SearchResult(rs.getString(rsMetaData.getColumnName(i))));
+                            } else {
+                                exportMap.put(rsMetaData.getColumnName(i), null);
                             }
                         }
                     }
