@@ -13,7 +13,7 @@ public class SearchResult {
     }
 
     public Boolean getAsBoolean() {
-        return Boolean.getBoolean(item);
+        return Boolean.parseBoolean(item);
     }
 
     public int getAsInt() {
@@ -21,7 +21,7 @@ public class SearchResult {
     }
 
     public long getAsLong() {
-        return Long.getLong(item);
+        return Long.parseLong(item);
     }
 
     public double getAsDouble() {
