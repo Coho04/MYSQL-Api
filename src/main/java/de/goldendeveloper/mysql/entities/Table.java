@@ -53,7 +53,7 @@ public class Table {
         List<Object> conn = MYSQL.connection(this.getDatabase().getName());
         Statement statement = (Statement) conn.get(0);
         Connection connect = (Connection) conn.get(1);
-        for (int i = 1; i < countRows(); i++) {
+        for (int i = 1; i <= countRows(); i++) {
             HashMap<String, SearchResult> exportMap = new HashMap<>();
             try {
                 String columns = "";
