@@ -19,7 +19,7 @@ public class Table {
 
     public ResultSet describe() {
         try {
-            Statement statement = (Statement) MYSQL.connection(this.getName()).get(0);
+            Statement statement = (Statement) MYSQL.connection(this.getDatabase()).get(0);
             return statement.executeQuery("DESCRIBE `" + this.name + "`;");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,7 +33,7 @@ public class Table {
 
     public void drop() {
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn = MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             statement.execute("DROP TABLE `" + this.name + "`;");
@@ -60,7 +60,7 @@ public class Table {
 
     public int countRows() {
         try {
-            Statement statement = (Statement) MYSQL.connection(this.getDatabase().getName()).get(0);
+            Statement statement = (Statement) MYSQL.connection(this.getDatabase()).get(0);
             ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM `" + this.name + "`;");
             rs.next();
             return rs.getInt(1);
@@ -83,7 +83,7 @@ public class Table {
 
     public void dropRow(int id) {
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn = MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             statement.execute("DELETE FROM `" + this.name + "` where id = `" + id + "`;");
@@ -97,7 +97,7 @@ public class Table {
     public List<Column> getColumns() {
         List<Column> list = new ArrayList<>();
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn = MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             ResultSet rs = statement.executeQuery("show columns from `" + this.name + "` ;");
@@ -120,7 +120,7 @@ public class Table {
 
     public Boolean existsColumn(String name) {
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn = MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             statement.executeQuery("select `" + name + "` from `" + this.name + "`;");
@@ -133,7 +133,7 @@ public class Table {
 
     public Boolean existsRow(Column column, String item) {
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn = MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             statement.executeQuery("select `" + item + "` from `" + column.getName() + "`;");
@@ -144,21 +144,9 @@ public class Table {
         }
     }
 
-    public void addColumn(String name, Integer MysqlType) {
-        try {
-            List<Object> conn = MYSQL.connection(this.getDatabase().getName());
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
-            statement.execute("ALTER TABLE `" + this.name + "` ADD `" + name + "` " + MysqlTypes.getMysqlTypeName(MysqlType) + ";");
-            MYSQL.close(null, connect, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void setUniqueColumn(String name) {
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn = MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             statement.execute("ALTER IGNORE TABLE `" + this.name + "` ADD UNIQUE (" + name + ");");
@@ -168,12 +156,12 @@ public class Table {
         }
     }
 
-    public void addColumn(String name, Integer MysqlType, int size) {
+    public void addColumn(String name) {
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn = MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
-            statement.execute("ALTER TABLE `" + this.name + "` ADD `" + name + "` " + MysqlTypes.getMysqlTypeName(MysqlType) + " (" + size + ");");
+            statement.execute("ALTER TABLE `" + this.name + "` ADD `" + name + "` " + MysqlTypes.getMysqlTypeName(MysqlTypes.VARCHAR) + " (" + 88888 + ");");
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -187,7 +175,7 @@ public class Table {
 
     public Boolean hasColumn(String name) {
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn = MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             statement.executeQuery("SELECT " + name + " FROM `" + this.name + "`;");
@@ -216,7 +204,7 @@ public class Table {
             }
         }
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn = MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             statement.execute("INSERT INTO `" + this.name + "` (" + keys + ")VALUES (" + items + ");");

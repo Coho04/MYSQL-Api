@@ -218,13 +218,13 @@ public class MYSQL {
         }
     }
 
-    public static List<Object> connection(String database) {
+    public static List<Object> connection(Database database) {
         List<Object> stuff = new ArrayList<>();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
             Statement statement = connect.createStatement();
-            statement.execute("use `" + database + "`");
+            statement.execute("use `" + database.getName() + "`");
             stuff.add(statement);
             stuff.add(connect);
         } catch (ClassNotFoundException | SQLException e) {

@@ -21,7 +21,7 @@ public class Column {
     public List<Object> getAll() {
         List<Object> list = new ArrayList<>();
         try {
-            List<Object> conn =  MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn =  MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             ResultSet rs = statement.executeQuery("SELECT `" + this.name + "` FROM `" + getTable().getName() + "`;");
@@ -37,7 +37,7 @@ public class Column {
 
     public void drop() {
         try {
-            List<Object> conn =  MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn =  MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             statement.execute("ALTER TABLE `" + this.table.getName() + "` DROP COLUMN `" + this.name + "`;");
@@ -49,7 +49,7 @@ public class Column {
 
     public Object getRandom() {
         try {
-            Statement statement = (Statement) MYSQL.connection(this.getDatabase().getName()).get(0);
+            Statement statement = (Statement) MYSQL.connection(this.getDatabase()).get(0);
             ResultSet rs = statement.executeQuery("SELECT " + this.name + " FROM `" + this.getTable().getName() + "` ORDER BY RAND() LIMIT " + this.getTable().countRows());
             rs.next();
             return rs.getObject(1);
@@ -62,7 +62,7 @@ public class Column {
 
     public void setItemNull(int ID) {
         try {
-            List<Object> conn =  MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn =  MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `id` = " + ID + ";");
@@ -74,7 +74,7 @@ public class Column {
 
     public void setNull() {
         try {
-            List<Object> conn =  MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn =  MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `" + this.getName() + "` IS NOT NULL;");
@@ -86,7 +86,7 @@ public class Column {
 
     public Boolean getAsBoolean(int id) {
         try {
-            List<Object> conn =  MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn =  MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             ResultSet rs = statement.executeQuery("SELECT `" + this.name + "` FROM `" + getTable().getName() + "`;");
@@ -108,7 +108,7 @@ public class Column {
 
     public String getAsString(int id) {
         try {
-            List<Object> conn =  MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn =  MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             ResultSet rs = statement.executeQuery("SELECT `" + this.name + "` FROM `" + getTable().getName() + "`;");
@@ -124,7 +124,7 @@ public class Column {
 
     public void setName(String name) {
         try {
-            List<Object> conn =  MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn =  MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             statement.execute("ALTER TABLE `" + this.getTable().getName() + "` CHANGE " + this.name + name + " varchar (50)");

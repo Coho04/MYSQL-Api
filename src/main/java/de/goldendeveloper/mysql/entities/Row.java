@@ -25,7 +25,7 @@ public class Row {
     public HashMap<String, SearchResult> get() {
         if (exportMap.isEmpty()) {
             try {
-                List<Object> conn =  MYSQL.connection(this.getDatabase().getName());
+                List<Object> conn =  MYSQL.connection(this.getDatabase());
                 Statement statement = (Statement) conn.get(0);
                 Connection connect = (Connection) conn.get(1);
                 ResultSet rs = statement.executeQuery("SELECT * FROM `" + this.getTable().getName() + "` WHERE " + this.column.getName() + " = '" + this.item + "';");
@@ -56,7 +56,7 @@ public class Row {
 
     public void set(Column column, String item) {
         try {
-            List<Object> conn =  MYSQL.connection(this.getDatabase().getName());
+            List<Object> conn =  MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + column.getName() + "` = '" + item + "' WHERE `" + this.column.getName() + "` = '" + this.item + "';");
