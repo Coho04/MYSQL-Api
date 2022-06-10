@@ -33,10 +33,12 @@ public class Row {
                 rs.next();
                 if (rs != null) {
                     for (int i = 1; i <= rsMetaData.getColumnCount(); i++) {
-                        if (rs.getString(rsMetaData.getColumnName(i)) != null) {
-                            exportMap.put(rsMetaData.getColumnName(i), new SearchResult( rs.getString(rsMetaData.getColumnName(i))));
-                        } else {
-                            exportMap.put(rsMetaData.getColumnName(i), null);
+                        if (!rs.isClosed()) {
+                            if (rs.getString(rsMetaData.getColumnName(i)) != null) {
+                                exportMap.put(rsMetaData.getColumnName(i), new SearchResult(rs.getString(rsMetaData.getColumnName(i))));
+                            } else {
+                                exportMap.put(rsMetaData.getColumnName(i), null);
+                            }
                         }
                     }
                 } else {

@@ -223,7 +223,7 @@ public class MYSQL {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
+            Statement statement = connect.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             statement.execute("use `" + database.getName() + "`");
             stuff.add(statement);
             stuff.add(connect);
