@@ -18,15 +18,15 @@ public class Column {
         this.table = table;
     }
 
-    public List<Object> getAll() {
-        List<Object> list = new ArrayList<>();
+    public List<SearchResult> getAll() {
+        List<SearchResult> list = new ArrayList<>();
         try {
             List<Object> conn =  MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
             ResultSet rs = statement.executeQuery("SELECT `" + this.name + "` FROM `" + getTable().getName() + "`;");
             while (rs.next()) {
-                list.add(rs.getObject(1));
+                list.add(new SearchResult(rs.getString(1)));
             }
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
