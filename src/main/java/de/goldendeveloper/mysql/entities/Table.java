@@ -50,7 +50,7 @@ public class Table {
     public List<Row> getRows() {
         List<Row> rows = new ArrayList<>();
         Column column = this.getColumn("id");
-        List<Object> conn = MYSQL.connection(this.getDatabase().getName());
+        List<Object> conn = MYSQL.connection(this.getDatabase());
         Statement statement = (Statement) conn.get(0);
         Connection connect = (Connection) conn.get(1);
         for (int i = 1; i <= countRows(); i++) {
