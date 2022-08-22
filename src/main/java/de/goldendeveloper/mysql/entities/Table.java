@@ -110,16 +110,6 @@ public class Table {
         return exportMap;
     }
 
-
-    public Boolean s(Statement statement, Column column, int item) {
-        try {
-            statement.executeQuery("SELECT * FROM `" + this.getName() + "` where " + column.getName() + " = " + item + ";");
-        } catch (SQLException e) {
-            return false;
-        }
-        return true;
-    }
-
     public int countRows() {
         try {
             Statement statement = (Statement) MYSQL.connection(this.getDatabase()).get(0);
@@ -151,7 +141,6 @@ public class Table {
             e.printStackTrace();
         }
     }
-
 
     public List<Column> getColumns() {
         List<Column> list = new ArrayList<>();
@@ -222,7 +211,7 @@ public class Table {
             List<Object> conn = MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
-            statement.execute("ALTER TABLE `" + this.name + "` ADD `" + name + "` " + MysqlTypes.getMysqlTypeName(MysqlTypes.VARCHAR) + " (" + 88888 + ");");
+            statement.execute("ALTER TABLE `" + this.name + "` ADD `" + name + "` " + MysqlTypes.getMysqlTypeName(MysqlTypes.VARCHAR) + " (" + 65555 + ");");
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
             e.printStackTrace();
