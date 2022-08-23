@@ -152,12 +152,12 @@ public class MYSQL {
         }
     }
 
-    public void switchDatabase(String name) {
+    public void switchDatabase(Database database) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
             Statement statement = connect.createStatement();
-            statement.execute("use " + name + ";");
+            statement.execute("use " + database.getName() + ";");
             MYSQL.close(null, connect, statement);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

@@ -75,8 +75,7 @@ To get or edit tables a database instance is needed (see above).:
         table.drop();
         table.showColumnsInTable();
         table.columnExists("NAME");
-        table.addColumn("NAME", MysqlTypes.INT);
-        table.addColumn("NAME", MysqlTypes.INT, 20);
+        table.addColumn("NAME");
         table.getDatabase();
         table.getColumn("NAME");
         table.insert(new RowBuilder()
@@ -85,14 +84,14 @@ To get or edit tables a database instance is needed (see above).:
                     .build();        
                     );
 
-        Column cmn = table.getColumn("NAME");
-        cmn.setItemNull("NAME");
-        cmn.setNull();
-        cmn.getRandom().toString();
-        cmn.setName("NAME");
-        cmn.getDatabase();
-        cmn.getTable();
-        cmn.getName();
+        Column column = table.getColumn("NAME");
+        column.setItemNull("NAME");
+        column.setNull();
+        column.getRandom().toString();
+        column.setName("NAME");
+        column.getDatabase();
+        column.getTable();
+        column.getName();
 
 To read the data from the table see the following figure:
 
@@ -105,15 +104,15 @@ when creating a user a password is set and a true / false query if the correspon
         mysql.createUser("NAME", "NAME",false);
         user.setPassword("PASSWORD");
          
-        User usr = mysql.getUser("NAME");
+        User user = mysql.getUser("NAME");
               
-        usr.setPermission(Permissions.ALL);
-        usr.setPermissionToDatabase(Permissions.EXECUTE, database);
+        user.setPermission(Permissions.ALL);
+        user.setPermissionToDatabase(Permissions.EXECUTE, database);
         
-        usr.removePermission(Permissions.REFERENCES);
-        usr.removePermissionToDatabase(Permissions.EXECUTE, database);
+        user.removePermission(Permissions.REFERENCES);
+        user.removePermissionToDatabase(Permissions.EXECUTE, database);
     
-        usr.getName();
+        user.getName();
         
 To delete objects the method drop is attached to an object: 
 
@@ -177,8 +176,7 @@ Um Tabellen zu bekommen, beziehungsweise zu bearbeiten wird eine Database instan
         table.drop();
         table.showColumnsInTable();
         table.columnExists("NAME");
-        table.addColumn("NAME", MysqlTypes.INT);
-        table.addColumn("NAME", MysqlTypes.INT, 20);
+        table.addColumn("NAME");
         table.getDatabase();
         table.getColumn("NAME");
         table.insert(new RowBuilder()
@@ -207,15 +205,15 @@ Beim Erstellen eines Benutzers wird ein Passwort gesetzt und eine true /false ab
         mysql.createUser("NAME", "NAME",false);
         user.setPassword("PASSWORD");
                  
-        User usr = mysql.getUser("NAME");
+        User user = mysql.getUser("NAME");
             
-        usr.setPermission(Permissions.ALL);
-        usr.setPermissionToDatabase(Permissions.EXECUTE, database);
+        user.setPermission(Permissions.ALL);
+        user.setPermissionToDatabase(Permissions.EXECUTE, database);
         
-        usr.removePermission(Permissions.REFERENCES);
-        usr.removePermissionToDatabase(Permissions.EXECUTE, database);
+        user.removePermission(Permissions.REFERENCES);
+        user.removePermissionToDatabase(Permissions.EXECUTE, database);
         
-        usr.getName();
+        user.getName();
         
 Um Objekte zu löschen wird einem Objekt die Methode drop angehangen: 
 
