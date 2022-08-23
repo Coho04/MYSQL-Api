@@ -4,7 +4,7 @@
 
     <groupId>de.goldendeveloper</groupId>
     <artifactId>MYSQL-Api</artifactId>
-    <version>4.2</version>
+    <version>4.3</version>
     <packaging>jar</packaging>
 
     <name>MYSQL-Api | JMA</name>
