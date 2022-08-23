@@ -18,7 +18,7 @@ public class Column {
         this.table = table;
     }
 
-    public List<SearchResult> getAll() {
+    public SearchResults getAll() {
         List<SearchResult> list = new ArrayList<>();
         try {
             List<Object> conn =  MYSQL.connection(this.getDatabase());
@@ -32,7 +32,7 @@ public class Column {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return list;
+        return new SearchResults(list);
     }
 
     public void drop() {
