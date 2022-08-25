@@ -1,5 +1,6 @@
 package de.goldendeveloper.mysql.entities;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import de.goldendeveloper.mysql.MYSQL;
 
 import java.sql.*;
@@ -45,6 +46,18 @@ public class Table {
 
     public Row getRow(Column column, String item) {
         return new Row(this, column, item);
+    }
+
+    public Row getRow(Column column, Boolean item) {
+        return new Row(this, column, String.valueOf(item));
+    }
+
+    public Row getRow(Column column, long item) {
+        return new Row(this, column, String.valueOf(item));
+    }
+
+    public Row getRow(Column column, int item) {
+        return new Row(this, column, String.valueOf(item));
     }
 
     public List<Row> getRows() {
