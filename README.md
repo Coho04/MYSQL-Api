@@ -22,7 +22,7 @@ Repository:
 Dependency:
 
     <dependency>
-	    <groupId>com.github.Golden-Developer</groupId>
+	    <groupId>com.github.golden-developer</groupId>
 	    <artifactId>MYSQL-Api</artifactId>
 	    <version>{$version}</version>
 	</dependency>
