@@ -1,5 +1,7 @@
 MYSQL-Api (English)
 
+The MYSQL api also called JMA is responsible for communication between a MYSQL server and your Java project. Important: To be able to use the Api optimally SQL knowledge is recommended but not necessary.
+
 JMA (Java MYSQL API)
 
 [![](https://img.shields.io/badge/License-BSD--2-informational.svg)](LICENSE)
@@ -26,9 +28,6 @@ Dependency:
 	    <artifactId>MYSQL-Api</artifactId>
 	    <version>{$version}</version>
 	</dependency>
-
-
-The MYSQL api also called JMA is responsible for communication between a MYSQL server and your Java project. Important: To be able to use the Api optimally SQL knowledge is recommended but not necessary.
 
 To connect to the MYSQL-Api a new MYSQL instance is created with the server Ip, the username, a password, and the port:
             
