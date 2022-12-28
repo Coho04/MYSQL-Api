@@ -1,6 +1,5 @@
 package de.goldendeveloper.mysql.entities;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import de.goldendeveloper.mysql.MYSQL;
 
 import java.sql.*;
