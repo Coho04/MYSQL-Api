@@ -23,6 +23,14 @@ public class MYSQL {
         System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + MYSQL.hostname + " [Port]: " + MYSQL.port + " [Username]: " + MYSQL.username + "  !");
     }
 
+    public MYSQL(String hostname, String username, String password) {
+        MYSQL.hostname = hostname;
+        MYSQL.username = username;
+        MYSQL.password = password;
+        MYSQL.port = 3306;
+        System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + MYSQL.hostname + " [Port]: " + MYSQL.port + " [Username]: " + MYSQL.username + "  !");
+    }
+
     public void setPassword(String password) {
         MYSQL.password = password;
     }

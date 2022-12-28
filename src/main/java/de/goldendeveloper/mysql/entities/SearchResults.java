@@ -82,4 +82,8 @@ public class SearchResults {
         }
         return list;
     }
+
+    public List<SearchResult> getAsSearchResults() {
+        return this.item;
+    }
 }

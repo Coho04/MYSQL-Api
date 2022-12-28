@@ -83,4 +83,16 @@ public class Row {
     public Table getTable() {
         return this.table;
     }
+
+    public void drop() {
+        try {
+            List<Object> conn = MYSQL.connection(this.getDatabase());
+            Statement statement = (Statement) conn.get(0);
+            Connection connect = (Connection) conn.get(1);
+            statement.execute("DELETE FROM `" + this.getTable().getName() + "` where id = `" + this.item + "`;");
+            MYSQL.close(null, connect, statement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
