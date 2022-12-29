@@ -89,7 +89,7 @@ public class Row {
             List<Object> conn = MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
-            statement.execute("DELETE FROM `" + this.getTable().getName() + "` where id = `" + this.item + "`;");
+            statement.execute("DELETE FROM `" + this.getTable().getName() + "` where id = `" + this.get().get("id").getAsInt() + "`;");
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
             e.printStackTrace();
