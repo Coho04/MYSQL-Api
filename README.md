@@ -223,6 +223,7 @@ Um Objekte zu löschen wird einem Objekt die Methode drop angehangen:
         user.drop();
         table.drop();
         database.drop();
+        row.drop();
         column.drop();
       
 Um die Verbindung zum Server zu beenden wird dem MYSQL die Methode disconnect angehangen:
