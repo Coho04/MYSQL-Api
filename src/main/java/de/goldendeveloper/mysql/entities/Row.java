@@ -22,7 +22,7 @@ public class Row {
         this.exportMap = new HashMap<>();
     }
 
-    public HashMap<String, SearchResult> get() {
+    public HashMap<String, SearchResult> getData() {
         if (exportMap.isEmpty()) {
             try {
                 List<Object> conn =  MYSQL.connection(this.getDatabase());
@@ -89,7 +89,7 @@ public class Row {
             List<Object> conn = MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
-            statement.execute("DELETE FROM `" + this.getTable().getName() + "` where id = `" + this.get().get("id").getAsInt() + "`;");
+            statement.execute("DELETE FROM `" + this.getTable().getName() + "` where id = `" + this.getData().get("id").getAsInt() + "`;");
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
             e.printStackTrace();
