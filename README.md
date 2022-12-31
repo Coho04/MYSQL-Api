@@ -78,8 +78,8 @@ To get or edit tables a database instance is needed (see above).:
         table.getDatabase();
         table.getColumn("NAME");
         table.insert(new RowBuilder()
-                        .with(table.getColumn("ColumnNameOne"), "ColumnTwoWert")
-                        .with(table.getColumn("ColumnNameTwo"), "ColumnTwoWert")
+                        .with(table.getColumn("ColumnNameOne"), "ColumnTwoValue")
+                        .with(table.getColumn("ColumnNameTwo"), "ColumnTwoValue")
                     .build();        
                     );
 
@@ -179,8 +179,8 @@ Um Tabellen zu bekommen, beziehungsweise zu bearbeiten wird eine Database instan
         table.getDatabase();
         table.getColumn("NAME");
         table.insert(new RowBuilder()
-                        .with(table.getColumn("ColumnNameOne"), "ColumnTwoWert")
-                        .with(table.getColumn("ColumnNameTwo"), "ColumnTwoWert")
+                        .with(table.getColumn("ColumnNameOne"), "ColumnTwoValue")
+                        .with(table.getColumn("ColumnNameTwo"), "ColumnTwoValue")
                     .build();        
                     );
 
@@ -195,7 +195,7 @@ Um Tabellen zu bekommen, beziehungsweise zu bearbeiten wird eine Database instan
 
 Um die Daten aus der Tabelle auslesen zu können siehe folgende Abbildung:
     
-    HashMap<String, SearchResult> row = table.getRow(table.getColumn(EXAMPLE_COLUMN_NAME), WERT_IN_COLUMN).get()
+    HashMap<String, SearchResult> row = table.getRow(table.getColumn(EXAMPLE_COLUMN_NAME), VALUE_IN_COLUMN).get()
     int i = row.get(EXAMPLE_COLUMN_NAME).getAsInt();
     System.out.println(i);
 
