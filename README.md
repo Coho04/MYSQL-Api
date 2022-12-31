@@ -94,8 +94,10 @@ To get or edit tables a database instance is needed (see above).:
 
 To read the data from the table see the following figure:
 
-    HashMap<String, SearchResult> row = table.getRow(table.getColumn(EXAMPLE_COLUMN_NAME), VALUE_IN_COLUMN).get()
-    int i = row.get(EXAMPLE_COLUMN_NAME).getAsInt();
+    Row row = table.getRow(table.getColumn(EXAMPLE_COLUMN_NAME), VALUE_IN_COLUMN);
+    HashMap<String, SearchResult> rowData = row.getData();
+    SearchResult result = rowData.get(EXAMPLE_COLUMN_NAME);
+    int i = result.getAsInt();
     System.out.println(i);
         
 when creating a user a password is set and a true / false query if the corresponding database should be created. This means that both a password and a username are required: 
@@ -195,8 +197,10 @@ Um Tabellen zu bekommen, beziehungsweise zu bearbeiten wird eine Database instan
 
 Um die Daten aus der Tabelle auslesen zu können siehe folgende Abbildung:
     
-    HashMap<String, SearchResult> row = table.getRow(table.getColumn(EXAMPLE_COLUMN_NAME), WERT_IN_COLUMN).get()
-    int i = row.get(EXAMPLE_COLUMN_NAME).getAsInt();
+    Row row = table.getRow(table.getColumn(EXAMPLE_COLUMN_NAME), WERT_IN_COLUMN);
+    HashMap<String, SearchResult> rowData = row.getData();
+    SearchResult result = rowData.get(EXAMPLE_COLUMN_NAME);
+    int i = result.getAsInt();
     System.out.println(i);
 
 Beim Erstellen eines Benutzers wird ein Passwort gesetzt und eine true /false abfrage, ob die dazugehörige Datenbank erstellt werden soll. Dass bedeutet das sowohl ein Passwort als auch ein Benutzername benötigt wird: 
