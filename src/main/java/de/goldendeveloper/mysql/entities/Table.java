@@ -147,7 +147,7 @@ public class Table {
             List<Object> conn = MYSQL.connection(this.getDatabase());
             Statement statement = (Statement) conn.get(0);
             Connection connect = (Connection) conn.get(1);
-            statement.execute("DELETE FROM `" + this.name + "` where id = `" + id + "`;");
+            statement.execute("DELETE FROM `" + this.name + "` where id = " + id + ";");
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
             e.printStackTrace();

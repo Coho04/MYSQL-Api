@@ -50,4 +50,9 @@ public class MYSQLDumpBuilder {
         }
         return command.toString();
     }
+
+
+    public MYSQLDump build() {
+        return null;
+    }
 }
