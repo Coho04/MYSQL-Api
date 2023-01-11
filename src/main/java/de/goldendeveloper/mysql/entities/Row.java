@@ -68,6 +68,31 @@ public class Row {
         }
     }
 
+    public void set(Column column, int item) {
+        set(column, String.valueOf(item));
+    }
+
+    public void set(Column column, Boolean item) {
+        set(column, String.valueOf(item));
+    }
+
+    public void set(Column column, float item) {
+        set(column, String.valueOf(item));
+    }
+
+    public void set(Column column, char item) {
+        set(column, String.valueOf(item));
+    }
+
+    public void set(Column column, long item) {
+        set(column, String.valueOf(item));
+    }
+
+    public void set(Column column, double item) {
+        set(column, String.valueOf(item));
+    }
+
+
     public List<Column> showColumns() {
         return table.getColumns();
     }
