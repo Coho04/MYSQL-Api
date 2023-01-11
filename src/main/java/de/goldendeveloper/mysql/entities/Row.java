@@ -84,6 +84,10 @@ public class Row {
         return this.table;
     }
 
+    public int getId() {
+         return getData().get("id").getAsInt();
+    }
+
     public void drop() {
         try {
             List<Object> conn = MYSQL.connection(this.getDatabase());
