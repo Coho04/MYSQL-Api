@@ -5,7 +5,6 @@ import de.goldendeveloper.mysql.MYSQL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Column {
 
