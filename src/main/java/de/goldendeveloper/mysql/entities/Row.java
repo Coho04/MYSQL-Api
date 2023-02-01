@@ -44,7 +44,7 @@ public class Row {
                 } else {
                     return null;
                 }
-                MYSQL.close(null, connect, statement);
+                MYSQL.close(rs, connect, statement);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -65,6 +65,7 @@ public class Table {
         List<Object> conn = MYSQL.connection(this.getDatabase());
         Statement statement = (Statement) conn.get(0);
         Connection connect = (Connection) conn.get(1);
+        ResultSet rs = null;
         for (int i = 1; i <= countRows(); i++) {
             HashMap<String, SearchResult> exportMap = new HashMap<>();
             try {
@@ -72,7 +73,7 @@ public class Table {
                 for (Column clm : this.getColumns()) {
                     columns = columns + "," + clm.getName();
                 }
-                ResultSet rs = statement.executeQuery("Select  " + columns.replaceFirst(",", "") + " From (Select *, Row_Number() Over (Order By `id`) As RowNum From `" + this.name + "`) t2 Where RowNum = " + i + ";");
+                rs = statement.executeQuery("Select  " + columns.replaceFirst(",", "") + " From (Select *, Row_Number() Over (Order By `id`) As RowNum From `" + this.name + "`) t2 Where RowNum = " + i + ";");
                 ResultSetMetaData rsMetaData = rs.getMetaData();
                 rs.next();
                 for (int b = 1; b <= this.countColumn(); b++) {
@@ -91,10 +92,11 @@ public class Table {
             r.setExportMap(exportMap);
             rows.add(r);
         }
-        MYSQL.close(null, connect, statement);
+        MYSQL.close(rs, connect, statement);
         return rows;
     }
 
+    // TODO: Check Connection Count
     public HashMap<String, SearchResult> getMap(Statement statement, Column column, int item) {
         HashMap<String, SearchResult> exportMap = new HashMap<>();
         if (exportMap.isEmpty()) {
@@ -124,10 +126,14 @@ public class Table {
 
     public int countRows() {
         try {
-            Statement statement = (Statement) MYSQL.connection(this.getDatabase()).get(0);
+            List<Object> conn = MYSQL.connection(this.getDatabase());
+            Statement statement = (Statement) conn.get(0);
+            Connection connect = (Connection) conn.get(1);
             ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM `" + this.name + "`;");
             rs.next();
-            return rs.getInt(1);
+            int i = rs.getInt(1);
+            MYSQL.close(rs, connect, statement);
+            return i;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -164,7 +170,7 @@ public class Table {
             while (rs.next()) {
                 list.add(new Column(rs.getString(1), this));
             }
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(rs, connect, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -288,38 +294,10 @@ public class Table {
         List<Object> conn = MYSQL.connection(this.getDatabase());
         Statement statement = (Statement) conn.get(0);
         Connection connect = (Connection) conn.get(1);
-            HashMap<String, SearchResult> exportMap = new HashMap<>();
-            try {
-                ResultSet rs = statement.executeQuery("SELECT * FROM `" + this.getName() + "` WHERE  id = ( SELECT MAX(`id`) FROM `" + this.getName() + "`);");
-                ResultSetMetaData rsMetaData = rs.getMetaData();
-                rs.next();
-                for (int b = 1; b <= this.countColumn(); b++) {
-                    if (!rsMetaData.getColumnName(b).isEmpty()) {
-                        if (rs.getString(rsMetaData.getColumnName(b)) != null && !rs.getString(rsMetaData.getColumnName(b)).isEmpty()) {
-                            exportMap.put(rsMetaData.getColumnName(b), new SearchResult(rs.getString(rsMetaData.getColumnName(b))));
-                        } else {
-                            exportMap.put(rsMetaData.getColumnName(b), null);
-                        }
-                    }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            String id = exportMap.get("id").getAsString();
-            Row r = new Row(this, column, id);
-            r.setExportMap(exportMap);
-            MYSQL.close(null, connect, statement);
-        return r;
-    }
-
-    public Row getOldestRow() {
-        Column column = this.getColumn("id");
-        List<Object> conn = MYSQL.connection(this.getDatabase());
-        Statement statement = (Statement) conn.get(0);
-        Connection connect = (Connection) conn.get(1);
+        ResultSet rs = null;
         HashMap<String, SearchResult> exportMap = new HashMap<>();
         try {
-            ResultSet rs = statement.executeQuery("SELECT * FROM `" + this.getName() + "` WHERE  id = ( SELECT MIN(`id`) FROM `" + this.getName() + "`)';");
+            rs = statement.executeQuery("SELECT * FROM `" + this.getName() + "` WHERE  id = ( SELECT MAX(`id`) FROM `" + this.getName() + "`);");
             ResultSetMetaData rsMetaData = rs.getMetaData();
             rs.next();
             for (int b = 1; b <= this.countColumn(); b++) {
@@ -337,7 +315,37 @@ public class Table {
         String id = exportMap.get("id").getAsString();
         Row r = new Row(this, column, id);
         r.setExportMap(exportMap);
-        MYSQL.close(null, connect, statement);
+        MYSQL.close(rs, connect, statement);
+        return r;
+    }
+
+    public Row getOldestRow() {
+        Column column = this.getColumn("id");
+        List<Object> conn = MYSQL.connection(this.getDatabase());
+        Statement statement = (Statement) conn.get(0);
+        Connection connect = (Connection) conn.get(1);
+        HashMap<String, SearchResult> exportMap = new HashMap<>();
+        ResultSet rs = null;
+        try {
+            rs = statement.executeQuery("SELECT * FROM `" + this.getName() + "` WHERE  id = ( SELECT MIN(`id`) FROM `" + this.getName() + "`)';");
+            ResultSetMetaData rsMetaData = rs.getMetaData();
+            rs.next();
+            for (int b = 1; b <= this.countColumn(); b++) {
+                if (!rsMetaData.getColumnName(b).isEmpty()) {
+                    if (rs.getString(rsMetaData.getColumnName(b)) != null && !rs.getString(rsMetaData.getColumnName(b)).isEmpty()) {
+                        exportMap.put(rsMetaData.getColumnName(b), new SearchResult(rs.getString(rsMetaData.getColumnName(b))));
+                    } else {
+                        exportMap.put(rsMetaData.getColumnName(b), null);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String id = exportMap.get("id").getAsString();
+        Row r = new Row(this, column, id);
+        r.setExportMap(exportMap);
+        MYSQL.close(rs, connect, statement);
         return r;
     }
 }

@@ -5,6 +5,7 @@ import de.goldendeveloper.mysql.MYSQL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Column {
 
@@ -28,7 +29,7 @@ public class Column {
             while (rs.next()) {
                 list.add(new SearchResult(rs.getString(1)));
             }
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(rs, connect, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -49,10 +50,14 @@ public class Column {
 
     public Object getRandom() {
         try {
-            Statement statement = (Statement) MYSQL.connection(this.getDatabase()).get(0);
+            List<Object> conn =  MYSQL.connection(this.getDatabase());
+            Statement statement = (Statement) conn.get(0);
+            Connection connect = (Connection) conn.get(1);
             ResultSet rs = statement.executeQuery("SELECT " + this.name + " FROM `" + this.getTable().getName() + "` ORDER BY RAND() LIMIT " + this.getTable().countRows());
             rs.next();
-            return rs.getObject(1);
+            Object obj = rs.getObject(1);
+            MYSQL.close(rs, connect, statement);
+            return obj;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -99,7 +104,7 @@ public class Column {
                     return null;
                 }
             }
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(rs, connect, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -115,7 +120,7 @@ public class Column {
             while (rs.next()) {
                 return "" + rs.getObject(1) + "";
             }
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(rs, connect, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
