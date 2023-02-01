@@ -85,6 +85,21 @@ public class Database {
         }
     }
 
+    public void createTable(String name, List<String> columns) {
+        try {
+            Statement statement = (Statement) MYSQL.connection(this).get(0);
+            Connection connect = (Connection) MYSQL.connection(this).get(1);
+            statement.execute("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
+            MYSQL.close(null, connect, statement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        for (String column : columns) {
+            this.getTable(name).addColumn(column);
+        }
+    }
+
+
     public Boolean existsTable(String name) {
         try {
             List<Object> conn =  MYSQL.connection(this);
