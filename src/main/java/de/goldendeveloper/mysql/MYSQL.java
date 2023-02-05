@@ -1,6 +1,9 @@
 package de.goldendeveloper.mysql;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import de.goldendeveloper.mysql.entities.Database;
+import de.goldendeveloper.mysql.entities.MysqlTypes;
 import de.goldendeveloper.mysql.entities.User;
 
 import java.sql.*;
@@ -14,12 +17,29 @@ public class MYSQL {
     public static String username;
     public static int port;
 
+    public static Connection connect = null;
 
     public MYSQL(String hostname, String username, String password, int port) {
         MYSQL.hostname = hostname;
         MYSQL.username = username;
         MYSQL.password = password;
         MYSQL.port = port;
+
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port);
+        config.setUsername(MYSQL.username);
+        config.setPassword(MYSQL.password);
+        config.addDataSourceProperty("cachePrepStmts", "true");
+        config.addDataSourceProperty("prepStmtCacheSize", "250");
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+
+        HikariDataSource ds = new HikariDataSource(config);
+        try {
+            connect = ds.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + MYSQL.hostname + " [Port]: " + MYSQL.port + " [Username]: " + MYSQL.username + "  !");
     }
 
@@ -28,6 +48,23 @@ public class MYSQL {
         MYSQL.username = username;
         MYSQL.password = password;
         MYSQL.port = 3306;
+
+
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port);
+        config.setUsername(MYSQL.username);
+        config.setPassword(MYSQL.password);
+        config.addDataSourceProperty("cachePrepStmts", "true");
+        config.addDataSourceProperty("prepStmtCacheSize", "250");
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+
+        HikariDataSource ds = new HikariDataSource(config);
+        try {
+            connect = ds.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + MYSQL.hostname + " [Port]: " + MYSQL.port + " [Username]: " + MYSQL.username + "  !");
     }
 
@@ -61,15 +98,13 @@ public class MYSQL {
 
     public String getVersion() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
             Statement statement = connect.createStatement();
             ResultSet rs = statement.executeQuery("SELECT @@VERSION AS 'SQL Server Version Details'");
             if (rs.next()) {
                 return rs.getString(1);
             }
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
@@ -78,15 +113,13 @@ public class MYSQL {
     public List<User> getUsers() {
         List<User> list = new ArrayList<>();
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
             Statement statement = connect.createStatement();
             ResultSet rs = statement.executeQuery("SELECT user FROM mysql.user;");
             while (rs.next()) {
                 list.add(new User(rs.getString(1)));
             }
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             e.printStackTrace();
         }
         return list;
@@ -94,40 +127,34 @@ public class MYSQL {
 
     public Boolean existsDatabase(String name) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
             Statement statement = connect.createStatement();
             statement.execute("CREATE DATABASE " + name + ";");
             statement.execute("DROP DATABASE " + name + ";");
             MYSQL.close(null, connect, statement);
             return false;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             return true;
         }
     }
 
     public Boolean existsUser(String name) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
             Statement statement = connect.createStatement();
             statement.execute("CREATE USER '" + name + "'@'localhost' IDENTIFIED BY 'password';");
             statement.execute("DROP USER '" + name + "'@'localhost';");
             MYSQL.close(null, connect, statement);
             return false;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             return true;
         }
     }
 
     public void customExecute(String SQL) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
             Statement statement = connect.createStatement();
             statement.execute(SQL);
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -138,51 +165,44 @@ public class MYSQL {
 
     public void createDatabase(String database) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
             Statement statement = connect.createStatement();
+
             statement.execute("CREATE DATABASE " + database + ";");
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             e.printStackTrace();
         }
     }
 
     public void onFlushPrivileges() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
             Statement statement = connect.createStatement();
             statement.execute("FLUSH PRIVILEGES;");
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void switchDatabase(Database database) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
             Statement statement = connect.createStatement();
             statement.execute("use " + database.getName() + ";");
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void createUser(String username, String password, Boolean database) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
             Statement statement = connect.createStatement();
             statement.execute("CREATE USER " + "'" + username + "'@'localhost' IDENTIFIED BY '" + password + "';");
             if (database) {
                 this.createDatabase(username);
             }
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -190,17 +210,14 @@ public class MYSQL {
     public List<Database> getDatabases() {
         List<Database> dbs = new ArrayList<>();
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement();
+            Statement statement = connect.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = statement.executeQuery("SHOW DATABASES;");
-            rs.next();
             while (rs.next()) {
                 Database db = new Database(rs.getString(1));
-                dbs.add(db);
+                System.out.println("NAME: " + db.getName());
             }
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return dbs;
@@ -215,9 +232,9 @@ public class MYSQL {
             if (resultSet != null) {
                 resultSet.close();
             }
-            if (connection != null) {
-                connection.close();
-            }
+//            if (connection != null) {
+//                connection.close();
+//            }
             if (statement != null) {
                 statement.close();
             }
@@ -226,18 +243,19 @@ public class MYSQL {
         }
     }
 
-    public static List<Object> connection(Database database) {
-        List<Object> stuff = new ArrayList<>();
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
-            Statement statement = connect.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            statement.execute("use `" + database.getName() + "`");
-            stuff.add(statement);
-            stuff.add(connect);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        return stuff;
-    }
+//    public static List<Object> connection(Database database) {
+//        List<Object> stuff = new ArrayList<>();
+//        try {
+//
+//            HikariDataSource ds = new HikariDataSource(config);
+//            Connection connect = ds.getConnection();
+//            Statement statement = connect.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+//            statement.execute("use `" + database.getName() + "`");
+//            stuff.add(statement);
+//            stuff.add(connect);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return stuff;
+//    }
 }

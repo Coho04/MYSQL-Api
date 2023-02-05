@@ -58,9 +58,8 @@ public class Database {
     public List<Table> getTables() {
         List<Table> tables = new ArrayList<>();
         try {
-            List<Object> conn =  MYSQL.connection(this);
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
             ResultSet rs = statement.executeQuery("SHOW TABLES;");
             while (rs.next()) {
                 Table table = new Table(rs.getString(1), this);
@@ -75,9 +74,8 @@ public class Database {
 
     public void createTable(String name) {
         try {
-            List<Object> conn =  MYSQL.connection(this);
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
             statement.execute("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
@@ -87,9 +85,8 @@ public class Database {
 
     public void createTable(String name, List<String> columns) {
         try {
-            List<Object> conn =  MYSQL.connection(this);
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
             statement.execute("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
@@ -103,9 +100,8 @@ public class Database {
 
     public Boolean existsTable(String name) {
         try {
-            List<Object> conn =  MYSQL.connection(this);
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
             statement.executeQuery("SELECT * FROM `" + name + "`;");
             MYSQL.close(null, connect, statement);
             return true;

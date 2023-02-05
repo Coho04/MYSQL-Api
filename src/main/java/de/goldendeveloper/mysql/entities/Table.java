@@ -19,7 +19,8 @@ public class Table {
 
     public ResultSet describe() {
         try {
-            Statement statement = (Statement) MYSQL.connection(this.getDatabase()).get(0);
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
             return statement.executeQuery("DESCRIBE `" + this.name + "`;");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,9 +34,8 @@ public class Table {
 
     public void drop() {
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase());
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
             statement.execute("DROP TABLE `" + this.name + "`;");
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
@@ -62,9 +62,13 @@ public class Table {
     public List<Row> getRows() {
         List<Row> rows = new ArrayList<>();
         Column column = this.getColumn("id");
-        List<Object> conn = MYSQL.connection(this.getDatabase());
-        Statement statement = (Statement) conn.get(0);
-        Connection connect = (Connection) conn.get(1);
+        Connection connect = MYSQL.connect;
+        Statement statement = null;
+        try {
+            statement = connect.createStatement();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         ResultSet rs = null;
         for (int i = 1; i <= countRows(); i++) {
             HashMap<String, SearchResult> exportMap = new HashMap<>();
@@ -126,9 +130,8 @@ public class Table {
 
     public int countRows() {
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase());
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
             ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM `" + this.name + "`;");
             rs.next();
             int i = rs.getInt(1);
@@ -150,9 +153,8 @@ public class Table {
 
     public void dropRow(int id) {
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase());
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
             statement.execute("DELETE FROM `" + this.name + "` where id = " + id + ";");
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
@@ -163,9 +165,8 @@ public class Table {
     public List<Column> getColumns() {
         List<Column> list = new ArrayList<>();
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase());
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
             ResultSet rs = statement.executeQuery("show columns from `" + this.name + "` ;");
             while (rs.next()) {
                 list.add(new Column(rs.getString(1), this));
@@ -186,9 +187,8 @@ public class Table {
 
     public Boolean existsColumn(String name) {
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase());
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
             statement.executeQuery("select `" + name + "` from `" + this.name + "`;");
             MYSQL.close(null, connect, statement);
             return true;
@@ -199,9 +199,8 @@ public class Table {
 
     public Boolean existsRow(Column column, String item) {
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase());
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
             ResultSet rs = statement.executeQuery("SELECT EXISTS(SELECT * FROM `" + this.getName() + "` WHERE `" + column.getName() + "` = " + item + ");");
             rs.next();
             Boolean result = rs.getBoolean(1);
@@ -214,9 +213,8 @@ public class Table {
 
     public void setUniqueColumn(String name) {
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase());
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
             statement.execute("ALTER IGNORE TABLE `" + this.name + "` ADD UNIQUE (" + name + ");");
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
@@ -226,9 +224,8 @@ public class Table {
 
     public void addColumn(String name) {
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase());
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
             statement.execute("ALTER TABLE `" + this.name + "` ADD `" + name + "` " + MysqlTypes.getMysqlTypeName(MysqlTypes.TEXT) + " (" + 65555 + ");");
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
@@ -242,9 +239,8 @@ public class Table {
 
     public Boolean hasColumn(String name) {
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase());
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
             statement.executeQuery("SELECT " + name + " FROM `" + this.name + "`;");
             MYSQL.close(null, connect, statement);
             return true;
@@ -271,9 +267,8 @@ public class Table {
             }
         }
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase());
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
             statement.execute("INSERT INTO `" + this.name + "` (" + keys + ")VALUES (" + items + ");");
             MYSQL.close(null, connect, statement);
         } catch (SQLException e) {
@@ -290,62 +285,68 @@ public class Table {
     }
 
     public Row getLastestRow() {
-        Column column = this.getColumn("id");
-        List<Object> conn = MYSQL.connection(this.getDatabase());
-        Statement statement = (Statement) conn.get(0);
-        Connection connect = (Connection) conn.get(1);
-        ResultSet rs = null;
-        HashMap<String, SearchResult> exportMap = new HashMap<>();
         try {
-            rs = statement.executeQuery("SELECT * FROM `" + this.getName() + "` WHERE  id = ( SELECT MAX(`id`) FROM `" + this.getName() + "`);");
-            ResultSetMetaData rsMetaData = rs.getMetaData();
-            rs.next();
-            for (int b = 1; b <= this.countColumn(); b++) {
-                if (!rsMetaData.getColumnName(b).isEmpty()) {
-                    if (rs.getString(rsMetaData.getColumnName(b)) != null && !rs.getString(rsMetaData.getColumnName(b)).isEmpty()) {
-                        exportMap.put(rsMetaData.getColumnName(b), new SearchResult(rs.getString(rsMetaData.getColumnName(b))));
-                    } else {
-                        exportMap.put(rsMetaData.getColumnName(b), null);
+            Column column = this.getColumn("id");
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
+            ResultSet rs = null;
+            HashMap<String, SearchResult> exportMap = new HashMap<>();
+            try {
+                rs = statement.executeQuery("SELECT * FROM `" + this.getName() + "` WHERE  id = ( SELECT MAX(`id`) FROM `" + this.getName() + "`);");
+                ResultSetMetaData rsMetaData = rs.getMetaData();
+                rs.next();
+                for (int b = 1; b <= this.countColumn(); b++) {
+                    if (!rsMetaData.getColumnName(b).isEmpty()) {
+                        if (rs.getString(rsMetaData.getColumnName(b)) != null && !rs.getString(rsMetaData.getColumnName(b)).isEmpty()) {
+                            exportMap.put(rsMetaData.getColumnName(b), new SearchResult(rs.getString(rsMetaData.getColumnName(b))));
+                        } else {
+                            exportMap.put(rsMetaData.getColumnName(b), null);
+                        }
                     }
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+            String id = exportMap.get("id").getAsString();
+            Row r = new Row(this, column, id);
+            r.setExportMap(exportMap);
+            MYSQL.close(rs, connect, statement);
+            return r;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        String id = exportMap.get("id").getAsString();
-        Row r = new Row(this, column, id);
-        r.setExportMap(exportMap);
-        MYSQL.close(rs, connect, statement);
-        return r;
     }
 
     public Row getOldestRow() {
-        Column column = this.getColumn("id");
-        List<Object> conn = MYSQL.connection(this.getDatabase());
-        Statement statement = (Statement) conn.get(0);
-        Connection connect = (Connection) conn.get(1);
-        HashMap<String, SearchResult> exportMap = new HashMap<>();
-        ResultSet rs = null;
         try {
-            rs = statement.executeQuery("SELECT * FROM `" + this.getName() + "` WHERE  id = ( SELECT MIN(`id`) FROM `" + this.getName() + "`)';");
-            ResultSetMetaData rsMetaData = rs.getMetaData();
-            rs.next();
-            for (int b = 1; b <= this.countColumn(); b++) {
-                if (!rsMetaData.getColumnName(b).isEmpty()) {
-                    if (rs.getString(rsMetaData.getColumnName(b)) != null && !rs.getString(rsMetaData.getColumnName(b)).isEmpty()) {
-                        exportMap.put(rsMetaData.getColumnName(b), new SearchResult(rs.getString(rsMetaData.getColumnName(b))));
-                    } else {
-                        exportMap.put(rsMetaData.getColumnName(b), null);
+            Column column = this.getColumn("id");
+            Connection connect = MYSQL.connect;
+            Statement statement = connect.createStatement();
+            HashMap<String, SearchResult> exportMap = new HashMap<>();
+            ResultSet rs = null;
+            try {
+                rs = statement.executeQuery("SELECT * FROM `" + this.getName() + "` WHERE  id = ( SELECT MIN(`id`) FROM `" + this.getName() + "`)';");
+                ResultSetMetaData rsMetaData = rs.getMetaData();
+                rs.next();
+                for (int b = 1; b <= this.countColumn(); b++) {
+                    if (!rsMetaData.getColumnName(b).isEmpty()) {
+                        if (rs.getString(rsMetaData.getColumnName(b)) != null && !rs.getString(rsMetaData.getColumnName(b)).isEmpty()) {
+                            exportMap.put(rsMetaData.getColumnName(b), new SearchResult(rs.getString(rsMetaData.getColumnName(b))));
+                        } else {
+                            exportMap.put(rsMetaData.getColumnName(b), null);
+                        }
                     }
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+            String id = exportMap.get("id").getAsString();
+            Row r = new Row(this, column, id);
+            r.setExportMap(exportMap);
+            MYSQL.close(rs, connect, statement);
+            return r;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        String id = exportMap.get("id").getAsString();
-        Row r = new Row(this, column, id);
-        r.setExportMap(exportMap);
-        MYSQL.close(rs, connect, statement);
-        return r;
     }
 }

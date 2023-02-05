@@ -3,7 +3,6 @@ package de.goldendeveloper.mysql.entities;
 import de.goldendeveloper.mysql.MYSQL;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -21,23 +20,21 @@ public class User {
 
     public void drop(Boolean database) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
+            Connection connect = MYSQL.connect;
             Statement statement = connect.createStatement();
             statement.execute("DROP USER '" + this.name + "'@'localhost';");
             if (database) {
                 statement.execute("DROP DATABASE " + this.name + ";");
             }
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void setPermission(int PERMISSION) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
+            Connection connect = MYSQL.connect;
             Statement statement = connect.createStatement();
             switch (PERMISSION) {
                 case 0:
@@ -66,15 +63,14 @@ public class User {
                     break;
             }
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             e.printStackTrace();
         }
     }
 
     public void setPermissionToDatabase(int PERMISSION, Database database) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
+            Connection connect = MYSQL.connect;
             Statement statement = connect.createStatement();
             switch (PERMISSION) {
                 case 0:
@@ -103,15 +99,14 @@ public class User {
                     break;
             }
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void removePermission(int PERMISSION) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
+            Connection connect = MYSQL.connect;
             Statement statement = connect.createStatement();
             switch (PERMISSION) {
                 case 0:
@@ -140,15 +135,14 @@ public class User {
                     break;
             }
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             e.printStackTrace();
         }
     }
 
     public void removePermissionToDatabase(int PERMISSION, Database database) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
+            Connection connect = MYSQL.connect;
             Statement statement = connect.createStatement();
             switch (PERMISSION) {
                 case 0:
@@ -177,19 +171,18 @@ public class User {
                     break;
             }
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void setPassword(String password) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
+            Connection connect = MYSQL.connect;
             Statement statement = connect.createStatement();
             statement.execute("SET PASSWORD FOR '" + this.name + "'@'localhost' = PASSWORD('" + password + "');");
             MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             e.printStackTrace();
         }
     }
