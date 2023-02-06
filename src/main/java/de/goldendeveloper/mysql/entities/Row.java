@@ -25,7 +25,7 @@ public class Row {
     public HashMap<String, SearchResult> getData() {
         if (exportMap.isEmpty()) {
             try {
-                Connection connect = MYSQL.connect;
+                Connection connect = MYSQL.getConnect();
                 Statement statement = connect.createStatement();
                 ResultSet rs = statement.executeQuery("SELECT * FROM `" + this.getTable().getName() + "` WHERE " + this.column.getName() + " = '" + this.item + "';");
                 ResultSetMetaData rsMetaData = rs.getMetaData();
@@ -43,7 +43,7 @@ public class Row {
                 } else {
                     return null;
                 }
-                MYSQL.close(rs, connect, statement);
+                MYSQL.close(rs, statement);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -57,10 +57,10 @@ public class Row {
 
     public void set(Column column, String item) {
         try {
-            Connection connect = MYSQL.connect;
+            Connection connect = MYSQL.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + column.getName() + "` = '" + item + "' WHERE `" + this.column.getName() + "` = '" + this.item + "';");
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -113,10 +113,10 @@ public class Row {
 
     public void drop() {
         try {
-            Connection connect = MYSQL.connect;
+            Connection connect = MYSQL.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("DELETE FROM `" + this.getTable().getName() + "` where id = " + this.getData().get("id").getAsInt() + ";");
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }

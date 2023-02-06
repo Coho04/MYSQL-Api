@@ -24,12 +24,11 @@ public class Database {
 
     public void rename(String name) {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
+            Connection connect = MYSQL.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("ALTER DATABASE `" + this.name + "` Modify Name = `" + name + "`;");
-            MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+            MYSQL.close(null, statement);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         this.name = name;
@@ -37,12 +36,11 @@ public class Database {
 
     public void drop() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port, MYSQL.username, MYSQL.password);
+            Connection connect = MYSQL.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("DROP DATABASE `" + this.name + "`;");
-            MYSQL.close(null, connect, statement);
-        } catch (SQLException | ClassNotFoundException e) {
+            MYSQL.close(null, statement);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -58,14 +56,14 @@ public class Database {
     public List<Table> getTables() {
         List<Table> tables = new ArrayList<>();
         try {
-            Connection connect = MYSQL.connect;
+            Connection connect = MYSQL.getConnect();
             Statement statement = connect.createStatement();
             ResultSet rs = statement.executeQuery("SHOW TABLES;");
             while (rs.next()) {
                 Table table = new Table(rs.getString(1), this);
                 tables.add(table);
             }
-            MYSQL.close(rs, connect, statement);
+            MYSQL.close(rs, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -74,10 +72,10 @@ public class Database {
 
     public void createTable(String name) {
         try {
-            Connection connect = MYSQL.connect;
+            Connection connect = MYSQL.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -85,10 +83,10 @@ public class Database {
 
     public void createTable(String name, List<String> columns) {
         try {
-            Connection connect = MYSQL.connect;
+            Connection connect = MYSQL.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -100,10 +98,10 @@ public class Database {
 
     public Boolean existsTable(String name) {
         try {
-            Connection connect = MYSQL.connect;
+            Connection connect = MYSQL.getConnect();
             Statement statement = connect.createStatement();
             statement.executeQuery("SELECT * FROM `" + name + "`;");
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
             return true;
         } catch (SQLException e) {
             return false;

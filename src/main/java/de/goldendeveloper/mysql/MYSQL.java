@@ -3,7 +3,6 @@ package de.goldendeveloper.mysql;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import de.goldendeveloper.mysql.entities.Database;
-import de.goldendeveloper.mysql.entities.MysqlTypes;
 import de.goldendeveloper.mysql.entities.User;
 
 import java.sql.*;
@@ -12,76 +11,44 @@ import java.util.List;
 
 public class MYSQL {
 
-    public static String password;
-    public static String hostname;
-    public static String username;
-    public static int port;
+    private static String password;
+    private static String hostname;
+    private static String username;
+    private static int port = 3306;
 
-    public static Connection connect = null;
+    private static String jbcUrl = "jdbc:mysql://";
+
+    private static Connection connect = null;
 
     public MYSQL(String hostname, String username, String password, int port) {
         MYSQL.hostname = hostname;
         MYSQL.username = username;
         MYSQL.password = password;
         MYSQL.port = port;
-
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port);
-        config.setUsername(MYSQL.username);
-        config.setPassword(MYSQL.password);
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-
-        HikariDataSource ds = new HikariDataSource(config);
-        try {
-            connect = ds.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + MYSQL.hostname + " [Port]: " + MYSQL.port + " [Username]: " + MYSQL.username + "  !");
+        System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + this.hostname + " [Port]: " + this.port + " [Username]: " + this.username);
     }
 
     public MYSQL(String hostname, String username, String password) {
         MYSQL.hostname = hostname;
         MYSQL.username = username;
         MYSQL.password = password;
-        MYSQL.port = 3306;
-
-
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:mysql://" + MYSQL.hostname + ":" + MYSQL.port);
-        config.setUsername(MYSQL.username);
-        config.setPassword(MYSQL.password);
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-
-        HikariDataSource ds = new HikariDataSource(config);
-        try {
-            connect = ds.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + MYSQL.hostname + " [Port]: " + MYSQL.port + " [Username]: " + MYSQL.username + "  !");
+        System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + this.hostname + " [Port]: " + this.port + " [Username]: " + this.username);
     }
 
     public void setPassword(String password) {
-        MYSQL.password = password;
+        this.password = password;
     }
 
     public void setHostname(String hostname) {
-        MYSQL.hostname = hostname;
+        this.hostname = hostname;
     }
 
     public void setPort(int port) {
-        MYSQL.port = port;
+        this.port = port;
     }
 
     public void setUsername(String username) {
-        MYSQL.username = username;
+        this.username = username;
     }
 
     public String getUsername() {
@@ -103,7 +70,7 @@ public class MYSQL {
             if (rs.next()) {
                 return rs.getString(1);
             }
-            MYSQL.close(null, connect, statement);
+            close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -118,8 +85,8 @@ public class MYSQL {
             while (rs.next()) {
                 list.add(new User(rs.getString(1)));
             }
-            MYSQL.close(null, connect, statement);
-        } catch (SQLException  e) {
+            close(null, statement);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
@@ -130,7 +97,7 @@ public class MYSQL {
             Statement statement = connect.createStatement();
             statement.execute("CREATE DATABASE " + name + ";");
             statement.execute("DROP DATABASE " + name + ";");
-            MYSQL.close(null, connect, statement);
+            close(null, statement);
             return false;
         } catch (SQLException e) {
             return true;
@@ -142,7 +109,7 @@ public class MYSQL {
             Statement statement = connect.createStatement();
             statement.execute("CREATE USER '" + name + "'@'localhost' IDENTIFIED BY 'password';");
             statement.execute("DROP USER '" + name + "'@'localhost';");
-            MYSQL.close(null, connect, statement);
+            close(null, statement);
             return false;
         } catch (SQLException e) {
             return true;
@@ -153,7 +120,7 @@ public class MYSQL {
         try {
             Statement statement = connect.createStatement();
             statement.execute(SQL);
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -168,8 +135,8 @@ public class MYSQL {
             Statement statement = connect.createStatement();
 
             statement.execute("CREATE DATABASE " + database + ";");
-            MYSQL.close(null, connect, statement);
-        } catch (SQLException  e) {
+            MYSQL.close(null, statement);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -178,7 +145,7 @@ public class MYSQL {
         try {
             Statement statement = connect.createStatement();
             statement.execute("FLUSH PRIVILEGES;");
-            MYSQL.close(null, connect, statement);
+            close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -188,7 +155,7 @@ public class MYSQL {
         try {
             Statement statement = connect.createStatement();
             statement.execute("use " + database.getName() + ";");
-            MYSQL.close(null, connect, statement);
+            close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -201,7 +168,7 @@ public class MYSQL {
             if (database) {
                 this.createDatabase(username);
             }
-            MYSQL.close(null, connect, statement);
+            close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -216,7 +183,7 @@ public class MYSQL {
                 Database db = new Database(rs.getString(1));
                 System.out.println("NAME: " + db.getName());
             }
-            MYSQL.close(null, connect, statement);
+            close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -227,14 +194,11 @@ public class MYSQL {
         return new User(name);
     }
 
-    public static void close(ResultSet resultSet, Connection connection, Statement statement) {
+    public static void close(ResultSet resultSet, Statement statement) {
         try {
             if (resultSet != null) {
                 resultSet.close();
             }
-//            if (connection != null) {
-//                connection.close();
-//            }
             if (statement != null) {
                 statement.close();
             }
@@ -243,19 +207,39 @@ public class MYSQL {
         }
     }
 
-//    public static List<Object> connection(Database database) {
-//        List<Object> stuff = new ArrayList<>();
-//        try {
-//
-//            HikariDataSource ds = new HikariDataSource(config);
-//            Connection connect = ds.getConnection();
-//            Statement statement = connect.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-//            statement.execute("use `" + database.getName() + "`");
-//            stuff.add(statement);
-//            stuff.add(connect);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return stuff;
-//    }
+    public static Connection getConnect() {
+        try {
+            if (connect == null) {
+                connect = getHikariDataSource().getConnection();
+            } else if (connect.isClosed()) {
+                connect = getHikariDataSource().getConnection();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return connect;
+    }
+
+    public void closeConnection() {
+        try {
+            if (connect != null) {
+                if (!connect.isClosed()) {
+                    connect.close();
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static HikariDataSource getHikariDataSource() {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(jbcUrl + hostname + ":" + port);
+        config.setUsername(username);
+        config.setPassword(password);
+        config.addDataSourceProperty("cachePrepStmts", "true");
+        config.addDataSourceProperty("prepStmtCacheSize", "250");
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        return new HikariDataSource(config);
+    }
 }
