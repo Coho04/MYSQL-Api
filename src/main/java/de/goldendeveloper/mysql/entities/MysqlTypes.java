@@ -1,8 +1,5 @@
 package de.goldendeveloper.mysql.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MysqlTypes {
 
     public static final int BIT = 0;

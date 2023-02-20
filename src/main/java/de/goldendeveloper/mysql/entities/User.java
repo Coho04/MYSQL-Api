@@ -9,9 +9,11 @@ import java.sql.Statement;
 public class User {
 
     private final String name;
+    private final MYSQL mysql;
 
-    public User(String name) {
+    public User(String name, MYSQL mysql) {
         this.name = name;
+        this.mysql = mysql;
     }
 
     public String getName() {
@@ -20,7 +22,7 @@ public class User {
 
     public void drop(Boolean database) {
         try {
-            Connection connect = MYSQL.connect;
+            Connection connect = mysql.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("DROP USER '" + this.name + "'@'localhost';");
             if (database) {
@@ -34,7 +36,7 @@ public class User {
 
     public void setPermission(int PERMISSION) {
         try {
-            Connection connect = MYSQL.connect;
+            Connection connect = mysql.getConnect();
             Statement statement = connect.createStatement();
             switch (PERMISSION) {
                 case 0:
@@ -70,7 +72,7 @@ public class User {
 
     public void setPermissionToDatabase(int PERMISSION, Database database) {
         try {
-            Connection connect = MYSQL.connect;
+            Connection connect = mysql.getConnect();
             Statement statement = connect.createStatement();
             switch (PERMISSION) {
                 case 0:
@@ -106,7 +108,7 @@ public class User {
 
     public void removePermission(int PERMISSION) {
         try {
-            Connection connect = MYSQL.connect;
+            Connection connect = mysql.getConnect();
             Statement statement = connect.createStatement();
             switch (PERMISSION) {
                 case 0:
@@ -142,7 +144,7 @@ public class User {
 
     public void removePermissionToDatabase(int PERMISSION, Database database) {
         try {
-            Connection connect = MYSQL.connect;
+            Connection connect = mysql.getConnect();
             Statement statement = connect.createStatement();
             switch (PERMISSION) {
                 case 0:
@@ -178,7 +180,7 @@ public class User {
 
     public void setPassword(String password) {
         try {
-            Connection connect = MYSQL.connect;
+            Connection connect = mysql.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("SET PASSWORD FOR '" + this.name + "'@'localhost' = PASSWORD('" + password + "');");
             MYSQL.close(null, connect, statement);

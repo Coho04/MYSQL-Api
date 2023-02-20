@@ -3,7 +3,6 @@ package de.goldendeveloper.mysql;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import de.goldendeveloper.mysql.entities.Database;
-import de.goldendeveloper.mysql.entities.MysqlTypes;
 import de.goldendeveloper.mysql.entities.User;
 
 import java.sql.*;
@@ -17,7 +16,8 @@ public class MYSQL {
     public static String username;
     public static int port;
 
-    public static Connection connect = null;
+    private Connection connection = null;
+    private HikariConfig config;
 
     public MYSQL(String hostname, String username, String password, int port) {
         MYSQL.hostname = hostname;
@@ -32,14 +32,7 @@ public class MYSQL {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-
-        HikariDataSource ds = new HikariDataSource(config);
-        try {
-            connect = ds.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
+        this.config = config;
         System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + MYSQL.hostname + " [Port]: " + MYSQL.port + " [Username]: " + MYSQL.username + "  !");
     }
 
@@ -57,14 +50,7 @@ public class MYSQL {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-
-        HikariDataSource ds = new HikariDataSource(config);
-        try {
-            connect = ds.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
+        this.config = config;
         System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + MYSQL.hostname + " [Port]: " + MYSQL.port + " [Username]: " + MYSQL.username + "  !");
     }
 
@@ -98,12 +84,12 @@ public class MYSQL {
 
     public String getVersion() {
         try {
-            Statement statement = connect.createStatement();
+            Statement statement = getConnect().createStatement();
             ResultSet rs = statement.executeQuery("SELECT @@VERSION AS 'SQL Server Version Details'");
             if (rs.next()) {
                 return rs.getString(1);
             }
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, getConnect(), statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -113,13 +99,13 @@ public class MYSQL {
     public List<User> getUsers() {
         List<User> list = new ArrayList<>();
         try {
-            Statement statement = connect.createStatement();
+            Statement statement = getConnect().createStatement();
             ResultSet rs = statement.executeQuery("SELECT user FROM mysql.user;");
             while (rs.next()) {
-                list.add(new User(rs.getString(1)));
+                list.add(new User(rs.getString(1), this));
             }
-            MYSQL.close(null, connect, statement);
-        } catch (SQLException  e) {
+            MYSQL.close(null, getConnect(), statement);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
@@ -127,10 +113,10 @@ public class MYSQL {
 
     public Boolean existsDatabase(String name) {
         try {
-            Statement statement = connect.createStatement();
+            Statement statement = getConnect().createStatement();
             statement.execute("CREATE DATABASE " + name + ";");
             statement.execute("DROP DATABASE " + name + ";");
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, getConnect(), statement);
             return false;
         } catch (SQLException e) {
             return true;
@@ -139,10 +125,10 @@ public class MYSQL {
 
     public Boolean existsUser(String name) {
         try {
-            Statement statement = connect.createStatement();
+            Statement statement = getConnect().createStatement();
             statement.execute("CREATE USER '" + name + "'@'localhost' IDENTIFIED BY 'password';");
             statement.execute("DROP USER '" + name + "'@'localhost';");
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, getConnect(), statement);
             return false;
         } catch (SQLException e) {
             return true;
@@ -151,34 +137,34 @@ public class MYSQL {
 
     public void customExecute(String SQL) {
         try {
-            Statement statement = connect.createStatement();
+            Statement statement = getConnect().createStatement();
             statement.execute(SQL);
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, getConnect(), statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public Database getDatabase(String name) {
-        return new Database(name);
+        return new Database(name, this);
     }
 
     public void createDatabase(String database) {
         try {
-            Statement statement = connect.createStatement();
+            Statement statement = getConnect().createStatement();
 
             statement.execute("CREATE DATABASE " + database + ";");
-            MYSQL.close(null, connect, statement);
-        } catch (SQLException  e) {
+            MYSQL.close(null, getConnect(), statement);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void onFlushPrivileges() {
         try {
-            Statement statement = connect.createStatement();
+            Statement statement = getConnect().createStatement();
             statement.execute("FLUSH PRIVILEGES;");
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, getConnect(), statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -186,9 +172,9 @@ public class MYSQL {
 
     public void switchDatabase(Database database) {
         try {
-            Statement statement = connect.createStatement();
+            Statement statement = getConnect().createStatement();
             statement.execute("use " + database.getName() + ";");
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, getConnect(), statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -196,12 +182,12 @@ public class MYSQL {
 
     public void createUser(String username, String password, Boolean database) {
         try {
-            Statement statement = connect.createStatement();
+            Statement statement = getConnect().createStatement();
             statement.execute("CREATE USER " + "'" + username + "'@'localhost' IDENTIFIED BY '" + password + "';");
             if (database) {
                 this.createDatabase(username);
             }
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, getConnect(), statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -210,21 +196,37 @@ public class MYSQL {
     public List<Database> getDatabases() {
         List<Database> dbs = new ArrayList<>();
         try {
-            Statement statement = connect.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            Statement statement = getConnect().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = statement.executeQuery("SHOW DATABASES;");
             while (rs.next()) {
-                Database db = new Database(rs.getString(1));
+                Database db = new Database(rs.getString(1), this);
                 System.out.println("NAME: " + db.getName());
             }
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, getConnect(), statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return dbs;
     }
 
+    public Connection getConnect() {
+        try {
+            if (connection == null || connection.isClosed()) {
+                HikariDataSource ds = new HikariDataSource(config);
+                try {
+                    connection = ds.getConnection();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return connection;
+    }
+
     public User getUser(String name) {
-        return new User(name);
+        return new User(name, this);
     }
 
     public static void close(ResultSet resultSet, Connection connection, Statement statement) {
@@ -232,9 +234,6 @@ public class MYSQL {
             if (resultSet != null) {
                 resultSet.close();
             }
-//            if (connection != null) {
-//                connection.close();
-//            }
             if (statement != null) {
                 statement.close();
             }
@@ -242,20 +241,4 @@ public class MYSQL {
             e.printStackTrace();
         }
     }
-
-//    public static List<Object> connection(Database database) {
-//        List<Object> stuff = new ArrayList<>();
-//        try {
-//
-//            HikariDataSource ds = new HikariDataSource(config);
-//            Connection connect = ds.getConnection();
-//            Statement statement = connect.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-//            statement.execute("use `" + database.getName() + "`");
-//            stuff.add(statement);
-//            stuff.add(connect);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return stuff;
-//    }
 }

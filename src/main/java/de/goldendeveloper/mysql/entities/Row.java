@@ -13,19 +13,21 @@ public class Row {
     private final Column column;
     private final String item;
     private HashMap<String, SearchResult> exportMap;
+    private final MYSQL mysql;
 
-    public Row(Table table, Column column, String item) {
+    public Row(Table table, Column column, MYSQL mysql, String item) {
         this.db = table.getDatabase();
         this.table = table;
         this.column = column;
         this.item = item;
         this.exportMap = new HashMap<>();
+        this.mysql = mysql;
     }
 
     public HashMap<String, SearchResult> getData() {
         if (exportMap.isEmpty()) {
             try {
-                Connection connect = MYSQL.connect;
+                Connection connect = mysql.getConnect();
                 Statement statement = connect.createStatement();
                 ResultSet rs = statement.executeQuery("SELECT * FROM `" + this.getTable().getName() + "` WHERE " + this.column.getName() + " = '" + this.item + "';");
                 ResultSetMetaData rsMetaData = rs.getMetaData();
@@ -57,7 +59,7 @@ public class Row {
 
     public void set(Column column, String item) {
         try {
-            Connection connect = MYSQL.connect;
+            Connection connect = mysql.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + column.getName() + "` = '" + item + "' WHERE `" + this.column.getName() + "` = '" + this.item + "';");
             MYSQL.close(null, connect, statement);
@@ -113,7 +115,7 @@ public class Row {
 
     public void drop() {
         try {
-            Connection connect = MYSQL.connect;
+            Connection connect = mysql.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("DELETE FROM `" + this.getTable().getName() + "` where id = " + this.getData().get("id").getAsInt() + ";");
             MYSQL.close(null, connect, statement);
