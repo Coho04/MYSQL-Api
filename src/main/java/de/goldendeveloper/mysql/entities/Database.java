@@ -26,7 +26,7 @@ public class Database {
 
     public void rename(String name) {
         try {
-            Connection connect = MYSQL.getConnect();
+            Connection connect = mysql.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("ALTER DATABASE `" + this.name + "` Modify Name = `" + name + "`;");
             MYSQL.close(null, statement);
@@ -38,7 +38,7 @@ public class Database {
 
     public void drop() {
         try {
-            Connection connect = MYSQL.getConnect();
+            Connection connect = mysql.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("DROP DATABASE `" + this.name + "`;");
             MYSQL.close(null, statement);
