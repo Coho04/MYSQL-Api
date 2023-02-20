@@ -29,7 +29,7 @@ public class Column {
             while (rs.next()) {
                 list.add(new SearchResult(rs.getString(1)));
             }
-            MYSQL.close(rs, connect, statement);
+            MYSQL.close(rs, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -41,7 +41,7 @@ public class Column {
             Connection connect = mysql.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("ALTER TABLE `" + this.table.getName() + "` DROP COLUMN `" + this.name + "`;");
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -54,7 +54,7 @@ public class Column {
             ResultSet rs = statement.executeQuery("SELECT " + this.name + " FROM `" + this.getTable().getName() + "` ORDER BY RAND() LIMIT " + this.getTable().countRows());
             rs.next();
             Object obj = rs.getObject(1);
-            MYSQL.close(rs, connect, statement);
+            MYSQL.close(rs, statement);
             return obj;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,7 +68,7 @@ public class Column {
             Connection connect = mysql.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `id` = " + ID + ";");
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -79,7 +79,7 @@ public class Column {
             Connection connect = mysql.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `" + this.getName() + "` IS NOT NULL;");
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -99,7 +99,7 @@ public class Column {
                     return null;
                 }
             }
-            MYSQL.close(rs, connect, statement);
+            MYSQL.close(rs, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -114,7 +114,7 @@ public class Column {
             while (rs.next()) {
                 return "" + rs.getObject(1) + "";
             }
-            MYSQL.close(rs, connect, statement);
+            MYSQL.close(rs, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -127,7 +127,7 @@ public class Column {
             Statement statement = connect.createStatement();
             statement.execute("ALTER TABLE `" + this.getTable().getName() + "` CHANGE " + this.name + name + " varchar (50)");
             this.name = name;
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }

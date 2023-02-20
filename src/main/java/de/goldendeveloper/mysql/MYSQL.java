@@ -11,11 +11,12 @@ import java.util.List;
 
 public class MYSQL {
 
-    public static String password;
-    public static String hostname;
-    public static String username;
-    public static int port;
+    private static String password;
+    private static String hostname;
+    private static String username;
+    private static int port = 3306;
 
+    private static String jbcUrl = "jdbc:mysql://";
     private Connection connection = null;
     private HikariConfig config;
 
@@ -55,19 +56,19 @@ public class MYSQL {
     }
 
     public void setPassword(String password) {
-        MYSQL.password = password;
+        this.password = password;
     }
 
     public void setHostname(String hostname) {
-        MYSQL.hostname = hostname;
+        this.hostname = hostname;
     }
 
     public void setPort(int port) {
-        MYSQL.port = port;
+        this.port = port;
     }
 
     public void setUsername(String username) {
-        MYSQL.username = username;
+        this.username = username;
     }
 
     public String getUsername() {
@@ -89,7 +90,7 @@ public class MYSQL {
             if (rs.next()) {
                 return rs.getString(1);
             }
-            MYSQL.close(null, getConnect(), statement);
+            close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -104,7 +105,7 @@ public class MYSQL {
             while (rs.next()) {
                 list.add(new User(rs.getString(1), this));
             }
-            MYSQL.close(null, getConnect(), statement);
+            close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -116,7 +117,7 @@ public class MYSQL {
             Statement statement = getConnect().createStatement();
             statement.execute("CREATE DATABASE " + name + ";");
             statement.execute("DROP DATABASE " + name + ";");
-            MYSQL.close(null, getConnect(), statement);
+            close(null, statement);
             return false;
         } catch (SQLException e) {
             return true;
@@ -128,7 +129,7 @@ public class MYSQL {
             Statement statement = getConnect().createStatement();
             statement.execute("CREATE USER '" + name + "'@'localhost' IDENTIFIED BY 'password';");
             statement.execute("DROP USER '" + name + "'@'localhost';");
-            MYSQL.close(null, getConnect(), statement);
+            close(null, statement);
             return false;
         } catch (SQLException e) {
             return true;
@@ -139,7 +140,7 @@ public class MYSQL {
         try {
             Statement statement = getConnect().createStatement();
             statement.execute(SQL);
-            MYSQL.close(null, getConnect(), statement);
+            MYSQL.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -154,7 +155,7 @@ public class MYSQL {
             Statement statement = getConnect().createStatement();
 
             statement.execute("CREATE DATABASE " + database + ";");
-            MYSQL.close(null, getConnect(), statement);
+            MYSQL.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -164,7 +165,7 @@ public class MYSQL {
         try {
             Statement statement = getConnect().createStatement();
             statement.execute("FLUSH PRIVILEGES;");
-            MYSQL.close(null, getConnect(), statement);
+            close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -174,7 +175,7 @@ public class MYSQL {
         try {
             Statement statement = getConnect().createStatement();
             statement.execute("use " + database.getName() + ";");
-            MYSQL.close(null, getConnect(), statement);
+            close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -187,7 +188,7 @@ public class MYSQL {
             if (database) {
                 this.createDatabase(username);
             }
-            MYSQL.close(null, getConnect(), statement);
+            close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -202,11 +203,28 @@ public class MYSQL {
                 Database db = new Database(rs.getString(1), this);
                 System.out.println("NAME: " + db.getName());
             }
-            MYSQL.close(null, getConnect(), statement);
+            close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return dbs;
+    }
+
+    public User getUser(String name) {
+        return new User(name, this);
+    }
+
+    public static void close(ResultSet resultSet, Statement statement) {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public Connection getConnect() {
@@ -223,22 +241,5 @@ public class MYSQL {
             e.printStackTrace();
         }
         return connection;
-    }
-
-    public User getUser(String name) {
-        return new User(name, this);
-    }
-
-    public static void close(ResultSet resultSet, Connection connection, Statement statement) {
-        try {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (statement != null) {
-                statement.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

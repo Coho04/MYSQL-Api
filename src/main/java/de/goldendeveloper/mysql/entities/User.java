@@ -28,7 +28,7 @@ public class User {
             if (database) {
                 statement.execute("DROP DATABASE " + this.name + ";");
             }
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -64,7 +64,7 @@ public class User {
                     statement.execute("GRANT EXECUTE ON * TO '" + this.name + "'@'localhost';");
                     break;
             }
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException  e) {
             e.printStackTrace();
         }
@@ -100,7 +100,7 @@ public class User {
                     statement.execute("GRANT EXECUTE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
                     break;
             }
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -136,7 +136,7 @@ public class User {
                     statement.execute("REVOKE EXECUTE ON * FROM '" + this.name + "'@'localhost';");
                     break;
             }
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException  e) {
             e.printStackTrace();
         }
@@ -172,7 +172,7 @@ public class User {
                     statement.execute("REVOKE EXECUTE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
                     break;
             }
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -183,7 +183,7 @@ public class User {
             Connection connect = mysql.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("SET PASSWORD FOR '" + this.name + "'@'localhost' = PASSWORD('" + password + "');");
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException  e) {
             e.printStackTrace();
         }

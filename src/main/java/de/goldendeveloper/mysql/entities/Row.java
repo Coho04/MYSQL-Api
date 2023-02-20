@@ -45,7 +45,7 @@ public class Row {
                 } else {
                     return null;
                 }
-                MYSQL.close(rs, connect, statement);
+                MYSQL.close(rs, statement);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -62,7 +62,7 @@ public class Row {
             Connection connect = mysql.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + column.getName() + "` = '" + item + "' WHERE `" + this.column.getName() + "` = '" + this.item + "';");
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -118,7 +118,7 @@ public class Row {
             Connection connect = mysql.getConnect();
             Statement statement = connect.createStatement();
             statement.execute("DELETE FROM `" + this.getTable().getName() + "` where id = " + this.getData().get("id").getAsInt() + ";");
-            MYSQL.close(null, connect, statement);
+            MYSQL.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
