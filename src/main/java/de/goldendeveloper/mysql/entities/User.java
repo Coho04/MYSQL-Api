@@ -2,7 +2,6 @@ package de.goldendeveloper.mysql.entities;
 
 import de.goldendeveloper.mysql.MYSQL;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -22,13 +21,12 @@ public class User {
 
     public void drop(Boolean database) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             statement.execute("DROP USER '" + this.name + "'@'localhost';");
             if (database) {
                 statement.execute("DROP DATABASE " + this.name + ";");
             }
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -36,8 +34,7 @@ public class User {
 
     public void setPermission(int PERMISSION) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             switch (PERMISSION) {
                 case 0:
                     statement.execute("GRANT ALL PRIVILEGES ON * TO '" + this.name + "'@'localhost';");
@@ -64,7 +61,7 @@ public class User {
                     statement.execute("GRANT EXECUTE ON * TO '" + this.name + "'@'localhost';");
                     break;
             }
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException  e) {
             e.printStackTrace();
         }
@@ -72,8 +69,7 @@ public class User {
 
     public void setPermissionToDatabase(int PERMISSION, Database database) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             switch (PERMISSION) {
                 case 0:
                     statement.execute("GRANT ALL PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
@@ -100,7 +96,7 @@ public class User {
                     statement.execute("GRANT EXECUTE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
                     break;
             }
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -108,8 +104,7 @@ public class User {
 
     public void removePermission(int PERMISSION) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             switch (PERMISSION) {
                 case 0:
                     statement.execute("REVOKE ALL PRIVILEGES ON * FROM '" + this.name + "'@'localhost';");
@@ -136,7 +131,7 @@ public class User {
                     statement.execute("REVOKE EXECUTE ON * FROM '" + this.name + "'@'localhost';");
                     break;
             }
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException  e) {
             e.printStackTrace();
         }
@@ -144,8 +139,7 @@ public class User {
 
     public void removePermissionToDatabase(int PERMISSION, Database database) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             switch (PERMISSION) {
                 case 0:
                     statement.execute("REVOKE ALL PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
@@ -172,7 +166,7 @@ public class User {
                     statement.execute("REVOKE EXECUTE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
                     break;
             }
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -180,10 +174,9 @@ public class User {
 
     public void setPassword(String password) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             statement.execute("SET PASSWORD FOR '" + this.name + "'@'localhost' = PASSWORD('" + password + "');");
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException  e) {
             e.printStackTrace();
         }

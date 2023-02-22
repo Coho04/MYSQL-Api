@@ -27,8 +27,7 @@ public class Row {
     public HashMap<String, SearchResult> getData() {
         if (exportMap.isEmpty()) {
             try {
-                Connection connect = mysql.getConnect();
-                Statement statement = connect.createStatement();
+                Statement statement = mysql.getConnect().createStatement();
                 ResultSet rs = statement.executeQuery("SELECT * FROM `" + this.getTable().getName() + "` WHERE " + this.column.getName() + " = '" + this.item + "';");
                 ResultSetMetaData rsMetaData = rs.getMetaData();
                 rs.next();
@@ -45,7 +44,7 @@ public class Row {
                 } else {
                     return null;
                 }
-                MYSQL.close(rs, statement);
+                mysql.close(rs, statement);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -59,10 +58,9 @@ public class Row {
 
     public void set(Column column, String item) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + column.getName() + "` = '" + item + "' WHERE `" + this.column.getName() + "` = '" + this.item + "';");
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -115,10 +113,9 @@ public class Row {
 
     public void drop() {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             statement.execute("DELETE FROM `" + this.getTable().getName() + "` where id = " + this.getData().get("id").getAsInt() + ";");
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -21,8 +21,7 @@ public class Table {
 
     public ResultSet describe() {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             return statement.executeQuery("DESCRIBE `" + this.name + "`;");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -36,10 +35,9 @@ public class Table {
 
     public void drop() {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             statement.execute("DROP TABLE `" + this.name + "`;");
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,7 +65,7 @@ public class Table {
         Connection connect = mysql.getConnect();
         Statement statement = null;
         try {
-            statement = connect.createStatement();
+            statement = mysql.getConnect().createStatement();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -98,7 +96,7 @@ public class Table {
             r.setExportMap(exportMap);
             rows.add(r);
         }
-        MYSQL.close(rs, statement);
+        mysql.close(rs, statement);
         return rows;
     }
 
@@ -132,12 +130,11 @@ public class Table {
 
     public int countRows() {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM `" + this.name + "`;");
             rs.next();
             int i = rs.getInt(1);
-            MYSQL.close(rs, statement);
+            mysql.close(rs, statement);
             return i;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -155,10 +152,9 @@ public class Table {
 
     public void dropRow(int id) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             statement.execute("DELETE FROM `" + this.name + "` where id = " + id + ";");
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -167,13 +163,12 @@ public class Table {
     public List<Column> getColumns() {
         List<Column> list = new ArrayList<>();
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             ResultSet rs = statement.executeQuery("show columns from `" + this.name + "` ;");
             while (rs.next()) {
                 list.add(new Column(rs.getString(1), this, mysql));
             }
-            MYSQL.close(rs, statement);
+            mysql.close(rs, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -189,10 +184,9 @@ public class Table {
 
     public Boolean existsColumn(String name) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             statement.executeQuery("select `" + name + "` from `" + this.name + "`;");
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
             return true;
         } catch (SQLException e) {
             return false;
@@ -201,12 +195,11 @@ public class Table {
 
     public Boolean existsRow(Column column, String item) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             ResultSet rs = statement.executeQuery("SELECT EXISTS(SELECT * FROM `" + this.getName() + "` WHERE `" + column.getName() + "` = " + item + ");");
             rs.next();
             Boolean result = rs.getBoolean(1);
-            MYSQL.close(rs, statement);
+            mysql.close(rs, statement);
             return result;
         } catch (SQLException e) {
             return false;
@@ -215,10 +208,9 @@ public class Table {
 
     public void setUniqueColumn(String name) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             statement.execute("ALTER IGNORE TABLE `" + this.name + "` ADD UNIQUE (" + name + ");");
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -226,10 +218,9 @@ public class Table {
 
     public void addColumn(String name) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             statement.execute("ALTER TABLE `" + this.name + "` ADD `" + name + "` " + MysqlTypes.getMysqlTypeName(MysqlTypes.TEXT) + " (" + 65555 + ");");
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -241,10 +232,9 @@ public class Table {
 
     public Boolean hasColumn(String name) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             statement.executeQuery("SELECT " + name + " FROM `" + this.name + "`;");
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
             return true;
         } catch (SQLException e) {
             return false;
@@ -269,10 +259,9 @@ public class Table {
             }
         }
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             statement.execute("INSERT INTO `" + this.name + "` (" + keys + ")VALUES (" + items + ");");
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -289,8 +278,7 @@ public class Table {
     public Row getLastestRow() {
         try {
             Column column = this.getColumn("id");
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             ResultSet rs = null;
             HashMap<String, SearchResult> exportMap = new HashMap<>();
             try {
@@ -312,7 +300,7 @@ public class Table {
             String id = exportMap.get("id").getAsString();
             Row r = new Row(this, column, mysql, id);
             r.setExportMap(exportMap);
-            MYSQL.close(rs, statement);
+            mysql.close(rs, statement);
             return r;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -322,8 +310,7 @@ public class Table {
     public Row getOldestRow() {
         try {
             Column column = this.getColumn("id");
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             HashMap<String, SearchResult> exportMap = new HashMap<>();
             ResultSet rs = null;
             try {
@@ -345,7 +332,7 @@ public class Table {
             String id = exportMap.get("id").getAsString();
             Row r = new Row(this, column, mysql, id);
             r.setExportMap(exportMap);
-            MYSQL.close(rs, statement);
+            mysql.close(rs, statement);
             return r;
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -26,10 +26,9 @@ public class Database {
 
     public void rename(String name) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             statement.execute("ALTER DATABASE `" + this.name + "` Modify Name = `" + name + "`;");
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -38,10 +37,9 @@ public class Database {
 
     public void drop() {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             statement.execute("DROP DATABASE `" + this.name + "`;");
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -58,14 +56,13 @@ public class Database {
     public List<Table> getTables() {
         List<Table> tables = new ArrayList<>();
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             ResultSet rs = statement.executeQuery("SHOW TABLES;");
             while (rs.next()) {
                 Table table = new Table(rs.getString(1), this, mysql);
                 tables.add(table);
             }
-            MYSQL.close(rs, statement);
+            mysql.close(rs, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -74,10 +71,9 @@ public class Database {
 
     public void createTable(String name) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             statement.execute("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -85,10 +81,9 @@ public class Database {
 
     public void createTable(String name, List<String> columns) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             statement.execute("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -100,10 +95,9 @@ public class Database {
 
     public Boolean existsTable(String name) {
         try {
-            Connection connect = mysql.getConnect();
-            Statement statement = connect.createStatement();
+            Statement statement = mysql.getConnect().createStatement();
             statement.executeQuery("SELECT * FROM `" + name + "`;");
-            MYSQL.close(null, statement);
+            mysql.close(null, statement);
             return true;
         } catch (SQLException e) {
             return false;
