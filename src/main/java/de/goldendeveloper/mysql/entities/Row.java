@@ -13,21 +13,21 @@ public class Row {
     private final Column column;
     private final String item;
     private HashMap<String, SearchResult> exportMap;
+    private final MYSQL mysql;
 
-    public Row(Table table, Column column, String item) {
+    public Row(Table table, Column column, MYSQL mysql, String item) {
         this.db = table.getDatabase();
         this.table = table;
         this.column = column;
         this.item = item;
         this.exportMap = new HashMap<>();
+        this.mysql = mysql;
     }
 
     public HashMap<String, SearchResult> getData() {
         if (exportMap.isEmpty()) {
             try {
-                List<Object> conn =  MYSQL.connection(this.getDatabase());
-                Statement statement = (Statement) conn.get(0);
-                Connection connect = (Connection) conn.get(1);
+                Statement statement = mysql.getConnect().createStatement();
                 ResultSet rs = statement.executeQuery("SELECT * FROM `" + this.getTable().getName() + "` WHERE " + this.column.getName() + " = '" + this.item + "';");
                 ResultSetMetaData rsMetaData = rs.getMetaData();
                 rs.next();
@@ -44,7 +44,7 @@ public class Row {
                 } else {
                     return null;
                 }
-                MYSQL.close(rs, connect, statement);
+                mysql.close(rs, statement);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -58,11 +58,9 @@ public class Row {
 
     public void set(Column column, String item) {
         try {
-            List<Object> conn =  MYSQL.connection(this.getDatabase());
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
+            Statement statement = mysql.getConnect().createStatement();
             statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + column.getName() + "` = '" + item + "' WHERE `" + this.column.getName() + "` = '" + this.item + "';");
-            MYSQL.close(null, connect, statement);
+            mysql.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -115,11 +113,9 @@ public class Row {
 
     public void drop() {
         try {
-            List<Object> conn = MYSQL.connection(this.getDatabase());
-            Statement statement = (Statement) conn.get(0);
-            Connection connect = (Connection) conn.get(1);
+            Statement statement = mysql.getConnect().createStatement();
             statement.execute("DELETE FROM `" + this.getTable().getName() + "` where id = " + this.getData().get("id").getAsInt() + ";");
-            MYSQL.close(null, connect, statement);
+            mysql.close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
