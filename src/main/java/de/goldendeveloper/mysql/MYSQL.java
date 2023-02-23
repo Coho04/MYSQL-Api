@@ -148,7 +148,7 @@ public class MYSQL {
     public Database getDatabase(String name) {
         try {
             Statement statement = getConnect().createStatement();
-            statement.execute("use " + name + ";");
+            statement.execute("use `" + name + "`;");
             close(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
