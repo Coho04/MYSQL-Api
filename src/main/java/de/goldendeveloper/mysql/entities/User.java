@@ -26,7 +26,7 @@ public class User {
             if (database) {
                 statement.execute("DROP DATABASE " + this.name + ";");
             }
-            mysql.close(null, statement);
+            mysql.closeRsAndSt(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -61,7 +61,7 @@ public class User {
                     statement.execute("GRANT EXECUTE ON * TO '" + this.name + "'@'localhost';");
                     break;
             }
-            mysql.close(null, statement);
+            mysql.closeRsAndSt(null, statement);
         } catch (SQLException  e) {
             e.printStackTrace();
         }
@@ -96,7 +96,7 @@ public class User {
                     statement.execute("GRANT EXECUTE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
                     break;
             }
-            mysql.close(null, statement);
+            mysql.closeRsAndSt(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -131,7 +131,7 @@ public class User {
                     statement.execute("REVOKE EXECUTE ON * FROM '" + this.name + "'@'localhost';");
                     break;
             }
-            mysql.close(null, statement);
+            mysql.closeRsAndSt(null, statement);
         } catch (SQLException  e) {
             e.printStackTrace();
         }
@@ -166,7 +166,7 @@ public class User {
                     statement.execute("REVOKE EXECUTE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
                     break;
             }
-            mysql.close(null, statement);
+            mysql.closeRsAndSt(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -176,7 +176,7 @@ public class User {
         try {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("SET PASSWORD FOR '" + this.name + "'@'localhost' = PASSWORD('" + password + "');");
-            mysql.close(null, statement);
+            mysql.closeRsAndSt(null, statement);
         } catch (SQLException  e) {
             e.printStackTrace();
         }

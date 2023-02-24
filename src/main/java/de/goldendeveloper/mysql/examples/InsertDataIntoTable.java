@@ -7,11 +7,13 @@ import de.goldendeveloper.mysql.entities.*;
 public class InsertDataIntoTable {
 
     public static void main(String[] args) {
+        String databaseName = "DATABASE-NAME";
+        String tableName = "TABLE-NAME";
         MYSQL mysql = new MYSQL("hostname", "username", "PASSWORD", 3306);
-        if (mysql.existsDatabase("DATABASE-NAME")) {
-            Database database = mysql.getDatabase("DATABASE-NAME");
-            if (database.existsTable("TABLE-NAME")) {
-                Table table = database.getTable("");
+        if (mysql.existsDatabase(databaseName)) {
+            Database database = mysql.getDatabase(databaseName);
+            if (database.existsTable(tableName)) {
+                Table table = database.getTable(tableName);
                 table.insert(
                         new RowBuilder()
                                 .with(table.getColumn("ColumnOne-Name"), "VALUE")

@@ -121,7 +121,11 @@ To delete objects the method drop is attached to an object:
         table.drop();
         database.drop();
         column.drop();
-      
+
+To independently revise the error messages or display them in <a href="https://sentry.io">Sentry</a>, create a new class and extend it with the [ExceptionHandler](src%2Fmain%2Fjava%2Fde%2Fgoldendeveloper%2Fmysql%2Ferrors%2FExceptionHandler.java), an example can be found [here](src%2Fmain%2Fjava%2Fde%2Fgoldendeveloper%2Fmysql%2Fexamples%2FCustomExceptionHandler.java), then add a new instance of your ExceptionHandler in the connection method:
+
+    MYSQL mysql = new MYSQL("hostname", "user", "password", 3306, new NewErrorExceptionHandler());     
+
 To terminate the connection to the server the method disconnect is appended to MYSQL:
 
         mysql.disconnect();
@@ -225,7 +229,12 @@ Um Objekte zu löschen wird einem Objekt die Methode drop angehangen:
         database.drop();
         row.drop();
         column.drop();
-      
+
+Um die Fehlermeldungen eigenständig zu überarbeiten, oder sie in <a href="https://sentry.io">Sentry</a> anzeigen zulassen, 
+erstelle eine neue Klasse die, den [ExceptionHandler](src%2Fmain%2Fjava%2Fde%2Fgoldendeveloper%2Fmysql%2Ferrors%2FExceptionHandler.java) extended ein Beispiel finden Sie [hier](src%2Fmain%2Fjava%2Fde%2Fgoldendeveloper%2Fmysql%2Fexamples%2FCustomExceptionHandler.java), und geben Sie diesen in der Verbindung mit an:
+    
+    MYSQL mysql = new MYSQL("hostname", "user", "password", 3306, new NewErrorExceptionHandler());     
+
 Um die Verbindung zum Server zu beenden wird dem MYSQL die Methode disconnect angehangen:
 
         mysql.disconnect();

@@ -28,7 +28,7 @@ public class Database {
         try {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("ALTER DATABASE `" + this.name + "` Modify Name = `" + name + "`;");
-            mysql.close(null, statement);
+            mysql.closeRsAndSt(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -39,7 +39,7 @@ public class Database {
         try {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("DROP DATABASE `" + this.name + "`;");
-            mysql.close(null, statement);
+            mysql.closeRsAndSt(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -62,7 +62,7 @@ public class Database {
                 Table table = new Table(rs.getString(1), this, mysql);
                 tables.add(table);
             }
-            mysql.close(rs, statement);
+            mysql.closeRsAndSt(rs, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -73,9 +73,13 @@ public class Database {
         try {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
-            mysql.close(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            mysql.closeRsAndSt(null, statement);
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -83,7 +87,7 @@ public class Database {
         try {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
-            mysql.close(null, statement);
+            mysql.closeRsAndSt(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -97,9 +101,16 @@ public class Database {
         try {
             Statement statement = mysql.getConnect().createStatement();
             statement.executeQuery("SELECT * FROM `" + name + "`;");
-            mysql.close(null, statement);
+            mysql.closeRsAndSt(null, statement);
             return true;
         } catch (SQLException e) {
+            return false;
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
             return false;
         }
     }
