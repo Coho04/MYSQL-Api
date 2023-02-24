@@ -18,11 +18,10 @@ public class ExceptionHandler {
     }
 
     public void callException(Exception exception) throws Exception {
-        if (print && !breakProgramm) {
+        if (print) {
             throw new Exception(exception);
-        } else if (print && breakProgramm) {
-            System.out.println(exception.getMessage());
-        } else if (!print && breakProgramm) {
+        }
+        if (breakProgramm) {
             System.exit(1);
         }
     }

@@ -11,11 +11,13 @@ import java.util.HashMap;
 public class ReadRowFromDatabase {
 
     public static void main(String[] args) {
+        String databaseName = "DATABASE-NAME";
+        String tableName = "TABLE-NAME";
         MYSQL mysql = new MYSQL("hostname", "username", "PASSWORD", 3306);
-        if (mysql.existsDatabase("DATABASE-NAME")) {
-            Database database = mysql.getDatabase("DATABASE-NAME");
-            if (database.existsTable("TABLE-NAME")) {
-                Table table = database.getTable("");
+        if (mysql.existsDatabase(databaseName)) {
+            Database database = mysql.getDatabase(databaseName);
+            if (database.existsTable(tableName)) {
+                Table table = database.getTable(tableName);
                 Row row = table.getRow(table.getColumn("COLUMN Name"), "SEARCH-VALUE");
                 HashMap<String, SearchResult> rowData = row.getData();
 

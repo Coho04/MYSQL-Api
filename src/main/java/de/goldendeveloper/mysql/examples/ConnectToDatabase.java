@@ -10,6 +10,8 @@ public class ConnectToDatabase {
         mysql = new MYSQL("127.0.0.1", "root", "", 3306);
         //Connect to Mysql Server with password
         mysql = new MYSQL("127.0.0.1", "root", "password", 3306);
+        //Connect with Custom ErrorHandling
+        mysql = new MYSQL("127.0.0.1", "root", "password", 3306, new CustomExceptionHandler());
 
         String databaseName = "YOUR_DATABASE_NAME";
 
