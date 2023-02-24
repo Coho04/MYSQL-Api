@@ -5,10 +5,10 @@ The MYSQL api also called JMA is responsible for communication between a MYSQL s
 JMA (Java MYSQL API)
 
 [![](https://img.shields.io/badge/License-BSD--2-informational.svg)](LICENSE)
-[![](https://jitpack.io/v/Golden-Developer/MYSQL-Api.svg)](https://jitpack.io/#Golden-Developer/MYSQL-Api)
+[![](https://jitpack.io/v/Golden-Developer/MYSQL-Api.svg)](https://jitpack.io/#golden-developer/MYSQL-Api)
 [![](https://img.shields.io/badge/Java-18-success?logo=java)](https://www.oracle.com/java/technologies/javase-downloads.html)
 [![](https://img.shields.io/badge/Golden--Developer-Mysql--Api-brightgreen?logo=golden-developer.de/img/Golden-Developer-logo.png)](https://www.golden-developer.de/)
-[![](https://jitpack.io/v/Golden-Developer/MYSQL-Api/month.svg)](https://jitpack.io/#Golden-Developer/MYSQL-Api)
+[![](https://jitpack.io/v/Golden-Developer/MYSQL-Api/month.svg)](https://jitpack.io/#golden-developer/MYSQL-Api)
 
 ![a](https://repository-images.githubusercontent.com/456002691/dbb9c775-7291-4d06-aa96-6ef3d0901630)
 
