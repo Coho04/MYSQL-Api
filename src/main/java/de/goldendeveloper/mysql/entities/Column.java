@@ -29,8 +29,12 @@ public class Column {
                 list.add(new SearchResult(rs.getString(1)));
             }
             mysql.closeRsAndSt(rs, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
         return new SearchResults(list);
     }
@@ -40,8 +44,12 @@ public class Column {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("ALTER TABLE `" + this.table.getName() + "` DROP COLUMN `" + this.name + "`;");
             mysql.closeRsAndSt(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -53,10 +61,13 @@ public class Column {
             Object obj = rs.getObject(1);
             mysql.closeRsAndSt(rs, statement);
             return obj;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
-
         return null;
     }
 
@@ -65,8 +76,12 @@ public class Column {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `id` = " + ID + ";");
             mysql.closeRsAndSt(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -75,8 +90,12 @@ public class Column {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `" + this.getName() + "` IS NOT NULL;");
             mysql.closeRsAndSt(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -94,8 +113,12 @@ public class Column {
                 }
             }
             mysql.closeRsAndSt(rs, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
         return null;
     }
@@ -108,8 +131,12 @@ public class Column {
                 return "" + rs.getObject(1) + "";
             }
             mysql.closeRsAndSt(rs, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
         return null;
     }
@@ -120,8 +147,12 @@ public class Column {
             statement.execute("ALTER TABLE `" + this.getTable().getName() + "` CHANGE " + this.name + name + " varchar (50)");
             this.name = name;
             mysql.closeRsAndSt(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 

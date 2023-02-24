@@ -29,8 +29,12 @@ public class Database {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("ALTER DATABASE `" + this.name + "` Modify Name = `" + name + "`;");
             mysql.closeRsAndSt(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
         this.name = name;
     }
@@ -40,8 +44,12 @@ public class Database {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("DROP DATABASE `" + this.name + "`;");
             mysql.closeRsAndSt(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -63,8 +71,12 @@ public class Database {
                 tables.add(table);
             }
             mysql.closeRsAndSt(rs, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
         return tables;
     }
@@ -88,8 +100,12 @@ public class Database {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
             mysql.closeRsAndSt(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
         for (String column : columns) {
             this.getTable(name).addColumn(column);

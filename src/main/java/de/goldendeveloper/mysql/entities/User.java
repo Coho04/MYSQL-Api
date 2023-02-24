@@ -27,8 +27,12 @@ public class User {
                 statement.execute("DROP DATABASE " + this.name + ";");
             }
             mysql.closeRsAndSt(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -62,8 +66,12 @@ public class User {
                     break;
             }
             mysql.closeRsAndSt(null, statement);
-        } catch (SQLException  e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -97,8 +105,12 @@ public class User {
                     break;
             }
             mysql.closeRsAndSt(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -132,8 +144,12 @@ public class User {
                     break;
             }
             mysql.closeRsAndSt(null, statement);
-        } catch (SQLException  e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -167,8 +183,12 @@ public class User {
                     break;
             }
             mysql.closeRsAndSt(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -177,8 +197,12 @@ public class User {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("SET PASSWORD FOR '" + this.name + "'@'localhost' = PASSWORD('" + password + "');");
             mysql.closeRsAndSt(null, statement);
-        } catch (SQLException  e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 }

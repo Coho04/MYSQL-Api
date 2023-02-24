@@ -65,8 +65,12 @@ public class Row {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + column.getName() + "` = '" + item + "' WHERE `" + this.column.getName() + "` = '" + this.item + "';");
             mysql.closeRsAndSt(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -120,8 +124,12 @@ public class Row {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("DELETE FROM `" + this.getTable().getName() + "` where id = " + this.getData().get("id").getAsInt() + ";");
             mysql.closeRsAndSt(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                mysql.getExceptionHandlerClass().callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 }
