@@ -44,9 +44,13 @@ public class Row {
                 } else {
                     return null;
                 }
-                mysql.close(rs, statement);
-            } catch (SQLException e) {
-                e.printStackTrace();
+                mysql.closeRsAndSt(rs, statement);
+            } catch (Exception e) {
+                try {
+                    mysql.getExceptionHandlerClass().callException(e);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         }
         return this.exportMap;
@@ -60,7 +64,7 @@ public class Row {
         try {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + column.getName() + "` = '" + item + "' WHERE `" + this.column.getName() + "` = '" + this.item + "';");
-            mysql.close(null, statement);
+            mysql.closeRsAndSt(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -115,7 +119,7 @@ public class Row {
         try {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("DELETE FROM `" + this.getTable().getName() + "` where id = " + this.getData().get("id").getAsInt() + ";");
-            mysql.close(null, statement);
+            mysql.closeRsAndSt(null, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }

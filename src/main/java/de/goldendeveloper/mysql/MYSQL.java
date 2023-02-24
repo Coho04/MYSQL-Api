@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import de.goldendeveloper.mysql.entities.Database;
 import de.goldendeveloper.mysql.entities.User;
+import de.goldendeveloper.mysql.errors.ExceptionHandler;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,15 +17,18 @@ public class MYSQL {
     private String username;
     private int port = 3306;
 
+    private ExceptionHandler exceptionHandlerClass;
+
     private static final String jbcUrl = "jdbc:mysql://";
     private Connection connection = null;
-    private final HikariDataSource ds;
+    private HikariDataSource ds = null;
 
     public MYSQL(String hostname, String username, String password, int port) {
         this.hostname = hostname;
         this.username = username;
         this.password = password;
         this.port = port;
+        this.exceptionHandlerClass = new ExceptionHandler();
 
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(jbcUrl + this.hostname + ":" + this.port);
@@ -41,6 +45,7 @@ public class MYSQL {
         this.hostname = hostname;
         this.username = username;
         this.password = password;
+        this.exceptionHandlerClass = new ExceptionHandler();
 
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(jbcUrl + this.hostname + ":" + this.port);
@@ -50,7 +55,42 @@ public class MYSQL {
         config.setMaxLifetime(10000);
         config.setIdleTimeout(5000);
 
-        this.ds = new HikariDataSource(config);
+        try {
+            this.ds = new HikariDataSource(config);
+        } catch (Exception e) {
+            try {
+                exceptionHandlerClass.callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + this.hostname + " [Port]: " + this.port + " [Username]: " + this.username + "  !");
+    }
+
+    public <T extends ExceptionHandler> MYSQL(String hostname, String username, String password, int port, T exceptionHandlerClass) {
+        this.hostname = hostname;
+        this.username = username;
+        this.password = password;
+        this.port = port;
+        this.exceptionHandlerClass = exceptionHandlerClass;
+
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(jbcUrl + this.hostname + ":" + this.port);
+        config.setUsername(this.username);
+        config.setPassword(this.password);
+        config.setMaximumPoolSize(3);
+        config.setMaxLifetime(10000);
+        config.setIdleTimeout(5000);
+
+        try {
+            this.ds = new HikariDataSource(config);
+        } catch (Exception e) {
+            try {
+                exceptionHandlerClass.callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
         System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + this.hostname + " [Port]: " + this.port + " [Username]: " + this.username + "  !");
     }
 
@@ -89,9 +129,13 @@ public class MYSQL {
             if (rs.next()) {
                 return rs.getString(1);
             }
-            close(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            closeRsAndSt(null, statement);
+        } catch (Exception e) {
+            try {
+                exceptionHandlerClass.callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
         return null;
     }
@@ -104,9 +148,13 @@ public class MYSQL {
             while (rs.next()) {
                 list.add(new User(rs.getString(1), this));
             }
-            close(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            closeRsAndSt(null, statement);
+        } catch (Exception e) {
+            try {
+                exceptionHandlerClass.callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
         return list;
     }
@@ -116,9 +164,16 @@ public class MYSQL {
             Statement statement = getConnect().createStatement();
             statement.execute("CREATE DATABASE " + name + ";");
             statement.execute("DROP DATABASE " + name + ";");
-            close(null, statement);
+            closeRsAndSt(null, statement);
             return false;
         } catch (SQLException e) {
+            return true;
+        } catch (Exception e) {
+            try {
+                exceptionHandlerClass.callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
             return true;
         }
     }
@@ -128,10 +183,17 @@ public class MYSQL {
             Statement statement = getConnect().createStatement();
             statement.execute("CREATE USER '" + name + "'@'localhost' IDENTIFIED BY 'password';");
             statement.execute("DROP USER '" + name + "'@'localhost';");
-            close(null, statement);
+            closeRsAndSt(null, statement);
             return false;
         } catch (SQLException e) {
             return true;
+        } catch (Exception e) {
+            try {
+                exceptionHandlerClass.callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return false;
         }
     }
 
@@ -139,9 +201,13 @@ public class MYSQL {
         try {
             Statement statement = getConnect().createStatement();
             statement.execute(SQL);
-            close(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            closeRsAndSt(null, statement);
+        } catch (Exception e) {
+            try {
+                exceptionHandlerClass.callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -149,9 +215,13 @@ public class MYSQL {
         try {
             Statement statement = getConnect().createStatement();
             statement.execute("use `" + name + "`;");
-            close(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            closeRsAndSt(null, statement);
+        } catch (Exception e) {
+            try {
+                exceptionHandlerClass.callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
         return new Database(name, this);
     }
@@ -160,9 +230,13 @@ public class MYSQL {
         try {
             Statement statement = getConnect().createStatement();
             statement.execute("CREATE DATABASE " + database + ";");
-            close(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            closeRsAndSt(null, statement);
+        } catch (Exception e) {
+            try {
+                exceptionHandlerClass.callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -170,9 +244,13 @@ public class MYSQL {
         try {
             Statement statement = getConnect().createStatement();
             statement.execute("FLUSH PRIVILEGES;");
-            close(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            closeRsAndSt(null, statement);
+        } catch (Exception e) {
+            try {
+                exceptionHandlerClass.callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -180,9 +258,13 @@ public class MYSQL {
         try {
             Statement statement = getConnect().createStatement();
             statement.execute("use " + database.getName() + ";");
-            close(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            closeRsAndSt(null, statement);
+        } catch (Exception e) {
+            try {
+                exceptionHandlerClass.callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -193,9 +275,13 @@ public class MYSQL {
             if (database) {
                 this.createDatabase(username);
             }
-            close(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            closeRsAndSt(null, statement);
+        } catch (Exception e) {
+            try {
+                exceptionHandlerClass.callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -208,9 +294,13 @@ public class MYSQL {
                 Database db = new Database(rs.getString(1), this);
                 dbs.add(db);
             }
-            close(rs, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            closeRsAndSt(rs, statement);
+        } catch (Exception e) {
+            try {
+                exceptionHandlerClass.callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
         return dbs;
     }
@@ -219,7 +309,15 @@ public class MYSQL {
         return new User(name, this);
     }
 
-    public void close(ResultSet resultSet, Statement statement) {
+    public <T extends ExceptionHandler> void setExceptionHandlerClass(T exceptionHandler) {
+        this.exceptionHandlerClass = exceptionHandler;
+    }
+
+    public ExceptionHandler getExceptionHandlerClass() {
+        return exceptionHandlerClass;
+    }
+
+    public void closeRsAndSt(ResultSet resultSet, Statement statement) {
         try {
             if (resultSet != null) {
                 resultSet.close();
@@ -227,9 +325,29 @@ public class MYSQL {
             if (statement != null) {
                 statement.close();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                exceptionHandlerClass.callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
+    }
+
+    public void close() {
+        try {
+            getConnect().close();
+        } catch (Exception e) {
+            try {
+                exceptionHandlerClass.callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public void closeConnection() {
+        close();
     }
 
     public Connection getConnect() {
@@ -237,12 +355,20 @@ public class MYSQL {
             if (connection == null || connection.isClosed()) {
                 try {
                     connection = ds.getConnection();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                } catch (Exception e) {
+                    try {
+                        exceptionHandlerClass.callException(e);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            try {
+                exceptionHandlerClass.callException(e);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
         return connection;
     }
