@@ -16,9 +16,9 @@
 
     <distributionManagement>
         <repository>
-            <id>internal.repo</id>
-            <name>Temporary Staging Repository</name>
-            <url>file://${project.build.directory}/mvn-repo</url>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/Golden-Developer/MYSQL-Api</url>
         </repository>
     </distributionManagement>
     <build>
@@ -110,6 +110,14 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/Golden-Developer/MYSQL-Api</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>com.jcraft</groupId>
