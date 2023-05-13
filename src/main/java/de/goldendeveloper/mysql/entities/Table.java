@@ -43,26 +43,13 @@ public class Table {
         }
     }
 
-    public Row getRow(Column column, String item) {
-        return new Row(this, column, mysql, item);
-    }
-
-    public Row getRow(Column column, Boolean item) {
-        return new Row(this, column, mysql, String.valueOf(item));
-    }
-
-    public Row getRow(Column column, long item) {
-        return new Row(this, column, mysql, String.valueOf(item));
-    }
-
-    public Row getRow(Column column, int item) {
+    public Row getRow(Column column, Object item) {
         return new Row(this, column, mysql, String.valueOf(item));
     }
 
     public List<Row> getRows() {
         List<Row> rows = new ArrayList<>();
         Column column = this.getColumn("id");
-        Connection connect = mysql.getConnect();
         Statement statement = null;
         try {
             statement = mysql.getConnect().createStatement();
@@ -78,17 +65,7 @@ public class Table {
                     columns = columns + "," + clm.getName();
                 }
                 rs = statement.executeQuery("Select  " + columns.replaceFirst(",", "") + " From (Select *, Row_Number() Over (Order By `id`) As RowNum From `" + this.name + "`) t2 Where RowNum = " + i + ";");
-                ResultSetMetaData rsMetaData = rs.getMetaData();
-                rs.next();
-                for (int b = 1; b <= this.countColumn(); b++) {
-                    if (!rsMetaData.getColumnName(b).isEmpty()) {
-                        if (rs.getString(rsMetaData.getColumnName(b)) != null && !rs.getString(rsMetaData.getColumnName(b)).isEmpty()) {
-                            exportMap.put(rsMetaData.getColumnName(b), new SearchResult(rs.getString(rsMetaData.getColumnName(b))));
-                        } else {
-                            exportMap.put(rsMetaData.getColumnName(b), null);
-                        }
-                    }
-                }
+                exportMap.putAll(fillMap(rs));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -262,8 +239,8 @@ public class Table {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("INSERT INTO `" + this.name + "` (" + keys + ")VALUES (" + items + ");");
             mysql.closeRsAndSt(null, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            mysql.callException(e);
         }
     }
 
@@ -283,17 +260,7 @@ public class Table {
             HashMap<String, SearchResult> exportMap = new HashMap<>();
             try {
                 rs = statement.executeQuery("SELECT * FROM `" + this.getName() + "` WHERE  id = ( SELECT MAX(`id`) FROM `" + this.getName() + "`);");
-                ResultSetMetaData rsMetaData = rs.getMetaData();
-                rs.next();
-                for (int b = 1; b <= this.countColumn(); b++) {
-                    if (!rsMetaData.getColumnName(b).isEmpty()) {
-                        if (rs.getString(rsMetaData.getColumnName(b)) != null && !rs.getString(rsMetaData.getColumnName(b)).isEmpty()) {
-                            exportMap.put(rsMetaData.getColumnName(b), new SearchResult(rs.getString(rsMetaData.getColumnName(b))));
-                        } else {
-                            exportMap.put(rsMetaData.getColumnName(b), null);
-                        }
-                    }
-                }
+                exportMap.putAll(fillMap(rs));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -302,9 +269,26 @@ public class Table {
             r.setExportMap(exportMap);
             mysql.closeRsAndSt(rs, statement);
             return r;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            mysql.callException(e);
         }
+        return null;
+    }
+
+    private HashMap<String, SearchResult> fillMap(ResultSet rs) throws SQLException {
+        HashMap<String, SearchResult> exportMap = new HashMap<>();
+        ResultSetMetaData rsMetaData = rs.getMetaData();
+        rs.next();
+        for (int b = 1; b <= this.countColumn(); b++) {
+            if (!rsMetaData.getColumnName(b).isEmpty()) {
+                if (rs.getString(rsMetaData.getColumnName(b)) != null && !rs.getString(rsMetaData.getColumnName(b)).isEmpty()) {
+                    exportMap.put(rsMetaData.getColumnName(b), new SearchResult(rs.getString(rsMetaData.getColumnName(b))));
+                } else {
+                    exportMap.put(rsMetaData.getColumnName(b), null);
+                }
+            }
+        }
+        return exportMap;
     }
 
     public Row getOldestRow() {
@@ -315,17 +299,7 @@ public class Table {
             ResultSet rs = null;
             try {
                 rs = statement.executeQuery("SELECT * FROM `" + this.getName() + "` WHERE  id = ( SELECT MIN(`id`) FROM `" + this.getName() + "`)';");
-                ResultSetMetaData rsMetaData = rs.getMetaData();
-                rs.next();
-                for (int b = 1; b <= this.countColumn(); b++) {
-                    if (!rsMetaData.getColumnName(b).isEmpty()) {
-                        if (rs.getString(rsMetaData.getColumnName(b)) != null && !rs.getString(rsMetaData.getColumnName(b)).isEmpty()) {
-                            exportMap.put(rsMetaData.getColumnName(b), new SearchResult(rs.getString(rsMetaData.getColumnName(b))));
-                        } else {
-                            exportMap.put(rsMetaData.getColumnName(b), null);
-                        }
-                    }
-                }
+                exportMap.putAll(fillMap(rs));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -334,8 +308,9 @@ public class Table {
             r.setExportMap(exportMap);
             mysql.closeRsAndSt(rs, statement);
             return r;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            mysql.callException(e);
         }
+        return null;
     }
 }

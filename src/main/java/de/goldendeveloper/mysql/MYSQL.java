@@ -29,15 +29,7 @@ public class MYSQL {
         this.password = password;
         this.port = port;
         this.exceptionHandlerClass = new ExceptionHandler();
-
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(jbcUrl + this.hostname + ":" + this.port);
-        config.setUsername(this.username);
-        config.setPassword(this.password);
-        config.setMaximumPoolSize(3);
-        config.setMaxLifetime(10000);
-        config.setIdleTimeout(5000);
-        this.ds = new HikariDataSource(config);
+        createConnectionConfig();
         System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + this.hostname + " [Port]: " + this.port + " [Username]: " + this.username + "  !");
     }
 
@@ -46,24 +38,7 @@ public class MYSQL {
         this.username = username;
         this.password = password;
         this.exceptionHandlerClass = new ExceptionHandler();
-
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(jbcUrl + this.hostname + ":" + this.port);
-        config.setUsername(this.username);
-        config.setPassword(this.password);
-        config.setMaximumPoolSize(3);
-        config.setMaxLifetime(10000);
-        config.setIdleTimeout(5000);
-
-        try {
-            this.ds = new HikariDataSource(config);
-        } catch (Exception e) {
-            try {
-                exceptionHandlerClass.callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
+        createConnectionConfig();
         System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + this.hostname + " [Port]: " + this.port + " [Username]: " + this.username + "  !");
     }
 
@@ -73,24 +48,7 @@ public class MYSQL {
         this.password = password;
         this.port = port;
         this.exceptionHandlerClass = exceptionHandlerClass;
-
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(jbcUrl + this.hostname + ":" + this.port);
-        config.setUsername(this.username);
-        config.setPassword(this.password);
-        config.setMaximumPoolSize(3);
-        config.setMaxLifetime(10000);
-        config.setIdleTimeout(5000);
-
-        try {
-            this.ds = new HikariDataSource(config);
-        } catch (Exception e) {
-            try {
-                exceptionHandlerClass.callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
+        createConnectionConfig();
         System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + this.hostname + " [Port]: " + this.port + " [Username]: " + this.username + "  !");
     }
 
@@ -131,11 +89,7 @@ public class MYSQL {
             }
             closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                exceptionHandlerClass.callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            callException(e);
         }
         return null;
     }
@@ -150,11 +104,7 @@ public class MYSQL {
             }
             closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                exceptionHandlerClass.callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            callException(e);
         }
         return list;
     }
@@ -169,11 +119,7 @@ public class MYSQL {
         } catch (SQLException e) {
             return true;
         } catch (Exception e) {
-            try {
-                exceptionHandlerClass.callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            callException(e);
             return true;
         }
     }
@@ -188,11 +134,7 @@ public class MYSQL {
         } catch (SQLException e) {
             return true;
         } catch (Exception e) {
-            try {
-                exceptionHandlerClass.callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            callException(e);
             return false;
         }
     }
@@ -203,11 +145,7 @@ public class MYSQL {
             statement.execute(SQL);
             closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                exceptionHandlerClass.callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            callException(e);
         }
     }
 
@@ -217,11 +155,7 @@ public class MYSQL {
             statement.execute("use `" + name + "`;");
             closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                exceptionHandlerClass.callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            callException(e);
         }
         return new Database(name, this);
     }
@@ -232,11 +166,7 @@ public class MYSQL {
             statement.execute("CREATE DATABASE " + database + ";");
             closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                exceptionHandlerClass.callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            callException(e);
         }
     }
 
@@ -246,11 +176,7 @@ public class MYSQL {
             statement.execute("FLUSH PRIVILEGES;");
             closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                exceptionHandlerClass.callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            callException(e);
         }
     }
 
@@ -260,11 +186,7 @@ public class MYSQL {
             statement.execute("use " + database.getName() + ";");
             closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                exceptionHandlerClass.callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            callException(e);
         }
     }
 
@@ -277,11 +199,7 @@ public class MYSQL {
             }
             closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                exceptionHandlerClass.callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            callException(e);
         }
     }
 
@@ -296,11 +214,7 @@ public class MYSQL {
             }
             closeRsAndSt(rs, statement);
         } catch (Exception e) {
-            try {
-                exceptionHandlerClass.callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            callException(e);
         }
         return dbs;
     }
@@ -326,11 +240,7 @@ public class MYSQL {
                 statement.close();
             }
         } catch (Exception e) {
-            try {
-                exceptionHandlerClass.callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            callException(e);
         }
     }
 
@@ -338,11 +248,7 @@ public class MYSQL {
         try {
             getConnect().close();
         } catch (Exception e) {
-            try {
-                exceptionHandlerClass.callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            callException(e);
         }
     }
 
@@ -356,20 +262,35 @@ public class MYSQL {
                 try {
                     connection = ds.getConnection();
                 } catch (Exception e) {
-                    try {
-                        exceptionHandlerClass.callException(e);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
+                    callException(e);
                 }
             }
         } catch (Exception e) {
-            try {
-                exceptionHandlerClass.callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            callException(e);
         }
         return connection;
+    }
+
+    private void createConnectionConfig() {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(jbcUrl + this.hostname + ":" + this.port);
+        config.setUsername(this.username);
+        config.setPassword(this.password);
+        config.setMaximumPoolSize(3);
+        config.setMaxLifetime(10000);
+        config.setIdleTimeout(5000);
+        try {
+            this.ds = new HikariDataSource(config);
+        } catch (Exception e) {
+            callException(e);
+        }
+    }
+
+    public void callException(Exception exception) {
+        try {
+            exceptionHandlerClass.callException(exception);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -103,8 +103,7 @@ public class MysqlTypes {
             case BOOLEAN:
                 type = "BOOLEAN";
                 break;
-            case DOUBLE:
-                type = "DOUBLE";
+            case DOUBLE: type = "DOUBLE";
                 break;
         }
         return type;

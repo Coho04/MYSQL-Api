@@ -30,11 +30,7 @@ public class Column {
             }
             mysql.closeRsAndSt(rs, statement);
         } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            mysql.callException(e);
         }
         return new SearchResults(list);
     }
@@ -45,11 +41,7 @@ public class Column {
             statement.execute("ALTER TABLE `" + this.table.getName() + "` DROP COLUMN `" + this.name + "`;");
             mysql.closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            mysql.callException(e);
         }
     }
 
@@ -62,11 +54,7 @@ public class Column {
             mysql.closeRsAndSt(rs, statement);
             return obj;
         } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            mysql.callException(e);
         }
         return null;
     }
@@ -77,11 +65,7 @@ public class Column {
             statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `id` = " + ID + ";");
             mysql.closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            mysql.callException(e);
         }
     }
 
@@ -91,11 +75,7 @@ public class Column {
             statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `" + this.getName() + "` IS NOT NULL;");
             mysql.closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            mysql.callException(e);
         }
     }
 
@@ -114,11 +94,7 @@ public class Column {
             }
             mysql.closeRsAndSt(rs, statement);
         } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            mysql.callException(e);
         }
         return null;
     }
@@ -132,11 +108,7 @@ public class Column {
             }
             mysql.closeRsAndSt(rs, statement);
         } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            mysql.callException(e);
         }
         return null;
     }
@@ -148,11 +120,7 @@ public class Column {
             this.name = name;
             mysql.closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            mysql.callException(e);
         }
     }
 

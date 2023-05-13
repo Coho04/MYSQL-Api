@@ -4,28 +4,9 @@ import java.util.HashMap;
 
 public class RowBuilder {
 
-    private final HashMap<String, String> insertMap;
+    private final HashMap<String, String> insertMap = new HashMap<>();
 
-    public RowBuilder() {
-        this.insertMap = new HashMap<>();
-    }
-
-    public RowBuilder with(Column column, String item) {
-        this.insertMap.put(column.getName(), item);
-        return this;
-    }
-
-    public RowBuilder with(Column column, Boolean item) {
-        this.insertMap.put(column.getName(), String.valueOf(item));
-        return this;
-    }
-
-    public RowBuilder with(Column column, Long item) {
-        this.insertMap.put(column.getName(), String.valueOf(item));
-        return this;
-    }
-
-    public RowBuilder with(Column column, Integer item) {
+    public RowBuilder with(Column column, Object item) {
         this.insertMap.put(column.getName(), String.valueOf(item));
         return this;
     }

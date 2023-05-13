@@ -1,5 +1,7 @@
 package de.goldendeveloper.mysql.entities;
 
+import org.codehaus.plexus.archiver.xz.PlexusIoXZResourceCollection;
+
 import java.util.ArrayList;
 import java.util.List;
 

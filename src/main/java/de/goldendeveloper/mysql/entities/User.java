@@ -28,11 +28,7 @@ public class User {
             }
             mysql.closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            mysql.callException(e);
         }
     }
 
@@ -67,11 +63,7 @@ public class User {
             }
             mysql.closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            mysql.callException(e);
         }
     }
 
@@ -106,11 +98,7 @@ public class User {
             }
             mysql.closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            mysql.callException(e);
         }
     }
 
@@ -145,11 +133,7 @@ public class User {
             }
             mysql.closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            mysql.callException(e);
         }
     }
 
@@ -184,11 +168,7 @@ public class User {
             }
             mysql.closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            mysql.callException(e);
         }
     }
 
@@ -198,11 +178,7 @@ public class User {
             statement.execute("SET PASSWORD FOR '" + this.name + "'@'localhost' = PASSWORD('" + password + "');");
             mysql.closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            mysql.callException(e);
         }
     }
 }

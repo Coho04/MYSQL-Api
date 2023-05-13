@@ -96,17 +96,7 @@ public class Database {
     }
 
     public void createTable(String name, List<String> columns) {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            statement.execute("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
-            mysql.closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
+        this.createTable(name);
         for (String column : columns) {
             this.getTable(name).addColumn(column);
         }

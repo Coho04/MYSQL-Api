@@ -31,14 +31,12 @@ public class Row {
                 ResultSet rs = statement.executeQuery("SELECT * FROM `" + this.getTable().getName() + "` WHERE " + this.column.getName() + " = '" + this.item + "';");
                 ResultSetMetaData rsMetaData = rs.getMetaData();
                 rs.next();
-                if (rs != null) {
+                if (!rs.isClosed()) {
                     for (int i = 1; i <= rsMetaData.getColumnCount(); i++) {
-                        if (!rs.isClosed()) {
-                            if (rs.getString(rsMetaData.getColumnName(i)) != null) {
-                                exportMap.put(rsMetaData.getColumnName(i), new SearchResult(rs.getString(rsMetaData.getColumnName(i))));
-                            } else {
-                                exportMap.put(rsMetaData.getColumnName(i), null);
-                            }
+                        if (rs.getString(rsMetaData.getColumnName(i)) != null) {
+                            exportMap.put(rsMetaData.getColumnName(i), new SearchResult(rs.getString(rsMetaData.getColumnName(i))));
+                        } else {
+                            exportMap.put(rsMetaData.getColumnName(i), null);
                         }
                     }
                 } else {
@@ -46,11 +44,7 @@ public class Row {
                 }
                 mysql.closeRsAndSt(rs, statement);
             } catch (Exception e) {
-                try {
-                    mysql.getExceptionHandlerClass().callException(e);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                mysql.callException(e);
             }
         }
         return this.exportMap;
@@ -60,44 +54,15 @@ public class Row {
         exportMap = newMap;
     }
 
-    public void set(Column column, String item) {
+    public void set(Column column, Object item) {
         try {
             Statement statement = mysql.getConnect().createStatement();
-            statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + column.getName() + "` = '" + item + "' WHERE `" + this.column.getName() + "` = '" + this.item + "';");
+            statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + column.getName() + "` = '" + item.toString() + "' WHERE `" + this.column.getName() + "` = '" + this.item + "';");
             mysql.closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            mysql.callException(e);
         }
     }
-
-    public void set(Column column, int item) {
-        set(column, String.valueOf(item));
-    }
-
-    public void set(Column column, Boolean item) {
-        set(column, String.valueOf(item));
-    }
-
-    public void set(Column column, float item) {
-        set(column, String.valueOf(item));
-    }
-
-    public void set(Column column, char item) {
-        set(column, String.valueOf(item));
-    }
-
-    public void set(Column column, long item) {
-        set(column, String.valueOf(item));
-    }
-
-    public void set(Column column, double item) {
-        set(column, String.valueOf(item));
-    }
-
 
     public List<Column> showColumns() {
         return table.getColumns();
@@ -116,7 +81,7 @@ public class Row {
     }
 
     public int getId() {
-         return getData().get("id").getAsInt();
+        return getData().get("id").getAsInt();
     }
 
     public void drop() {
@@ -125,11 +90,7 @@ public class Row {
             statement.execute("DELETE FROM `" + this.getTable().getName() + "` where id = " + this.getData().get("id").getAsInt() + ";");
             mysql.closeRsAndSt(null, statement);
         } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            mysql.callException(e);
         }
     }
 }
