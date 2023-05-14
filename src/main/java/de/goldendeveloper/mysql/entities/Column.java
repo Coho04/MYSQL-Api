@@ -13,6 +13,12 @@ public class Column {
     private final Database db;
     private final MYSQL mysql;
 
+    /**
+     *
+     * @param name - name of the column
+     * @param table - table of the column
+     * @param mysql - mysql instance
+     */
     public Column(String name, Table table, MYSQL mysql) {
         this.name = name;
         this.db = table.getDatabase();
@@ -20,6 +26,7 @@ public class Column {
         this.mysql = mysql;
     }
 
+    @SuppressWarnings("unused")
     public SearchResults getAll() {
         List<SearchResult> list = new ArrayList<>();
         try {
@@ -35,6 +42,7 @@ public class Column {
         return new SearchResults(list);
     }
 
+    @SuppressWarnings("unused")
     public void drop() {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -45,6 +53,7 @@ public class Column {
         }
     }
 
+    @SuppressWarnings("unused")
     public Object getRandom() {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -59,6 +68,7 @@ public class Column {
         return null;
     }
 
+    @SuppressWarnings("unused")
     public void setItemNull(int ID) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -69,6 +79,7 @@ public class Column {
         }
     }
 
+    @SuppressWarnings("unused")
     public void setNull() {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -79,6 +90,7 @@ public class Column {
         }
     }
 
+    @SuppressWarnings("unused")
     public Boolean getAsBoolean(int id) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -99,12 +111,13 @@ public class Column {
         return null;
     }
 
+    @SuppressWarnings("unused")
     public String getAsString(int id) {
         try {
             Statement statement = mysql.getConnect().createStatement();
             ResultSet rs = statement.executeQuery("SELECT `" + this.name + "` FROM `" + getTable().getName() + "`;");
             while (rs.next()) {
-                return "" + rs.getObject(1) + "";
+                return rs.getObject(1).toString();
             }
             mysql.closeRsAndSt(rs, statement);
         } catch (Exception e) {
@@ -113,6 +126,7 @@ public class Column {
         return null;
     }
 
+    @SuppressWarnings("unused")
     public void setName(String name) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -124,6 +138,7 @@ public class Column {
         }
     }
 
+    @SuppressWarnings("unused")
     public Database getDatabase() {
         return this.db;
     }

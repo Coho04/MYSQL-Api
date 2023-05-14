@@ -2,7 +2,6 @@ package de.goldendeveloper.mysql.entities;
 
 import de.goldendeveloper.mysql.MYSQL;
 
-import java.sql.SQLException;
 import java.sql.Statement;
 
 public class User {
@@ -15,10 +14,12 @@ public class User {
         this.mysql = mysql;
     }
 
+    @SuppressWarnings("unused")
     public String getName() {
         return this.name;
     }
 
+    @SuppressWarnings("unused")
     public void drop(Boolean database) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -32,6 +33,7 @@ public class User {
         }
     }
 
+    @SuppressWarnings("unused")
     public void setPermission(int PERMISSION) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -67,6 +69,7 @@ public class User {
         }
     }
 
+    @SuppressWarnings("unused")
     public void setPermissionToDatabase(int PERMISSION, Database database) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -102,6 +105,7 @@ public class User {
         }
     }
 
+    @SuppressWarnings("unused")
     public void removePermission(int PERMISSION) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -137,6 +141,7 @@ public class User {
         }
     }
 
+    @SuppressWarnings("unused")
     public void removePermissionToDatabase(int PERMISSION, Database database) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -172,6 +177,7 @@ public class User {
         }
     }
 
+    @SuppressWarnings("unused")
     public void setPassword(String password) {
         try {
             Statement statement = mysql.getConnect().createStatement();

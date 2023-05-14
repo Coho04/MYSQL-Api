@@ -20,6 +20,7 @@ public class Database {
         return this.name;
     }
 
+    @SuppressWarnings("unused")
     public void setName(String name) {
         rename(name);
     }
@@ -61,6 +62,7 @@ public class Database {
         }
     }
 
+    @SuppressWarnings("unused")
     public List<Table> getTables() {
         List<Table> tables = new ArrayList<>();
         try {
@@ -95,6 +97,7 @@ public class Database {
         }
     }
 
+    @SuppressWarnings("unused")
     public void createTable(String name, List<String> columns) {
         this.createTable(name);
         for (String column : columns) {
