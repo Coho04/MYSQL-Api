@@ -126,9 +126,9 @@ To independently revise the error messages or display them in <a href="https://s
 
     MYSQL mysql = new MYSQL("hostname", "user", "password", 3306, new NewErrorExceptionHandler());     
 
-To terminate the connection to the server the method disconnect is appended to MYSQL:
+To terminate the connection to the server the method close is appended to MYSQL:
 
-        mysql.disconnect();
+        mysql.close();
 
 
 
@@ -235,9 +235,9 @@ erstelle eine neue Klasse die, den [ExceptionHandler](src%2Fmain%2Fjava%2Fde%2Fg
     
     MYSQL mysql = new MYSQL("hostname", "user", "password", 3306, new NewErrorExceptionHandler());     
 
-Um die Verbindung zum Server zu beenden wird dem MYSQL die Methode disconnect angehangen:
+Um die Verbindung zum Server zu beenden wird dem MYSQL die Methode close angehangen:
 
-        mysql.disconnect();
+        mysql.close();
 
 
 
