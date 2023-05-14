@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class MYSQL {
 
     private String password;
@@ -52,42 +53,34 @@ public class MYSQL {
         System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + this.hostname + " [Port]: " + this.port + " [Username]: " + this.username + "  !");
     }
 
-    @SuppressWarnings("unused")
     public void setPassword(String password) {
         this.password = password;
     }
 
-    @SuppressWarnings("unused")
     public void setHostname(String hostname) {
         this.hostname = hostname;
     }
 
-    @SuppressWarnings("unused")
     public void setPort(int port) {
         this.port = port;
     }
 
-    @SuppressWarnings("unused")
     public void setUsername(String username) {
         this.username = username;
     }
 
-    @SuppressWarnings("unused")
     public String getUsername() {
         return username;
     }
 
-    @SuppressWarnings("unused")
     public int getPort() {
         return port;
     }
 
-    @SuppressWarnings("unused")
     public String getHostname() {
         return hostname;
     }
 
-    @SuppressWarnings("unused")
     public String getVersion() {
         try {
             Statement statement = getConnect().createStatement();
@@ -102,7 +95,6 @@ public class MYSQL {
         return null;
     }
 
-    @SuppressWarnings("unused")
     public List<User> getUsers() {
         List<User> list = new ArrayList<>();
         try {
@@ -133,7 +125,6 @@ public class MYSQL {
         }
     }
 
-    @SuppressWarnings("unused")
     public Boolean existsUser(String name) {
         try {
             Statement statement = getConnect().createStatement();
@@ -149,7 +140,6 @@ public class MYSQL {
         }
     }
 
-    @SuppressWarnings("unused")
     public void customExecute(String SQL) {
         try {
             Statement statement = getConnect().createStatement();
@@ -181,7 +171,6 @@ public class MYSQL {
         }
     }
 
-    @SuppressWarnings("unused")
     public void onFlushPrivileges() {
         try {
             Statement statement = getConnect().createStatement();
@@ -202,7 +191,6 @@ public class MYSQL {
         }
     }
 
-    @SuppressWarnings("unused")
     public void createUser(String username, String password, Boolean database) {
         try {
             Statement statement = getConnect().createStatement();
@@ -216,7 +204,6 @@ public class MYSQL {
         }
     }
 
-    @SuppressWarnings("unused")
     public void createUser(String username, String password) {
         this.createUser(username, password, false);
     }
@@ -237,12 +224,10 @@ public class MYSQL {
         return dbs;
     }
 
-    @SuppressWarnings("unused")
     public User getUser(String name) {
         return new User(name, this);
     }
 
-    @SuppressWarnings("unused")
     public <T extends ExceptionHandler> void setExceptionHandlerClass(T exceptionHandler) {
         this.exceptionHandlerClass = exceptionHandler;
     }
@@ -272,7 +257,6 @@ public class MYSQL {
         }
     }
 
-    @SuppressWarnings("unused")
     public void closeConnection() {
         close();
     }

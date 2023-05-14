@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class Column {
 
     private String name;
@@ -26,7 +27,6 @@ public class Column {
         this.mysql = mysql;
     }
 
-    @SuppressWarnings("unused")
     public SearchResults getAll() {
         List<SearchResult> list = new ArrayList<>();
         try {
@@ -42,7 +42,6 @@ public class Column {
         return new SearchResults(list);
     }
 
-    @SuppressWarnings("unused")
     public void drop() {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -53,7 +52,7 @@ public class Column {
         }
     }
 
-    @SuppressWarnings("unused")
+
     public Object getRandom() {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -68,7 +67,7 @@ public class Column {
         return null;
     }
 
-    @SuppressWarnings("unused")
+
     public void setItemNull(int ID) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -79,7 +78,7 @@ public class Column {
         }
     }
 
-    @SuppressWarnings("unused")
+
     public void setNull() {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -90,7 +89,7 @@ public class Column {
         }
     }
 
-    @SuppressWarnings("unused")
+
     public Boolean getAsBoolean(int id) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -111,7 +110,7 @@ public class Column {
         return null;
     }
 
-    @SuppressWarnings("unused")
+
     public String getAsString(int id) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -126,7 +125,7 @@ public class Column {
         return null;
     }
 
-    @SuppressWarnings("unused")
+
     public void setName(String name) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -138,7 +137,7 @@ public class Column {
         }
     }
 
-    @SuppressWarnings("unused")
+
     public Database getDatabase() {
         return this.db;
     }

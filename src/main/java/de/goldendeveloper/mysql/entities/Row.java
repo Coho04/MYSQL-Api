@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class Row {
 
     private final Table table;
@@ -54,7 +55,6 @@ public class Row {
         exportMap = newMap;
     }
 
-    @SuppressWarnings("unused")
     public void set(Column column, Object item) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -65,17 +65,14 @@ public class Row {
         }
     }
 
-    @SuppressWarnings("unused")
     public List<Column> showColumns() {
         return table.getColumns();
     }
 
-    @SuppressWarnings("unused")
     public List<Column> getColumns() {
         return table.getColumns();
     }
 
-    @SuppressWarnings("unused")
     public Database getDatabase() {
         return this.db;
     }
@@ -84,12 +81,10 @@ public class Row {
         return this.table;
     }
 
-    @SuppressWarnings("unused")
     public int getId() {
         return getData().get("id").getAsInt();
     }
 
-    @SuppressWarnings("unused")
     public void drop() {
         try {
             Statement statement = mysql.getConnect().createStatement();

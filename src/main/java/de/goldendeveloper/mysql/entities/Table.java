@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class Table {
 
     private final String name;
@@ -19,7 +20,6 @@ public class Table {
         this.mysql = mysql;
     }
 
-    @SuppressWarnings("unused")
     public ResultSet describe() {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -34,7 +34,6 @@ public class Table {
         return this.name;
     }
 
-    @SuppressWarnings("unused")
     public void drop() {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -49,7 +48,6 @@ public class Table {
         return new Row(this, column, mysql, String.valueOf(item));
     }
 
-    @SuppressWarnings("unused")
     public List<Row> getRows() {
         List<Row> rows = new ArrayList<>();
         Column column = this.getColumn("id");
@@ -78,7 +76,6 @@ public class Table {
         return rows;
     }
 
-    @SuppressWarnings("unused")
     public HashMap<String, SearchResult> getMap(Statement statement, Column column, int item) {
         HashMap<String, SearchResult> exportMap = new HashMap<>();
         try {
@@ -118,12 +115,10 @@ public class Table {
         return this.getColumns().size();
     }
 
-    @SuppressWarnings("unused")
     public boolean isEmpty() {
         return this.countRows() <= 0;
     }
 
-    @SuppressWarnings("unused")
     public void dropRow(int id) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -167,7 +162,6 @@ public class Table {
         }
     }
 
-    @SuppressWarnings("unused")
     public Boolean existsRow(Column column, String item) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -181,7 +175,6 @@ public class Table {
         }
     }
 
-    @SuppressWarnings("unused")
     public void setUniqueColumn(String name) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -202,12 +195,10 @@ public class Table {
         }
     }
 
-    @SuppressWarnings("unused")
     public Boolean hasColumns() {
         return this.getColumns().size() > 0;
     }
 
-    @SuppressWarnings("unused")
     public Boolean hasColumn(String name) {
         try {
             Statement statement = mysql.getConnect().createStatement();
@@ -249,12 +240,10 @@ public class Table {
         return this.db;
     }
 
-    @SuppressWarnings("unused")
     public Row getRowById(int id) {
         return new Row(this, this.getColumn("id"), mysql, String.valueOf(id));
     }
 
-    @SuppressWarnings("unused")
     public Row getLastestRow() {
         try {
             Column column = this.getColumn("id");
@@ -294,7 +283,6 @@ public class Table {
         return exportMap;
     }
 
-    @SuppressWarnings("unused")
     public Row getOldestRow() {
         try {
             Column column = this.getColumn("id");

@@ -1,5 +1,6 @@
 package de.goldendeveloper.mysql.entities;
 
+@SuppressWarnings("unused")
 public enum MysqlTypes {
     BIT("bit"),
     TINYINT("tinyint"),
