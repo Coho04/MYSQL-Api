@@ -1,6 +1,5 @@
 package de.goldendeveloper.mysql.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -13,57 +12,39 @@ public class SearchResults {
     }
 
     public List<String> getAsString() {
-        List<String> list = new ArrayList<>();
-        item.forEach(st -> list.add(st.getAsString()));
-        return list;
+        return item.stream().map(SearchResult::getAsString).toList();
     }
 
     public List<Boolean> getAsBoolean() {
-        List<Boolean> list = new ArrayList<>();
-        item.forEach(st -> list.add(st.getAsBoolean()));
-        return list;
+        return item.stream().map(SearchResult::getAsBoolean).toList();
     }
 
     public List<Integer> getAsInt() {
-        List<Integer> list = new ArrayList<>();
-        item.forEach(st -> list.add(st.getAsInt()));
-        return list;
+        return item.stream().map(SearchResult::getAsInt).toList();
     }
 
     public List<Long> getAsLong() {
-        List<Long> list = new ArrayList<>();
-        item.forEach(st -> list.add(st.getAsLong()));
-        return list;
+        return item.stream().map(SearchResult::getAsLong).toList();
     }
 
     public List<Double> getAsDouble() {
-        List<Double> list = new ArrayList<>();
-        item.forEach(st -> list.add(st.getAsDouble()));
-        return list;
+        return item.stream().map(SearchResult::getAsDouble).toList();
     }
 
     public List<Short> getAsShort() {
-        List<Short> list = new ArrayList<>();
-        item.forEach(st -> list.add(st.getAsShort()));
-        return list;
+        return item.stream().map(SearchResult::getAsShort).toList();
     }
 
     public List<Float> getAsFloat() {
-        List<Float> list = new ArrayList<>();
-        item.forEach(st -> list.add(st.getAsFloat()));
-        return list;
+        return item.stream().map(SearchResult::getAsFloat).toList();
     }
 
     public List<Object> getAsObject() {
-        List<Object> list = new ArrayList<>();
-        item.forEach(st -> list.add(st.getAsObject()));
-        return list;
+        return item.stream().map(SearchResult::getAsObject).toList();
     }
 
     public List<Byte> getAsByte() {
-        List<Byte> list = new ArrayList<>();
-        item.forEach(st -> list.add(st.getAsByte()));
-        return list;
+        return item.stream().map(SearchResult::getAsByte).toList();
     }
 
     public List<SearchResult> getAsSearchResults() {

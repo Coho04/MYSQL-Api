@@ -213,20 +213,20 @@ public class Table {
     public void insert(HashMap<String, String> rowBuilder) {
         StringBuilder keys = new StringBuilder();
         StringBuilder items = new StringBuilder();
-        for (String key : rowBuilder.keySet()) {
+        rowBuilder.keySet().forEach(key -> {
             if (keys.length() == 0) {
-                keys = new StringBuilder("`" + key + "`");
+                keys.append("`").append(key).append("`");
             } else {
                 keys.append(",`").append(key).append("`");
             }
-        }
-        for (String item : rowBuilder.values()) {
+        });
+        rowBuilder.values().forEach(item -> {
             if (items.length() == 0) {
-                items = new StringBuilder("'" + item + "'");
+                items.append("'").append(item).append("'");
             } else {
                 items.append(",'").append(item).append("'");
             }
-        }
+        });
         try {
             Statement statement = mysql.getConnect().createStatement();
             statement.execute("INSERT INTO `" + this.name + "` (" + keys + ")VALUES (" + items + ");");

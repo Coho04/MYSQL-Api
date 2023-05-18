@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class ReadRowFromDatabase {
 
-    public static void main(String[] args) {
+    public ReadRowFromDatabase() {
         String databaseName = "DATABASE-NAME";
         String tableName = "TABLE-NAME";
         MYSQL mysql = new MYSQL("hostname", "username", "PASSWORD", 3306);

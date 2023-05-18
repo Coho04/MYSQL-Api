@@ -6,7 +6,7 @@ import de.goldendeveloper.mysql.entities.*;
 
 public class InsertDataIntoTable {
 
-    public static void main(String[] args) {
+    public InsertDataIntoTable() {
         String databaseName = "DATABASE-NAME";
         String tableName = "TABLE-NAME";
         MYSQL mysql = new MYSQL("hostname", "username", "PASSWORD", 3306);

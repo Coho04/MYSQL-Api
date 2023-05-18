@@ -2,7 +2,9 @@ package de.goldendeveloper.mysql.entities;
 
 import de.goldendeveloper.mysql.MYSQL;
 
-import java.sql.*;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,9 +100,7 @@ public class Database {
 
     public void createTable(String name, List<String> columns) {
         this.createTable(name);
-        for (String column : columns) {
-            this.getTable(name).addColumn(column);
-        }
+        columns.forEach(column -> this.getTable(name).addColumn(column));
     }
 
 

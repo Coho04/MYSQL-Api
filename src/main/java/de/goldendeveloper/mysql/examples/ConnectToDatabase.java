@@ -4,7 +4,7 @@ import de.goldendeveloper.mysql.MYSQL;
 
 public class ConnectToDatabase {
 
-    public void main(String[] args) {
+    public ConnectToDatabase() {
         MYSQL mysql;
         //Connect to Mysql Server without password
         mysql = new MYSQL("127.0.0.1", "root", "", 3306);
