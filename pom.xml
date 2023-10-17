@@ -11,7 +11,9 @@
     <name>MYSQL-Api | JMA</name>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>20</java.version>
+        <project.source.encoding>UTF-8</project.source.encoding>
+        <project.target.encoding>UTF-8</project.target.encoding>
     </properties>
 
     <build>
@@ -60,8 +62,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <source>16</source>
-                    <target>16</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -126,7 +128,6 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>8.1.0</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
