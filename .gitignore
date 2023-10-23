@@ -15,3 +15,4 @@
 *.iml
 *.ipr
 .idea
+db.properties

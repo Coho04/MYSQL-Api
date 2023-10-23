@@ -2,13 +2,28 @@ package de.goldendeveloper.mysql;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MYSQLTest {
 
     private MYSQL setupTest() {
-        return new MYSQL("localhost", "root", "", 3306);
+        try {
+            Properties properties = new Properties();
+            properties.load(new FileInputStream("db.properties"));
+            String host = properties.getProperty("db.host");
+            String user = properties.getProperty("db.user");
+            String password = properties.getProperty("db.password");
+            int port = Integer.parseInt(properties.getProperty("db.port"));
+            return new MYSQL(host, user, password, port);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 
     @Test
     void setPassword() {

@@ -5,7 +5,7 @@
 
     <groupId>de.goldendeveloper</groupId>
     <artifactId>MYSQL-Api</artifactId>
-    <version>5.3</version>
+    <version>5.4</version>
     <packaging>jar</packaging>
 
     <name>MYSQL-Api | JMA</name>
@@ -117,6 +117,11 @@
             <artifactId>maven-assembly-plugin</artifactId>
             <version>3.4.2</version>
             <type>maven-plugin</type>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-archiver</artifactId>
+            <version>4.8.0</version>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
