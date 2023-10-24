@@ -16,10 +16,10 @@ Maven Integration:
 
 Repository:
 
-	<repository>
-        <id>jitpack.io</id>
-	    <url>https://jitpack.io</url>
-	</repository>
+        <repository>
+            <id>Golden-Developer</id>
+            <url>https://nexus.golden-developer.de/repository/maven-public/</url>
+        </repository>
             
 Dependency:
 
