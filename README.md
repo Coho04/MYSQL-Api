@@ -24,7 +24,7 @@ Repository:
 Dependency:
 
     <dependency>
-	    <groupId>com.github.golden-developer</groupId>
+	    <groupId>de.goldendeveloper</groupId>
 	    <artifactId>MYSQL-Api</artifactId>
 	    <version>{$version}</version>
 	</dependency>
