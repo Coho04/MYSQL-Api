@@ -1,9 +1,11 @@
 package de.goldendeveloper.mysql;
 
+import de.goldendeveloper.mysql.exceptions.NoConnectionException;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -71,7 +73,7 @@ class MYSQLTest {
     }
 
     @Test
-    void existsDatabase() {
+    void existsDatabase() throws NoConnectionException, SQLException {
         if (!setupTest().existsDatabase("test_mysql_api"))
             setupTest().createDatabase("test_mysql_api");
         assertTrue(setupTest().existsDatabase("test_mysql_api"));
@@ -88,14 +90,14 @@ class MYSQLTest {
     }
 
     @Test
-    void getDatabase() {
+    void getDatabase() throws NoConnectionException, SQLException {
         if (!setupTest().existsDatabase("test_mysql_api"))
             setupTest().createDatabase("test_mysql_api");
         assertNotNull(setupTest().getDatabase("test_mysql_api"));
     }
 
     @Test
-    void createDatabase() {
+    void createDatabase() throws NoConnectionException, SQLException {
         if (!setupTest().existsDatabase("test_mysql_api"))
             setupTest().createDatabase("test_mysql_api");
         assertTrue(setupTest().existsDatabase("test_mysql_api"));
@@ -107,7 +109,7 @@ class MYSQLTest {
     }
 
     @Test
-    void switchDatabase() {
+    void switchDatabase() throws NoConnectionException, SQLException {
         MYSQL mysql = setupTest();
         if (!mysql.existsDatabase("test_mysql_api"))
             mysql.createDatabase("test_mysql_api");
@@ -123,7 +125,7 @@ class MYSQLTest {
     }
 
     @Test
-    void getDatabases() {
+    void getDatabases() throws NoConnectionException, SQLException {
         MYSQL mysql = setupTest();
         if (!mysql.existsDatabase("test_mysql_api"))
             mysql.createDatabase("test_mysql_api");
