@@ -5,11 +5,15 @@ import com.zaxxer.hikari.HikariDataSource;
 import de.goldendeveloper.mysql.entities.Database;
 import de.goldendeveloper.mysql.entities.User;
 import de.goldendeveloper.mysql.errors.ExceptionHandler;
+import de.goldendeveloper.mysql.exceptions.NoConnectionException;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is used to manage MySQL operations.
+ */
 @SuppressWarnings("unused")
 public class MYSQL {
 
@@ -24,6 +28,13 @@ public class MYSQL {
     private Connection connection = null;
     private HikariDataSource ds = null;
 
+    /**
+     * Constructor for MYSQL class with hostname, username, password and port.
+     * @param hostname The hostname of the MySQL server.
+     * @param username The username to connect to the MySQL server.
+     * @param password The password to connect to the MySQL server.
+     * @param port The port of the MySQL server.
+     */
     public MYSQL(String hostname, String username, String password, int port) {
         this.hostname = hostname;
         this.username = username;
@@ -81,6 +92,10 @@ public class MYSQL {
         return hostname;
     }
 
+    /**
+     * This method is used to get the version of the MySQL server.
+     * @return The version of the MySQL server.
+     */
     public String getVersion() {
         try {
             Statement statement = getConnect().createStatement();
@@ -112,10 +127,14 @@ public class MYSQL {
 
     public Boolean existsDatabase(String name) {
         try {
-            Statement statement = getConnect().createStatement();
-            statement.execute("CREATE DATABASE " + name + ";");
-            statement.execute("DROP DATABASE " + name + ";");
-            closeRsAndSt(null, statement);
+            Connection connection = getConnect();
+//            Statement statement = getConnect().createStatement();
+//            statement.execute("CREATE DATABASE `" + name + "`;");
+            PreparedStatement preparedStatement = connection.prepareStatement("CREATE DATABASE ?;");
+            preparedStatement.setString(1, name);
+            preparedStatement.execute();
+//            statement.execute("DROP DATABASE " + name + ";");
+            closeRsAndSt(null, preparedStatement);
             return false;
         } catch (SQLException e) {
             return true;
@@ -161,13 +180,30 @@ public class MYSQL {
         return new Database(name, this);
     }
 
-    public void createDatabase(String database) {
+/*    public void createDatabase(String database) {
         try {
             Statement statement = getConnect().createStatement();
             statement.execute("CREATE DATABASE " + database + ";");
             closeRsAndSt(null, statement);
         } catch (Exception e) {
             callException(e);
+        }
+    }*/
+
+    /**
+     * This method is used to create a new database.
+     * @param database The name of the database to be created.
+     * @throws NoConnectionException If there is no connection to the MySQL server.
+     * @throws SQLException If there is any SQL related exception.
+     */
+    public void createDatabase(String database) throws NoConnectionException, SQLException {
+        Connection connection = getConnect();
+        if (connection != null) {
+            Statement statement = connection.createStatement();
+            statement.execute("CREATE DATABASE " + database + ";");
+            closeRsAndSt(null, statement);
+        } else {
+            throw new NoConnectionException("No Connection to MySQL-Server");
         }
     }
 
@@ -261,6 +297,10 @@ public class MYSQL {
         close();
     }
 
+    /**
+     * This method is used to get the connection to the MySQL server.
+     * @return The connection to the MySQL server.
+     */
     public Connection getConnect() {
         try {
             if (connection == null || connection.isClosed()) {
@@ -276,6 +316,10 @@ public class MYSQL {
         return connection;
     }
 
+
+    /**
+     * This method is used to create the configuration for the connection to the MySQL server.
+     */
     private void createConnectionConfig() {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(jbcUrl + this.hostname + ":" + this.port);
@@ -291,6 +335,10 @@ public class MYSQL {
         }
     }
 
+    /**
+     * This method is used to handle exceptions.
+     * @param exception The exception to be handled.
+     */
     public void callException(Exception exception) {
         try {
             exceptionHandlerClass.callException(exception);

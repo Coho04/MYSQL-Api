@@ -29,7 +29,7 @@ public class Row {
         if (exportMap.isEmpty()) {
             try {
                 Statement statement = mysql.getConnect().createStatement();
-                ResultSet rs = statement.executeQuery("SELECT * FROM `" + this.getTable().getName() + "` WHERE " + this.column.getName() + " = '" + this.item + "';");
+                ResultSet rs = statement.executeQuery("SELECT * FROM `" + this.getTable().getName() + "` WHERE `" + this.column.getName() + "` = '" + this.item + "';");
                 ResultSetMetaData rsMetaData = rs.getMetaData();
                 rs.next();
                 if (!rs.isClosed()) {
