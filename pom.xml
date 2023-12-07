@@ -6,7 +6,8 @@
     <groupId>de.goldendeveloper</groupId>
     <artifactId>MYSQL-Api</artifactId>
     <version>5.5</version>
-    <packaging>jar</packaging>
+    <packaging>jar</packaging>         
+    <url>https://github.com/Golden-Developer/MYSQL-Api</url>
 
     <name>MYSQL-Api | JMA</name>
 
