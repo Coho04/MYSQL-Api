@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 @SuppressWarnings("unused")
 public class Table {
@@ -304,5 +305,9 @@ public class Table {
             mysql.callException(e);
         }
         return null;
+    }
+
+    public Row getRandomRow() {
+        return this.getRowById(new Random().nextInt(this.countRows()));
     }
 }
