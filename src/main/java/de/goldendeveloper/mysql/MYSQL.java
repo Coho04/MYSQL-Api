@@ -5,17 +5,17 @@ import com.zaxxer.hikari.HikariDataSource;
 import de.goldendeveloper.mysql.entities.Database;
 import de.goldendeveloper.mysql.entities.User;
 import de.goldendeveloper.mysql.errors.ExceptionHandler;
-import de.goldendeveloper.mysql.exceptions.NoConnectionException;
+import de.goldendeveloper.mysql.interfaces.QueryHelper;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is used to manage MySQL operations.
+ * The MYSQL class provides methods for connecting to a MySQL server and performing operations on the server.
  */
 @SuppressWarnings("unused")
-public class MYSQL {
+public class MYSQL implements QueryHelper {
 
     private String password;
     private String hostname;
@@ -29,11 +29,12 @@ public class MYSQL {
     private HikariDataSource ds = null;
 
     /**
-     * Constructor for MYSQL class with hostname, username, password and port.
+     * Constructor for creating a MYSQL object with the specified hostname, username, password, and port.
+     *
      * @param hostname The hostname of the MySQL server.
      * @param username The username to connect to the MySQL server.
      * @param password The password to connect to the MySQL server.
-     * @param port The port of the MySQL server.
+     * @param port     The port of the MySQL server.
      */
     public MYSQL(String hostname, String username, String password, int port) {
         this.hostname = hostname;
@@ -45,6 +46,13 @@ public class MYSQL {
         System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + this.hostname + " [Port]: " + this.port + " [Username]: " + this.username + "  !");
     }
 
+    /**
+     * Constructor for creating a MYSQL object with the specified hostname, username, and password.
+     *
+     * @param hostname The hostname of the MySQL server.
+     * @param username The username to connect to the MySQL server.
+     * @param password The password to connect to the MySQL server.
+     */
     public MYSQL(String hostname, String username, String password) {
         this.hostname = hostname;
         this.username = username;
@@ -54,6 +62,15 @@ public class MYSQL {
         System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + this.hostname + " [Port]: " + this.port + " [Username]: " + this.username + "  !");
     }
 
+    /**
+     * This method is used to create a new MYSQL object with the specified hostname, username, password, port, and exception handler class.
+     *
+     * @param hostname              The hostname of the MySQL server.
+     * @param username              The username to connect to the MySQL server.
+     * @param password              The password to connect to the MySQL server.
+     * @param port                  The port of the MySQL server.
+     * @param exceptionHandlerClass The exception handler class to handle exceptions.
+     */
     public <T extends ExceptionHandler> MYSQL(String hostname, String username, String password, int port, T exceptionHandlerClass) {
         this.hostname = hostname;
         this.username = username;
@@ -64,214 +81,270 @@ public class MYSQL {
         System.out.println("[Golden-Developer][MYSQL-API] Created [Hostname]: " + this.hostname + " [Port]: " + this.port + " [Username]: " + this.username + "  !");
     }
 
+    /**
+     * Sets the password for the MYSQL class.
+     *
+     * @param password The password to be set.
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Sets the hostname for the MYSQL class.
+     *
+     * @param hostname The hostname to be set.
+     */
     public void setHostname(String hostname) {
         this.hostname = hostname;
     }
 
+    /**
+     * Sets the port for the MYSQL class.
+     *
+     * @param port The port to be set for the MYSQL class.
+     */
     public void setPort(int port) {
         this.port = port;
     }
 
+    /**
+     * Sets the username for the MYSQL class.
+     *
+     * @param username The username to be set for the MYSQL class.
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Retrieves the username associated with the MySQL server.
+     *
+     * @return The username of the MySQL server.
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * This method is used to retrieve the port of the MySQL server.
+     *
+     * @return The port of the MySQL server.
+     */
     public int getPort() {
         return port;
     }
 
+    /**
+     * This method returns the hostname of the MySQL server.
+     *
+     * @return The hostname of the MySQL server.
+     */
     public String getHostname() {
         return hostname;
     }
 
     /**
      * This method is used to get the version of the MySQL server.
+     *
      * @return The version of the MySQL server.
      */
     public String getVersion() {
-        try {
-            Statement statement = getConnect().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT @@VERSION AS 'SQL Server Version Details'");
-            if (rs.next()) {
-                return rs.getString(1);
+        return executeQuery("SELECT @@VERSION AS 'SQL Server Version Details'", rs -> rs.getString(1), this);
+    }
+
+    /**
+     * Retrieves a list of User objects representing the users in the MySQL server.
+     *
+     * @return A list of User objects representing the users in the MySQL server.
+     */
+    public List<User> getUsers() {
+        List<User> users = executeQuery("SELECT user FROM mysql.user;", rs -> {
+            List<User> list = new ArrayList<>();
+            do {
+                list.add(new User(rs.getString(1), this));
+            } while (rs.next());
+            return list;
+        }, this);
+        return users != null ? users : new ArrayList<>();
+    }
+
+    /**
+     * Checks if a database with the given name exists.
+     *
+     * @param databaseName The name of the database to check.
+     * @return {@code true} if the database exists, {@code false} otherwise.
+     */
+    public boolean existsDatabase(String databaseName) {
+        try (Connection connection = getConnect()) {
+            ResultSet resultSet = connection.getMetaData().getCatalogs();
+            while (resultSet.next()) {
+                if (resultSet.getString(1).equalsIgnoreCase(databaseName)) {
+                    return true;
+                }
             }
-            closeRsAndSt(null, statement);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             callException(e);
         }
+        return false;
+    }
+
+    /**
+     * Checks if a user with the given name exists in the MySQL server.
+     *
+     * @param name The name of the user to check.
+     * @return {@code true} if the user exists, {@code false} otherwise.
+     */
+    public boolean existsUser(String name) {
+        String query = "SELECT COUNT(*) FROM mysql.user WHERE user = '" + name + "';";
+        Integer count = executeQuery(query, rs -> rs.getInt(1), this);
+        return count != null && count > 0;
+    }
+
+    /**
+     * Executes the given SQL statement.
+     *
+     * @param SQL The SQL statement to be executed.
+     */
+    public void customExecute(String SQL) {
+        executeUpdate(SQL, this);
+    }
+
+    /**
+     * Retrieves a Database object with the given name.
+     *
+     * @param name The name of the database to retrieve.
+     * @return The Database object with the given name, or null if it doesn't exist.
+     */
+    public Database getDatabase(String name) {
+        executeUpdate("use `" + name + "`;", this);
+        if (existsDatabase(name))
+            return new Database(name, this);
         return null;
     }
 
-    public List<User> getUsers() {
-        List<User> list = new ArrayList<>();
-        try {
-            Statement statement = getConnect().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT user FROM mysql.user;");
-            while (rs.next()) {
-                list.add(new User(rs.getString(1), this));
-            }
-            closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            callException(e);
-        }
-        return list;
-    }
 
-    public Boolean existsDatabase(String name) {
-        try {
-            Connection connection = getConnect();
-//            Statement statement = getConnect().createStatement();
-//            statement.execute("CREATE DATABASE `" + name + "`;");
-            PreparedStatement preparedStatement = connection.prepareStatement("CREATE DATABASE ?;");
-            preparedStatement.setString(1, name);
-            preparedStatement.execute();
-//            statement.execute("DROP DATABASE " + name + ";");
-            closeRsAndSt(null, preparedStatement);
-            return false;
-        } catch (SQLException e) {
-            return true;
-        } catch (Exception e) {
-            callException(e);
-            return true;
-        }
-    }
-
-    public Boolean existsUser(String name) {
-        try {
-            Statement statement = getConnect().createStatement();
-            statement.execute("CREATE USER '" + name + "'@'localhost' IDENTIFIED BY 'password';");
-            statement.execute("DROP USER '" + name + "'@'localhost';");
-            closeRsAndSt(null, statement);
-            return false;
-        } catch (SQLException e) {
-            return true;
-        } catch (Exception e) {
-            callException(e);
-            return false;
-        }
-    }
-
-    public void customExecute(String SQL) {
-        try {
-            Statement statement = getConnect().createStatement();
-            statement.execute(SQL);
-            closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            callException(e);
-        }
-    }
-
-    public Database getDatabase(String name) {
-        try {
-            Statement statement = getConnect().createStatement();
-            statement.execute("use `" + name + "`;");
-            closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            callException(e);
-        }
+    /**
+     * Retrieves an existing Database object with the given name or creates a new one if it doesn't exist.
+     *
+     * @param name The name of the database to retrieve or create.
+     * @return An instance of the Database class representing the database with the given name.
+     */
+    public Database getOrCreateDatabase(String name) {
+        executeUpdate("use `" + name + "`;", this);
+        if (!existsDatabase(name))
+            createDatabase(name);
         return new Database(name, this);
     }
 
-/*    public void createDatabase(String database) {
-        try {
-            Statement statement = getConnect().createStatement();
-            statement.execute("CREATE DATABASE " + database + ";");
-            closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            callException(e);
-        }
-    }*/
-
     /**
      * This method is used to create a new database.
+     *
      * @param database The name of the database to be created.
-     * @throws NoConnectionException If there is no connection to the MySQL server.
-     * @throws SQLException If there is any SQL related exception.
      */
-    public void createDatabase(String database) throws NoConnectionException, SQLException {
-        Connection connection = getConnect();
-        if (connection != null) {
-            Statement statement = connection.createStatement();
-            statement.execute("CREATE DATABASE " + database + ";");
-            closeRsAndSt(null, statement);
-        } else {
-            throw new NoConnectionException("No Connection to MySQL-Server");
-        }
+    public void createDatabase(String database) {
+        executeUpdate("CREATE DATABASE " + database + ";", this);
     }
 
+    /**
+     * This method is used to flush the MySQL server privileges.
+     */
     public void onFlushPrivileges() {
-        try {
-            Statement statement = getConnect().createStatement();
-            statement.execute("FLUSH PRIVILEGES;");
-            closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            callException(e);
-        }
+        executeUpdate("FLUSH PRIVILEGES;", this);
     }
 
+    /**
+     * Switches the current database to the specified database.
+     *
+     * @param database The database to switch to.
+     */
     public void switchDatabase(Database database) {
-        try {
-            Statement statement = getConnect().createStatement();
-            statement.execute("use " + database.getName() + ";");
-            closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            callException(e);
-        }
+        executeUpdate("use " + database.getName() + ";", this);
     }
 
+    /**
+     * Creates a user in the MySQL server.
+     *
+     * @param username The username of the new user.
+     * @param password The password of the new user.
+     * @param database {@code true} if a new database should be created with the same name as the username,
+     *                 {@code false} otherwise.
+     */
     public void createUser(String username, String password, Boolean database) {
-        try {
-            Statement statement = getConnect().createStatement();
-            statement.execute("CREATE USER " + "'" + username + "'@'localhost' IDENTIFIED BY '" + password + "';");
-            if (database) {
-                this.createDatabase(username);
-            }
-            closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            callException(e);
+        executeUpdate("CREATE USER " + "'" + username + "'@'localhost' IDENTIFIED BY '" + password + "';", this);
+        if (database) {
+            this.createDatabase(username);
         }
     }
 
+    /**
+     * Creates a user in the MySQL server.
+     *
+     * @param username The username of the new user.
+     * @param password The password of the new user.
+     */
     public void createUser(String username, String password) {
         this.createUser(username, password, false);
     }
 
-    public List<Database> getDatabases() {
-        List<Database> dbs = new ArrayList<>();
-        try {
-            Statement statement = getConnect().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet rs = statement.executeQuery("SHOW DATABASES;");
-            while (rs.next()) {
-                Database db = new Database(rs.getString(1), this);
-                dbs.add(db);
-            }
-            closeRsAndSt(rs, statement);
-        } catch (Exception e) {
-            callException(e);
+    public User getOrCreateUser(String username, String password) {
+        if (!existsUser(username)) {
+            this.createUser(username, password, false);
         }
-        return dbs;
+        return new User(username, this);
     }
 
+    /**
+     * Retrieves a list of databases from the MySQL server.
+     *
+     * @return a list of Database objects representing the databases in the MySQL server.
+     */
+    public List<Database> getDatabases() {
+        List<Database> databases = executeQuery("SHOW DATABASES;", rs -> {
+            List<Database> list = new ArrayList<>();
+            do {
+                list.add(new Database(rs.getString(1), this));
+            } while (rs.next());
+            return list;
+        }, this);
+        return databases != null ? databases : new ArrayList<>();
+    }
+
+    /**
+     * This method is used to get a User object with the given name.
+     *
+     * @param name The name of the user.
+     * @return The User object with the given name.
+     */
     public User getUser(String name) {
         return new User(name, this);
     }
 
+    /**
+     * Sets the ExceptionHandler class for handling exceptions.
+     *
+     * @param exceptionHandler The ExceptionHandler instance to be set.
+     */
     public <T extends ExceptionHandler> void setExceptionHandlerClass(T exceptionHandler) {
         this.exceptionHandlerClass = exceptionHandler;
     }
 
+    /**
+     * This method is used to get the ExceptionHandler class associated with the MYSQL class.
+     *
+     * @return The ExceptionHandler class instance.
+     */
     public ExceptionHandler getExceptionHandlerClass() {
         return exceptionHandlerClass;
     }
 
+    /**
+     * Closes the given ResultSet and Statement objects.
+     * If any exception occurs during the close operation, it is passed to the {@link #callException(Exception)} method.
+     *
+     * @param resultSet The ResultSet object to be closed.
+     * @param statement The Statement object to be closed.
+     */
     public void closeRsAndSt(ResultSet resultSet, Statement statement) {
         try {
             if (resultSet != null) {
@@ -285,6 +358,10 @@ public class MYSQL {
         }
     }
 
+    /**
+     * Closes the connection to the MySQL server. If an exception occurs during the close operation,
+     * it will be passed to the {@link #callException(Exception)} method.
+     */
     public void close() {
         try {
             getConnect().close();
@@ -293,12 +370,17 @@ public class MYSQL {
         }
     }
 
+    /**
+     * Closes the connection to the MySQL server. If an exception occurs during the close operation,
+     * it will be passed to the {@link #callException(Exception)} method.
+     */
     public void closeConnection() {
         close();
     }
 
     /**
      * This method is used to get the connection to the MySQL server.
+     *
      * @return The connection to the MySQL server.
      */
     public Connection getConnect() {
@@ -337,6 +419,7 @@ public class MYSQL {
 
     /**
      * This method is used to handle exceptions.
+     *
      * @param exception The exception to be handled.
      */
     public void callException(Exception exception) {

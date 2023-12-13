@@ -1,61 +1,74 @@
 package de.goldendeveloper.mysql.entities;
 
 import de.goldendeveloper.mysql.MYSQL;
+import de.goldendeveloper.mysql.interfaces.QueryHelper;
 
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Database class represents a database in a MySQL server.
+ * It provides methods to perform various operations on the database,
+ * such as renaming, dropping, creating tables, retrieving tables,
+ * checking table existence, and getting a specific table.
+ */
 @SuppressWarnings("unused")
-public class Database {
+public class Database implements QueryHelper {
 
     private String name;
     private final MYSQL mysql;
 
+    /**
+     * Represents a database.
+     */
     public Database(String name, MYSQL mysql) {
         this.name = name;
         this.mysql = mysql;
     }
 
+    /**
+     * Retrieves the name of the database.
+     *
+     * @return the name of the database
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Sets the name of the database.
+     *
+     * @param name the new name for the database
+     */
     public void setName(String name) {
         rename(name);
     }
 
+    /**
+     * Renames the database.
+     *
+     * @param name the new name for the database
+     */
     public void rename(String name) {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            statement.execute("ALTER DATABASE `" + this.name + "` Modify Name = `" + name + "`;");
-            mysql.closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
+        executeUpdate("ALTER DATABASE `" + this.name + "` Modify Name = `" + name + "`;", mysql);
         this.name = name;
     }
 
+
+    /**
+     * Drops the database.
+     */
     public void drop() {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            statement.execute("DROP DATABASE `" + this.name + "`;");
-            mysql.closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
+        executeUpdate("DROP DATABASE `" + this.name + "`;", mysql);
     }
 
+    /**
+     * Retrieves a table from the database with the given name.
+     *
+     * @param name the name of the table to retrieve
+     * @return the table with the given name, or null if it does not exist
+     */
     public Table getTable(String name) {
         if (this.existsTable(name)) {
             return new Table(name, this, mysql);
@@ -64,59 +77,85 @@ public class Database {
         }
     }
 
+    /**
+     * Retrieves a list of tables from the database.
+     *
+     * @return a list of tables in the database
+     */
     public List<Table> getTables() {
-        List<Table> tables = new ArrayList<>();
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            ResultSet rs = statement.executeQuery("SHOW TABLES;");
-            while (rs.next()) {
-                Table table = new Table(rs.getString(1), this, mysql);
-                tables.add(table);
-            }
-            mysql.closeRsAndSt(rs, statement);
-        } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-        return tables;
+        String query = "SHOW TABLES;";
+        List<Table> tables = executeQuery(query, rs -> {
+            List<Table> list = new ArrayList<>();
+            do  {
+                list.add(new Table(rs.getString(1), this, mysql));
+            } while (rs.next());
+            return list;
+        }, mysql);
+        return tables != null ? tables : new ArrayList<>();
     }
 
+    /**
+     * Creates a new table with the given name.
+     *
+     * @param name the name of the table to create
+     */
     public void createTable(String name) {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            statement.execute("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));");
-            mysql.closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            try {
-                mysql.getExceptionHandlerClass().callException(e);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+        executeUpdate("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));", mysql);
+    }
+
+    /**
+     * Creates a new table with the given name and columns (if specified).
+     * If the table does not exist, it is created with a primary key column named "id".
+     * If the table exists, it checks if the specified columns exist in the table and adds them if they don't.
+     *
+     * @param name    the name of the table to create or modify
+     * @param columns an array of column names to add to the table (optional)
+     */
+    public void createTable(String name, String[] columns) {
+        if (!this.existsTable(name)) {
+            this.createTable(name);
+        }
+        if (columns.length > 0) {
+            Table table = this.getTable(name);
+            for (String column : columns) {
+                if (!table.hasColumn(column)) {
+                    table.addColumn(column);
+                }
             }
         }
     }
 
+    /**
+     * Creates a new table with the given name and columns.
+     * If the table does not exist, it is created with a primary key column named "id".
+     * If the table exists, it checks if the specified columns exist in the table and adds them if they don't.
+     *
+     * @param name    the name of the table to create or modify
+     * @param columns a list of column names to add to the table (optional)
+     */
     public void createTable(String name, List<String> columns) {
         this.createTable(name);
         columns.forEach(column -> this.getTable(name).addColumn(column));
     }
 
-
-    public Boolean existsTable(String name) {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            statement.executeQuery("SELECT * FROM `" + name + "`;");
-            mysql.closeRsAndSt(null, statement);
-            return true;
-        } catch (SQLException e) {
-            return false;
+    /**
+     * Checks if a table exists in the database.
+     *
+     * @param name the name of the table to check
+     * @return true if the table exists, false otherwise
+     */
+    public boolean existsTable(String tableName) {
+        try (Connection connection = mysql.getConnect()) {
+            DatabaseMetaData metaData = connection.getMetaData();
+            ResultSet resultSet = metaData.getTables(null, null, tableName, new String[] {"TABLE"});
+            boolean exists = resultSet.next();
+            resultSet.close();
+            return exists;
         } catch (Exception e) {
             try {
                 mysql.getExceptionHandlerClass().callException(e);
             } catch (Exception ex) {
-                ex.printStackTrace();
+                throw new RuntimeException(ex);
             }
             return false;
         }

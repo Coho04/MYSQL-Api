@@ -1,5 +1,8 @@
-package de.goldendeveloper.mysql.entities;
+package de.goldendeveloper.mysql.entities.enums;
 
+/**
+ * The MysqlTypes enum represents the different MySQL data types.
+ */
 @SuppressWarnings("unused")
 public enum MysqlTypes {
     BIT("bit"),
@@ -30,10 +33,20 @@ public enum MysqlTypes {
 
     private final String mysqlTypeName;
 
+    /**
+     * Constructs a new MysqlTypes object with the specified MySQL type name.
+     *
+     * @param mysqlTypeName the MySQL type name of the MysqlTypes object
+     */
     MysqlTypes(String mysqlTypeName) {
         this.mysqlTypeName = mysqlTypeName;
     }
 
+    /**
+     * Retrieves the MySQL type name associated with this MysqlTypes object.
+     *
+     * @return the MySQL type name
+     */
     public String getMysqlTypeName() {
         return mysqlTypeName;
     }

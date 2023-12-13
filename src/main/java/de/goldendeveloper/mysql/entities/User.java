@@ -1,142 +1,159 @@
 package de.goldendeveloper.mysql.entities;
 
 import de.goldendeveloper.mysql.MYSQL;
+import de.goldendeveloper.mysql.interfaces.QueryHelper;
+import de.goldendeveloper.mysql.entities.enums.Permissions;
 
-import java.sql.Statement;
-
-public class User {
+/**
+ * Represents a User in the application.
+ */
+@SuppressWarnings("unused")
+public class User implements QueryHelper {
 
     private final String name;
     private final MYSQL mysql;
 
+    /**
+     * Represents a User in the application.
+     */
     public User(String name, MYSQL mysql) {
         this.name = name;
         this.mysql = mysql;
     }
 
-    @SuppressWarnings("unused")
+    /**
+     * Retrieves the name of the user.
+     *
+     * @return The name of the user.
+     */
     public String getName() {
         return this.name;
     }
 
-    @SuppressWarnings("unused")
-    public void drop(Boolean database) {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            statement.execute("DROP USER '" + this.name + "'@'localhost';");
-            if (database) {
-                statement.execute("DROP DATABASE " + this.name + ";");
-            }
-            mysql.closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            mysql.callException(e);
+    /**
+     * Drops the user from the database. If the database parameter is true, it also drops the corresponding database.
+     *
+     * @param database true if the database should also be dropped, false otherwise
+     */
+    public void drop(boolean database) {
+        executeUpdate("DROP USER '" + this.name + "'@'localhost';", mysql);
+        if (database) {
+            executeUpdate("DROP DATABASE " + this.name + ";", mysql);
         }
     }
 
-    @SuppressWarnings("unused")
-    public void setPermission(Permissions PERMISSION) {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            switch (PERMISSION) {
-                case ALL -> statement.execute("GRANT ALL PRIVILEGES ON * TO '" + this.name + "'@'localhost';");
-                case DELETE -> statement.execute("GRANT DELETE ON * TO '" + this.name + "'@'localhost';");
-                case INSERT -> statement.execute("GRANT INSERT ON * TO '" + this.name + "'@'localhost';");
-                case REFERENCES -> statement.execute("GRANT REFERENCES ON * TO '" + this.name + "'@'localhost';");
-                case SELECT -> statement.execute("GRANT SELECT ON * TO '" + this.name + "'@'localhost';");
-                case TRIGGER -> statement.execute("GRANT TRIGGER ON * TO '" + this.name + "'@'localhost';");
-                case UPDATE -> statement.execute("GRANT UPDATE ON * TO '" + this.name + "'@'localhost';");
-                case EXECUTE -> statement.execute("GRANT EXECUTE ON * TO '" + this.name + "'@'localhost';");
-            }
-            mysql.closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            mysql.callException(e);
+    /**
+     * Sets the permissions for the user.
+     *
+     * @param permissions The permissions to be set for the user.
+     */
+    public void setPermission(Permissions permissions) {
+        String query = "";
+        switch (permissions) {
+            case ALL -> query = "GRANT ALL PRIVILEGES ON * TO '" + this.name + "'@'localhost';";
+            case DELETE -> query = "GRANT DELETE ON * TO '" + this.name + "'@'localhost';";
+            case INSERT -> query = "GRANT INSERT ON * TO '" + this.name + "'@'localhost';";
+            case REFERENCES -> query = "GRANT REFERENCES ON * TO '" + this.name + "'@'localhost';";
+            case SELECT -> query = "GRANT SELECT ON * TO '" + this.name + "'@'localhost';";
+            case TRIGGER -> query = "GRANT TRIGGER ON * TO '" + this.name + "'@'localhost';";
+            case UPDATE -> query = "GRANT UPDATE ON * TO '" + this.name + "'@'localhost';";
+            case EXECUTE -> query = "GRANT EXECUTE ON * TO '" + this.name + "'@'localhost';";
+        }
+        if (!query.isBlank()) {
+            executeUpdate(query, mysql);
         }
     }
 
-    @SuppressWarnings("unused")
-    public void setPermissionToDatabase(Permissions PERMISSION, Database database) {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            switch (PERMISSION) {
-                case ALL ->
-                        statement.execute("GRANT ALL PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
-                case DELETE ->
-                        statement.execute("GRANT DELETE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
-                case INSERT ->
-                        statement.execute("GRANT INSERT PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
-                case REFERENCES ->
-                        statement.execute("GRANT REFERENCES PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
-                case SELECT ->
-                        statement.execute("GRANT SELECT PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
-                case TRIGGER ->
-                        statement.execute("GRANT TRIGGER PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
-                case UPDATE ->
-                        statement.execute("GRANT UPDATE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
-                case EXECUTE ->
-                        statement.execute("GRANT EXECUTE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
-            }
-            mysql.closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            mysql.callException(e);
+    /**
+     * Sets the specified permissions to the given database for the current user.
+     *
+     * @param permissions The permissions to be set for the database.
+     * @param database    The database for which the permissions are to be set.
+     */
+    public void setPermissionToDatabase(Permissions permissions, Database database) {
+        String query = "";
+        switch (permissions) {
+            case ALL ->
+                    query = "GRANT ALL PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';";
+            case DELETE ->
+                    query = "GRANT DELETE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';";
+            case INSERT ->
+                    query = "GRANT INSERT PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';";
+            case REFERENCES ->
+                    query = "GRANT REFERENCES PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';";
+            case SELECT ->
+                    query = "GRANT SELECT PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';";
+            case TRIGGER ->
+                    query = "GRANT TRIGGER PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';";
+            case UPDATE ->
+                    query = "GRANT UPDATE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';";
+            case EXECUTE ->
+                    query = "GRANT EXECUTE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';";
+        }
+        if (!query.isBlank()) {
+            executeUpdate(query, mysql);
         }
     }
 
-    @SuppressWarnings("unused")
-    public void removePermission(Permissions PERMISSION) {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            switch (PERMISSION) {
-                case ALL -> statement.execute("REVOKE ALL PRIVILEGES ON * FROM '" + this.name + "'@'localhost';");
-                case DELETE -> statement.execute("REVOKE DELETE ON * FROM '" + this.name + "'@'localhost';");
-                case INSERT -> statement.execute("REVOKE INSERT ON * FROM '" + this.name + "'@'localhost';");
-                case REFERENCES -> statement.execute("REVOKE REFERENCES ON * FROM '" + this.name + "'@'localhost';");
-                case SELECT -> statement.execute("REVOKE SELECT ON * FROM '" + this.name + "'@'localhost';");
-                case TRIGGER -> statement.execute("REVOKE TRIGGER ON * FROM '" + this.name + "'@'localhost';");
-                case UPDATE -> statement.execute("REVOKE UPDATE ON * FROM '" + this.name + "'@'localhost';");
-                case EXECUTE -> statement.execute("REVOKE EXECUTE ON * FROM '" + this.name + "'@'localhost';");
-            }
-            mysql.closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            mysql.callException(e);
+    /**
+     * Removes the specified permissions from the user.
+     *
+     * @param permissions The permissions to be removed from the user.
+     */
+    public void removePermission(Permissions permissions) {
+        String query = "";
+        switch (permissions) {
+            case ALL -> query = "REVOKE ALL PRIVILEGES ON * FROM '" + this.name + "'@'localhost';";
+            case DELETE -> query = "REVOKE DELETE ON * FROM '" + this.name + "'@'localhost';";
+            case INSERT -> query = "REVOKE INSERT ON * FROM '" + this.name + "'@'localhost';";
+            case REFERENCES -> query = "REVOKE REFERENCES ON * FROM '" + this.name + "'@'localhost';";
+            case SELECT -> query = "REVOKE SELECT ON * FROM '" + this.name + "'@'localhost';";
+            case TRIGGER -> query = "REVOKE TRIGGER ON * FROM '" + this.name + "'@'localhost';";
+            case UPDATE -> query = "REVOKE UPDATE ON * FROM '" + this.name + "'@'localhost';";
+            case EXECUTE -> query = "REVOKE EXECUTE ON * FROM '" + this.name + "'@'localhost';";
+        }
+        if (!query.isBlank()) {
+            executeUpdate(query, mysql);
         }
     }
 
-    @SuppressWarnings("unused")
+    /**
+     * Removes the specified permissions from the user for the given database.
+     *
+     * @param PERMISSION The permissions to be removed from the user.
+     * @param database   The database from which to remove the permissions.
+     */
     public void removePermissionToDatabase(Permissions PERMISSION, Database database) {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            switch (PERMISSION) {
-                case ALL ->
-                        statement.execute("REVOKE ALL PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
-                case DELETE ->
-                        statement.execute("REVOKE DELETE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
-                case INSERT ->
-                        statement.execute("REVOKE INSERT PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
-                case REFERENCES ->
-                        statement.execute("REVOKE REFERENCES PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
-                case SELECT ->
-                        statement.execute("REVOKE SELECT PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
-                case TRIGGER ->
-                        statement.execute("REVOKE TRIGGER PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
-                case UPDATE ->
-                        statement.execute("REVOKE UPDATE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
-                case EXECUTE ->
-                        statement.execute("REVOKE EXECUTE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';");
-            }
-            mysql.closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            mysql.callException(e);
+        String query = "";
+        switch (PERMISSION) {
+            case ALL ->
+                    query = "REVOKE ALL PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';";
+            case DELETE ->
+                    query = "REVOKE DELETE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';";
+            case INSERT ->
+                    query = "REVOKE INSERT PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';";
+            case REFERENCES ->
+                    query = "REVOKE REFERENCES PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';";
+            case SELECT ->
+                    query = "REVOKE SELECT PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';";
+            case TRIGGER ->
+                    query = "REVOKE TRIGGER PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';";
+            case UPDATE ->
+                    query = "REVOKE UPDATE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';";
+            case EXECUTE ->
+                    query = "REVOKE EXECUTE PRIVILEGES ON " + database.getName() + "  TO '" + this.name + "'@'localhost';";
+        }
+        if (!query.isBlank()) {
+            executeUpdate(query, mysql);
         }
     }
 
-    @SuppressWarnings("unused")
+    /**
+     * Sets the password for the user.
+     *
+     * @param password The password to be set for the user.
+     */
     public void setPassword(String password) {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            statement.execute("SET PASSWORD FOR '" + this.name + "'@'localhost' = PASSWORD('" + password + "');");
-            mysql.closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            mysql.callException(e);
-        }
+        executeUpdate("SET PASSWORD FOR '" + this.name + "'@'localhost' = PASSWORD('" + password + "');", mysql);
     }
 }

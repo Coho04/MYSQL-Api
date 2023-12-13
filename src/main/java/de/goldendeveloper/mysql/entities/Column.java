@@ -1,14 +1,16 @@
 package de.goldendeveloper.mysql.entities;
 
 import de.goldendeveloper.mysql.MYSQL;
+import de.goldendeveloper.mysql.interfaces.QueryHelper;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a column in a database table.
+ */
 @SuppressWarnings("unused")
-public class Column {
+public class Column implements QueryHelper {
 
     private String name;
     private final Table table;
@@ -16,8 +18,7 @@ public class Column {
     private final MYSQL mysql;
 
     /**
-     *
-     * @param name - name of the column
+     * @param name  - name of the column
      * @param table - table of the column
      * @param mysql - mysql instance
      */
@@ -28,125 +29,105 @@ public class Column {
         this.mysql = mysql;
     }
 
-    public SearchResults getAll() {
+    /**
+     * Retrieves all search results from the database.
+     *
+     * @return A SearchResults object containing all search results.
+     */
+    public List<SearchResult> getAll() {
         List<SearchResult> list = new ArrayList<>();
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT `" + this.name + "` FROM `" + getTable().getName() + "`;");
-            while (rs.next()) {
-                list.add(new SearchResult(rs.getString(1)));
-            }
-            mysql.closeRsAndSt(rs, statement);
-        } catch (Exception e) {
-            mysql.callException(e);
-        }
-        return new SearchResults(list);
+        executeQuery("SELECT `" + this.name + "` FROM `" + table.getName() + "`;", rs -> list.add(new SearchResult(rs.getString(1))), mysql);
+        return list;
     }
 
+    /**
+     * Drops the column from the table in the database.
+     * It executes an SQL query to alter the table and drop the specified column.
+     */
     public void drop() {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            statement.execute("ALTER TABLE `" + this.table.getName() + "` DROP COLUMN `" + this.name + "`;");
-            mysql.closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            mysql.callException(e);
-        }
+        executeUpdate("ALTER TABLE `" + this.getTable().getName() + "` DROP COLUMN `" + this.name + "`;", mysql);
     }
 
-
+    /**
+     * Retrieves a random value from the specified column in the database table.
+     *
+     * @return The random value retrieved from the column.
+     */
     public Object getRandom() {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT " + this.name + " FROM `" + this.getTable().getName() + "` ORDER BY RAND() LIMIT " + this.getTable().countRows());
-            rs.next();
-            Object obj = rs.getObject(1);
-            mysql.closeRsAndSt(rs, statement);
-            return obj;
-        } catch (Exception e) {
-            mysql.callException(e);
-        }
-        return null;
+        String query = "SELECT " + this.name + " FROM `" + this.table.getName() + "` ORDER BY RAND() LIMIT " + this.table.countRows();
+        return executeQuery(query, (rs) -> rs.getObject(1), mysql);
     }
 
-
-    public void setItemNull(int ID) {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `id` = " + ID + ";");
-            mysql.closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            mysql.callException(e);
-        }
+    /**
+     * Sets the value of a specific item in the column to null.
+     *
+     * @param id ID of the item to update.
+     */
+    public void setItemNull(int id) {
+        executeUpdate("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `id` = " + id + ";", mysql);
     }
 
-
+    /**
+     * Sets the value of the column to null for all rows where the column is not already null.
+     * This method updates the specified column in the table to null for all rows where the column is not already null.
+     */
     public void setNull() {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            statement.execute("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `" + this.getName() + "` IS NOT NULL;");
-            mysql.closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            mysql.callException(e);
-        }
+        executeUpdate("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `" + this.getName() + "` IS NOT NULL;", mysql);
     }
 
-
-    public Boolean getAsBoolean(int id) {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT `" + this.name + "` FROM `" + getTable().getName() + "`;");
-            while (rs.next()) {
-                if (rs.getObject(1).toString().equalsIgnoreCase("true")) {
-                    return true;
-                } else if (rs.getObject(1).toString().equalsIgnoreCase("false")) {
-                    return false;
-                } else {
-                    return null;
-                }
-            }
-            mysql.closeRsAndSt(rs, statement);
-        } catch (Exception e) {
-            mysql.callException(e);
-        }
-        return null;
+    /**
+     * Retrieves the boolean value of the specified column for a given ID.
+     *
+     * @param id The ID of the column value to retrieve.
+     * @return The boolean value of the column for the specified ID, or null if the ID does not exist or there is an error.
+     */
+    public boolean getAsBoolean(int id) {
+        return executeQuery("SELECT `" + this.name + "` FROM `" + table.getName() + "`;", rs -> rs.getObject(1).toString().equalsIgnoreCase("true") ? Boolean.TRUE : rs.getObject(1).toString().equalsIgnoreCase("false") ? false : null, mysql);
     }
 
-
+    /**
+     * Retrieves the string value of the specified column for a given ID.
+     *
+     * @param id The ID of the column value to retrieve.
+     * @return The string value of the column for the specified ID, or null if the ID does not exist or there is an error.
+     */
     public String getAsString(int id) {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT `" + this.name + "` FROM `" + getTable().getName() + "`;");
-            while (rs.next()) {
-                return rs.getObject(1).toString();
-            }
-            mysql.closeRsAndSt(rs, statement);
-        } catch (Exception e) {
-            mysql.callException(e);
-        }
-        return null;
+        return executeQuery("SELECT `" + this.name + "` FROM `" + table.getName() + "`;", rs -> rs.getObject(1).toString(), mysql);
     }
 
-
+    /**
+     * Sets the name of the column.
+     *
+     * @param name The new name for the column.
+     */
     public void setName(String name) {
-        try {
-            Statement statement = mysql.getConnect().createStatement();
-            statement.execute("ALTER TABLE `" + this.getTable().getName() + "` CHANGE " + this.name + name + " varchar (50)");
-            this.name = name;
-            mysql.closeRsAndSt(null, statement);
-        } catch (Exception e) {
-            mysql.callException(e);
-        }
+        executeUpdate("ALTER TABLE `" + this.getTable().getName() + "` CHANGE " + this.name + name + " varchar (50)", mysql);
+        this.name = name;
     }
 
-
+    /**
+     * Retrieves the Database object associated with this Column.
+     *
+     * @return The Database object associated with this Column.
+     */
     public Database getDatabase() {
         return this.db;
     }
 
+    /**
+     * Retrieves the Table object associated with this Column.
+     *
+     * @return The Table object associated with this Column.
+     */
     public Table getTable() {
         return this.table;
     }
 
+    /**
+     * Retrieves the name of the column.
+     *
+     * @return The name of the column.
+     */
     public String getName() {
         return this.name;
     }
