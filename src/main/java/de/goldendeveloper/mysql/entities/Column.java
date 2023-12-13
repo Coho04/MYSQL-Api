@@ -18,9 +18,11 @@ public class Column implements QueryHelper {
     private final MYSQL mysql;
 
     /**
-     * @param name  - name of the column
-     * @param table - table of the column
-     * @param mysql - mysql instance
+     * Initializes a new instance of the Column class with the given name, table, and MYSQL object.
+     *
+     * @param name  The name of the column.
+     * @param table The Table object associated with this column.
+     * @param mysql The MYSQL object used for database operations.
      */
     public Column(String name, Table table, MYSQL mysql) {
         this.name = name;

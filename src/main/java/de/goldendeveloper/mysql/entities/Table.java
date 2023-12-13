@@ -24,10 +24,11 @@ public class Table implements QueryHelper {
     private final MYSQL mysql;
 
     /**
-     * The Table class represents a table in a database.
-     * It provides methods to perform various operations on the table,
-     * such as retrieving the table description, dropping the table,
-     * getting rows, columns, and checking table and column existence.
+     * Creates a new Table object with the given name, database, and MYSQL objects.
+     *
+     * @param name     The name of the table.
+     * @param database The Database object representing the associated database.
+     * @param mysql    The MYSQL object representing the database connection.
      */
     public Table(String name, Database database, MYSQL mysql) {
         this.name = name;
@@ -95,12 +96,11 @@ public class Table implements QueryHelper {
     }
 
     /**
-     * Retrieves a map of search results based on the provided statement, column, and item.
+     * Retrieves a map of search results based on the specified column and item.
      *
-     * @param column The Column object representing the column to search in.
+     * @param column The column to search in.
      * @param item   The item to search for in the specified column.
-     * @return A HashMap<String, SearchResult> containing the search results, where the key is the column name
-     * and the value is a SearchResult object representing the retrieved item.
+     * @return A map of search results, where the key is the column name and the value is a SearchResult object representing the retrieved item.
      */
     public HashMap<String, SearchResult> getMap(Column column, String item) {
         String query = "SELECT * FROM `" + this.getName() + "` WHERE " + column.getName() + " = '" + item + "';";

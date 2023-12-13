@@ -63,13 +63,14 @@ public class MYSQL implements QueryHelper {
     }
 
     /**
-     * This method is used to create a new MYSQL object with the specified hostname, username, password, port, and exception handler class.
+     * Constructs a MYSQL object with the specified hostname, username, password, and port.
      *
-     * @param hostname              The hostname of the MySQL server.
-     * @param username              The username to connect to the MySQL server.
-     * @param password              The password to connect to the MySQL server.
-     * @param port                  The port of the MySQL server.
-     * @param exceptionHandlerClass The exception handler class to handle exceptions.
+     * @param hostname             The hostname of the MySQL server.
+     * @param username             The username to connect to the MySQL server.
+     * @param password             The password to connect to the MySQL server.
+     * @param port                 The port of the MySQL server.
+     * @param exceptionHandlerClass The ExceptionHandler class for handling exceptions.
+     * @param <T>                  The type of the ExceptionHandler class.
      */
     public <T extends ExceptionHandler> MYSQL(String hostname, String username, String password, int port, T exceptionHandlerClass) {
         this.hostname = hostname;
@@ -287,6 +288,13 @@ public class MYSQL implements QueryHelper {
         this.createUser(username, password, false);
     }
 
+    /**
+     * Retrieves an existing User object with the given username or creates a new one if it doesn't exist.
+     *
+     * @param username The username of the user to retrieve or create.
+     * @param password The password of the user to retrieve or create.
+     * @return An instance of the User class representing the user with the given username.
+     */
     public User getOrCreateUser(String username, String password) {
         if (!existsUser(username)) {
             this.createUser(username, password, false);
@@ -323,7 +331,8 @@ public class MYSQL implements QueryHelper {
     /**
      * Sets the ExceptionHandler class for handling exceptions.
      *
-     * @param exceptionHandler The ExceptionHandler instance to be set.
+     * @param exceptionHandler The instance of the ExceptionHandler class.
+     * @param <T>              The type of the ExceptionHandler class.
      */
     public <T extends ExceptionHandler> void setExceptionHandlerClass(T exceptionHandler) {
         this.exceptionHandlerClass = exceptionHandler;

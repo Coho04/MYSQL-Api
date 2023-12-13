@@ -3,7 +3,8 @@ package de.goldendeveloper.mysql.entities;
 import java.util.HashMap;
 
 /**
- * Represents a builder class for building rows to be inserted into a database table.
+ * The RowBuilder class is used to build a row for database insertion.
+ * It allows users to insert key-value pairs into a HashMap using the with() method, and retrieve the built HashMap using the build() method.
  */
 public class RowBuilder {
 

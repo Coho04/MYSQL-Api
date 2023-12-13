@@ -20,7 +20,10 @@ public class Database implements QueryHelper {
     private final MYSQL mysql;
 
     /**
-     * Represents a database.
+     * Creates a new instance of the Database class.
+     *
+     * @param name   the name of the database
+     * @param mysql  the MYSQL object used to interact with the database
      */
     public Database(String name, MYSQL mysql) {
         this.name = name;
@@ -144,10 +147,10 @@ public class Database implements QueryHelper {
      * @param name the name of the table to check
      * @return true if the table exists, false otherwise
      */
-    public boolean existsTable(String tableName) {
+    public boolean existsTable(String name) {
         try (Connection connection = mysql.getConnect()) {
             DatabaseMetaData metaData = connection.getMetaData();
-            ResultSet resultSet = metaData.getTables(null, null, tableName, new String[] {"TABLE"});
+            ResultSet resultSet = metaData.getTables(null, null, name, new String[] {"TABLE"});
             boolean exists = resultSet.next();
             resultSet.close();
             return exists;

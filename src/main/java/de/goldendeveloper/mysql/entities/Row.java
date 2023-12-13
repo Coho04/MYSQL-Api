@@ -21,7 +21,14 @@ public class Row implements QueryHelper {
     private final MYSQL mysql;
 
     /**
-     * Represents a row in a MySQL database table.
+     * Represents a row in a database table.
+     *
+     * The Row class contains methods to retrieve and modify data in the corresponding row of the table.
+     *
+     * @param table The Table object representing the table the row belongs to.
+     * @param column The Column object representing the column in the row.
+     * @param mysql The MYSQL object representing the connection to the database.
+     * @param item The value of the column in the row.
      */
     public Row(Table table, Column column, MYSQL mysql, String item) {
         this.db = table.getDatabase();
