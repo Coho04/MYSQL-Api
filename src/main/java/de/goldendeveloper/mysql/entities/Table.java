@@ -89,8 +89,24 @@ public class Table implements QueryHelper {
     public List<Row> getRows() {
         List<Row> rows = new ArrayList<>();
         Column column = this.getColumn("id");
-        for (int i = 1; i <= countRows(); i++) {
-            rows.add(getRow(column, "SELECT * FROM " + this.getName() + " where id = '" + i + "';"));
+        int columnSize = countColumn();
+        int index = 0;
+        try {
+            Statement statement = mysql.getConnect().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM " + this.getName() + ";");
+            while (rs.next()) {
+                index++;
+                Row row = getRow(column, index);
+                HashMap<String, SearchResult> dataMap = new HashMap<>();
+                for (int i = 1; i <= columnSize; i++) {
+                    dataMap.put(rs.getMetaData().getColumnName(i), new SearchResult(rs.getString(i)));
+                }
+                row.setExportMap(dataMap);
+                rows.add(row);
+            }
+            mysql.closeRsAndSt(rs, statement);
+        } catch (Exception e) {
+            mysql.callException(e);
         }
         return rows;
     }
@@ -109,12 +125,9 @@ public class Table implements QueryHelper {
             ResultSetMetaData rsMetaData = rs.getMetaData();
             for (int i = 1; i <= this.countColumn(); i++) {
                 if (!rsMetaData.getColumnName(i).isEmpty()) {
-                    System.out.println("ColumnName: " + rsMetaData.getColumnName(i));
                     if (rs.getString(rsMetaData.getColumnName(i)) != null) {
-                        System.out.println("Value: " + rs.getString(rsMetaData.getColumnName(i)));
                         map.put(rsMetaData.getColumnName(i), new SearchResult(rs.getString(rsMetaData.getColumnName(i))));
                     } else {
-                        System.out.println("Value: null");
                         map.put(rsMetaData.getColumnName(i), null);
                     }
                 }
@@ -336,13 +349,13 @@ public class Table implements QueryHelper {
         try {
             ResultSetMetaData rsMetaData = rs.getMetaData();
             for (int b = 1; b <= this.countColumn(); b++) {
-                if (!rsMetaData.getColumnName(b).isEmpty()) {
-                    if (rs.getString(rsMetaData.getColumnName(b)) != null && !rs.getString(rsMetaData.getColumnName(b)).isEmpty()) {
-                        System.out.println("ColumnName: " + rsMetaData.getColumnName(b));
-                        map.put(rsMetaData.getColumnName(b), new SearchResult(rs.getString(rsMetaData.getColumnName(b))));
+                String columnName = rsMetaData.getColumnName(b);
+                if (!columnName.isEmpty()) {
+                    String columnValue = rs.getString(columnName);
+                    if (columnValue != null && !columnValue.isEmpty()) {
+                        map.put(columnName, new SearchResult(columnValue));
                     } else {
-                        System.out.println("ColumnName: " + rsMetaData.getColumnName(b));
-                        map.put(rsMetaData.getColumnName(b), null);
+                        map.put(columnName, null);
                     }
                 }
             }
