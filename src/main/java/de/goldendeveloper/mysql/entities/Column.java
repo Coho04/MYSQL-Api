@@ -36,10 +36,10 @@ public class Column implements QueryHelper {
      *
      * @return A SearchResults object containing all search results.
      */
-    public List<SearchResult> getAll() {
+    public SearchResults getAll() {
         List<SearchResult> list = new ArrayList<>();
         executeQuery("SELECT `" + this.name + "` FROM `" + table.getName() + "`;", rs -> list.add(new SearchResult(rs.getString(1))), mysql);
-        return list;
+        return new SearchResults(list);
     }
 
     /**
