@@ -26,7 +26,7 @@ jobs:
           username: github
           password: ${{ secrets.NEXUS_PASSWORD }}
           format: maven2
-          repository: MYSQL-Api
+          repository: maven-releases
           coordinates: groupId=de.goldendeveloper artifactId=MYSQL-Api version=${{ env.RELEASE_VERSION }}
           assets: extension=jar
           filename: ./target/MYSQL-Api-${{ env.RELEASE_VERSION }}.jar
