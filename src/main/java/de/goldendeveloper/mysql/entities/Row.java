@@ -22,13 +22,13 @@ public class Row implements QueryHelper {
 
     /**
      * Represents a row in a database table.
-     *
+     * <p>
      * The Row class contains methods to retrieve and modify data in the corresponding row of the table.
      *
-     * @param table The Table object representing the table the row belongs to.
+     * @param table  The Table object representing the table the row belongs to.
      * @param column The Column object representing the column in the row.
-     * @param mysql The MYSQL object representing the connection to the database.
-     * @param item The value of the column in the row.
+     * @param mysql  The MYSQL object representing the connection to the database.
+     * @param item   The value of the column in the row.
      */
     public Row(Table table, Column column, MYSQL mysql, String item) {
         this.db = table.getDatabase();
@@ -51,13 +51,11 @@ public class Row implements QueryHelper {
             exportMap = executeQuery(query, rs -> {
                 HashMap<String, SearchResult> map = new HashMap<>();
                 ResultSetMetaData rsMetaData = rs.getMetaData();
-                if (rs.next()) {
-                    for (int i = 1; i <= rsMetaData.getColumnCount(); i++) {
-                        if (rs.getString(rsMetaData.getColumnName(i)) != null) {
-                            map.put(rsMetaData.getColumnName(i), new SearchResult(rs.getString(rsMetaData.getColumnName(i))));
-                        } else {
-                            map.put(rsMetaData.getColumnName(i), null);
-                        }
+                for (int i = 1; i <= rsMetaData.getColumnCount(); i++) {
+                    if (rs.getString(rsMetaData.getColumnName(i)) != null) {
+                        map.put(rsMetaData.getColumnName(i), new SearchResult(rs.getString(rsMetaData.getColumnName(i))));
+                    } else {
+                        map.put(rsMetaData.getColumnName(i), null);
                     }
                 }
                 return map;
@@ -79,7 +77,7 @@ public class Row implements QueryHelper {
      * Sets the value of a specific item in the column.
      *
      * @param column The Column object representing the column to set the value for.
-     * @param item The new value to set for the column.
+     * @param item   The new value to set for the column.
      */
     public void set(Column column, Object item) {
         executeUpdate("UPDATE `" + this.getTable().getName() + "` SET `" + column.getName() + "` = '" + item.toString() + "' WHERE `" + this.column.getName() + "` = '" + this.item + "';", mysql);
@@ -134,7 +132,7 @@ public class Row implements QueryHelper {
      * Deletes the row from the database table associated with this object.
      * The deletion is performed based on the value of the column in the row.
      * The SQL query executed is as follows:
-     *   DELETE FROM `tableName` WHERE `columnName` = 'columnValue';
+     * DELETE FROM `tableName` WHERE `columnName` = 'columnValue';
      *
      * @see Row#getTable() to retrieve the table associated with this row
      * @see Row#column to retrieve the column associated with this row

@@ -225,7 +225,8 @@ public class Table implements QueryHelper {
      */
     public boolean existsRow(Column column, String item) {
         String query = "SELECT EXISTS(SELECT * FROM `" + this.getName() + "` WHERE `" + column.getName() + "` = '" + item + "')";
-        Boolean exists = executeQuery(query, rs -> rs.next() && rs.getBoolean(1), mysql);
+        Boolean exists = executeQuery(query, rs -> rs.getBoolean(1), mysql);
+        System.out.println("229: existsRow : "  + exists );
         return exists != null && exists;
     }
 
