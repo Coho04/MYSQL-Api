@@ -416,9 +416,6 @@ public class MYSQL implements QueryHelper {
         config.setJdbcUrl(jbcUrl + this.hostname + ":" + this.port);
         config.setUsername(this.username);
         config.setPassword(this.password);
-        config.setMaximumPoolSize(3);
-        config.setMaxLifetime(10000);
-        config.setIdleTimeout(5000);
         try {
             this.ds = new HikariDataSource(config);
         } catch (Exception e) {
