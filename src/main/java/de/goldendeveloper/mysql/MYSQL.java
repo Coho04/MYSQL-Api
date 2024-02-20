@@ -10,6 +10,7 @@ import de.goldendeveloper.mysql.interfaces.QueryHelper;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The MYSQL class provides methods for connecting to a MySQL server and performing operations on the server.
@@ -400,6 +401,13 @@ public class MYSQL implements QueryHelper {
     private void createConnectionConfig() {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(jbcUrl + this.hostname + ":" + this.port);
+        config.setMinimumIdle(5);
+        config.setMaximumPoolSize(10);
+        config.setConnectionTimeout(TimeUnit.SECONDS.toMillis(30));
+        config.setIdleTimeout(TimeUnit.MINUTES.toMillis(10));
+        config.setMaxLifetime(TimeUnit.MINUTES.toMillis(30));
+        config.setInitializationFailTimeout(0);
+        config.setLeakDetectionThreshold(TimeUnit.SECONDS.toMillis(60));
         config.setUsername(this.username);
         config.setPassword(this.password);
         try {
