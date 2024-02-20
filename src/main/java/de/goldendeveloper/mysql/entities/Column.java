@@ -3,7 +3,6 @@ package de.goldendeveloper.mysql.entities;
 import de.goldendeveloper.mysql.MYSQL;
 import de.goldendeveloper.mysql.interfaces.QueryHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,8 +36,8 @@ public class Column implements QueryHelper {
      * @return A SearchResults object containing all search results.
      */
     public SearchResults getAll() {
-        List<SearchResult> list = new ArrayList<>();
-        executeQuery("SELECT `" + this.name + "` FROM `" + table.getName() + "`;", rs -> list.add(new SearchResult(rs.getString(1))), mysql);
+        List<SearchResult> list = executeQuery("SELECT `" + this.name + "` FROM `" + table.getName() + "`;",
+                rs -> new SearchResult(rs.getString(1)), mysql);
         return new SearchResults(list);
     }
 
@@ -84,7 +83,13 @@ public class Column implements QueryHelper {
      * @return The boolean value of the column for the specified ID, or null if the ID does not exist or there is an error.
      */
     public boolean getAsBoolean(int id) {
-        return executeQuery("SELECT `" + this.name + "` FROM `" + table.getName() + "`;", rs -> rs.getObject(1).toString().equalsIgnoreCase("true") ? Boolean.TRUE : rs.getObject(1).toString().equalsIgnoreCase("false") ? false : null, mysql);
+        List<Boolean> results = executeQuery("SELECT `" + this.name + "` FROM `" + table.getName() + "` WHERE id = " + id + ";",
+                rs -> rs.getObject(1).toString().equalsIgnoreCase("true") ? Boolean.TRUE : rs.getObject(1).toString().equalsIgnoreCase("false") ? Boolean.FALSE : null, mysql);
+        if (!results.isEmpty()) {
+            return results.get(0);
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -94,8 +99,15 @@ public class Column implements QueryHelper {
      * @return The string value of the column for the specified ID, or null if the ID does not exist or there is an error.
      */
     public String getAsString(int id) {
-        return executeQuery("SELECT `" + this.name + "` FROM `" + table.getName() + "`;", rs -> rs.getObject(1).toString(), mysql);
+        List<String> results = executeQuery("SELECT `" + this.name + "` FROM `" + table.getName() + "` WHERE id = " + id + ";",
+                rs -> rs.getObject(1) != null ? rs.getObject(1).toString() : null, mysql);
+        if (!results.isEmpty()) {
+            return results.get(0);
+        } else {
+            return null;
+        }
     }
+
 
     /**
      * Sets the name of the column.

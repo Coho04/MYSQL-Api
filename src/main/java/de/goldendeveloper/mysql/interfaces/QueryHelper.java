@@ -4,6 +4,8 @@ import de.goldendeveloper.mysql.MYSQL;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public interface QueryHelper {
 
@@ -16,20 +18,39 @@ public interface QueryHelper {
      * @param <T>     the type of the query result
      * @return the processed query result, or null if an exception occurred
      */
-    default <T> T executeQuery(String query, ResultSetHandler<T> handler, MYSQL mysql) {
+//    default <T> T executeQuery(String query, ResultSetHandler<T> handler, MYSQL mysql) {
+//        try {
+//            Statement statement = mysql.getConnect().createStatement();
+//            ResultSet rs = statement.executeQuery(query);
+//            T result = null;
+//            if (rs.next()) {
+//                result = handler.handle(rs);
+//            }
+//            mysql.closeRsAndSt(rs, statement);
+//            return result;
+//        } catch (Exception e) {
+//            mysql.callException(e);
+//        }
+//        return null;
+//    }
+
+
+    default <T> List<T> executeQuery(String query, ResultSetHandler<T> handler, MYSQL mysql) {
+        List<T> results = new ArrayList<>();
         try {
             Statement statement = mysql.getConnect().createStatement();
             ResultSet rs = statement.executeQuery(query);
-            T result = null;
-            if (rs.next()) {
-                result = handler.handle(rs);
+            while (rs.next()) { // Ändern Sie `if` zu `while`, um alle Zeilen zu verarbeiten
+                T result = handler.handle(rs);
+                if (result != null) {
+                    results.add(result);
+                }
             }
             mysql.closeRsAndSt(rs, statement);
-            return result;
         } catch (Exception e) {
             mysql.callException(e);
         }
-        return null;
+        return results; // Gibt eine Liste von Ergebnissen zurück
     }
 
     /**

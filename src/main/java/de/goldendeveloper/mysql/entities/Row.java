@@ -48,20 +48,19 @@ public class Row implements QueryHelper {
     public HashMap<String, SearchResult> getData() {
         if (exportMap.isEmpty()) {
             String query = "SELECT * FROM `" + this.getTable().getName() + "` WHERE `" + this.column.getName() + "` = '" + this.item + "';";
-            exportMap = executeQuery(query, rs -> {
+            List<HashMap<String, SearchResult>> results = executeQuery(query, rs -> {
                 HashMap<String, SearchResult> map = new HashMap<>();
                 ResultSetMetaData rsMetaData = rs.getMetaData();
                 for (int i = 1; i <= rsMetaData.getColumnCount(); i++) {
-                    if (rs.getString(rsMetaData.getColumnName(i)) != null) {
-                        map.put(rsMetaData.getColumnName(i), new SearchResult(rs.getString(rsMetaData.getColumnName(i))));
-                    } else {
-                        map.put(rsMetaData.getColumnName(i), null);
-                    }
+                    map.put(rsMetaData.getColumnName(i), rs.getString(i) != null ? new SearchResult(rs.getString(i)) : null);
                 }
                 return map;
             }, mysql);
+            if (!results.isEmpty()) {
+                exportMap = results.get(0);
+            }
         }
-        return this.exportMap != null ? this.exportMap : new HashMap<>();
+        return exportMap != null ? exportMap : new HashMap<>();
     }
 
     /**
@@ -135,8 +134,6 @@ public class Row implements QueryHelper {
      * DELETE FROM `tableName` WHERE `columnName` = 'columnValue';
      *
      * @see Row#getTable() to retrieve the table associated with this row
-     * @see Row#column to retrieve the column associated with this row
-     * @see Row#item to retrieve the value of the column in this row
      * @see QueryHelper#executeUpdate(String, MYSQL) for executing the deletion query
      */
     public void drop() {

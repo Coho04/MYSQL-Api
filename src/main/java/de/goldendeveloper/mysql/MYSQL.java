@@ -65,12 +65,12 @@ public class MYSQL implements QueryHelper {
     /**
      * Constructs a MYSQL object with the specified hostname, username, password, and port.
      *
-     * @param hostname             The hostname of the MySQL server.
-     * @param username             The username to connect to the MySQL server.
-     * @param password             The password to connect to the MySQL server.
-     * @param port                 The port of the MySQL server.
+     * @param hostname              The hostname of the MySQL server.
+     * @param username              The username to connect to the MySQL server.
+     * @param password              The password to connect to the MySQL server.
+     * @param port                  The port of the MySQL server.
      * @param exceptionHandlerClass The ExceptionHandler class for handling exceptions.
-     * @param <T>                  The type of the ExceptionHandler class.
+     * @param <T>                   The type of the ExceptionHandler class.
      */
     public <T extends ExceptionHandler> MYSQL(String hostname, String username, String password, int port, T exceptionHandlerClass) {
         this.hostname = hostname;
@@ -151,7 +151,8 @@ public class MYSQL implements QueryHelper {
      * @return The version of the MySQL server.
      */
     public String getVersion() {
-        return executeQuery("SELECT @@VERSION AS 'SQL Server Version Details'", rs -> rs.getString(1), this);
+        List<String> results = executeQuery("SELECT @@VERSION AS 'SQL Server Version Details'", rs -> rs.getString(1), this);
+        return !results.isEmpty() ? results.get(0) : null;
     }
 
     /**
@@ -160,14 +161,7 @@ public class MYSQL implements QueryHelper {
      * @return A list of User objects representing the users in the MySQL server.
      */
     public List<User> getUsers() {
-        List<User> users = executeQuery("SELECT user FROM mysql.user;", rs -> {
-            List<User> list = new ArrayList<>();
-            do {
-                list.add(new User(rs.getString(1), this));
-            } while (rs.next());
-            return list;
-        }, this);
-        return users != null ? users : new ArrayList<>();
+        return executeQuery("SELECT user FROM mysql.user;", rs -> new User(rs.getString(1), this), this);
     }
 
     /**
@@ -197,9 +191,8 @@ public class MYSQL implements QueryHelper {
      * @return {@code true} if the user exists, {@code false} otherwise.
      */
     public boolean existsUser(String name) {
-        String query = "SELECT COUNT(*) FROM mysql.user WHERE user = '" + name + "';";
-        Integer count = executeQuery(query, rs -> rs.getInt(1), this);
-        return count != null && count > 0;
+        List<Integer> results = executeQuery("SELECT COUNT(*) FROM mysql.user WHERE user = '" + name + "';", rs -> rs.getInt(1), this);
+        return !results.isEmpty() && results.get(0) > 0;
     }
 
     /**
@@ -308,14 +301,7 @@ public class MYSQL implements QueryHelper {
      * @return a list of Database objects representing the databases in the MySQL server.
      */
     public List<Database> getDatabases() {
-        List<Database> databases = executeQuery("SHOW DATABASES;", rs -> {
-            List<Database> list = new ArrayList<>();
-            do {
-                list.add(new Database(rs.getString(1), this));
-            } while (rs.next());
-            return list;
-        }, this);
-        return databases != null ? databases : new ArrayList<>();
+        return executeQuery("SHOW DATABASES;", rs -> new Database(rs.getString(1), this), this);
     }
 
     /**

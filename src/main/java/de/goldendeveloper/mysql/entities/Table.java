@@ -49,7 +49,7 @@ public class Table implements QueryHelper {
                 list.add(rs.getString(1));
             }
             return list;
-        }, mysql);
+        }, mysql).get(0);
         return description != null ? description : new ArrayList<>();
     }
 
@@ -119,22 +119,16 @@ public class Table implements QueryHelper {
      * @return A map of search results, where the key is the column name and the value is a SearchResult object representing the retrieved item.
      */
     public HashMap<String, SearchResult> getMap(Column column, String item) {
-        String query = "SELECT * FROM `" + this.getName() + "` WHERE " + column.getName() + " = '" + item + "';";
-        HashMap<String, SearchResult> exportMap = executeQuery(query, rs -> {
+        String query = "SELECT * FROM `" + this.getName() + "` WHERE `" + column.getName() + "` = '" + item + "';";
+        List<HashMap<String, SearchResult>> results = executeQuery(query, rs -> {
             HashMap<String, SearchResult> map = new HashMap<>();
             ResultSetMetaData rsMetaData = rs.getMetaData();
-            for (int i = 1; i <= this.countColumn(); i++) {
-                if (!rsMetaData.getColumnName(i).isEmpty()) {
-                    if (rs.getString(rsMetaData.getColumnName(i)) != null) {
-                        map.put(rsMetaData.getColumnName(i), new SearchResult(rs.getString(rsMetaData.getColumnName(i))));
-                    } else {
-                        map.put(rsMetaData.getColumnName(i), null);
-                    }
-                }
+            for (int i = 1; i <= rsMetaData.getColumnCount(); i++) {
+                map.put(rsMetaData.getColumnName(i), new SearchResult(rs.getString(i)));
             }
             return map;
         }, mysql);
-        return exportMap != null ? exportMap : new HashMap<>();
+        return !results.isEmpty() ? results.get(0) : new HashMap<>();
     }
 
     /**
@@ -143,7 +137,8 @@ public class Table implements QueryHelper {
      * @return The number of rows in the table.
      */
     public int countRows() {
-        return executeQuery("SELECT COUNT(*) FROM `" + this.name + "`;", rs -> rs.getInt(1), mysql);
+        List<Integer> results = executeQuery("SELECT COUNT(*) FROM `" + this.name + "`;", rs -> rs.getInt(1), mysql);
+        return !results.isEmpty() ? results.get(0) : 0;
     }
 
     /**
@@ -179,15 +174,12 @@ public class Table implements QueryHelper {
      * @return A List of Column objects representing the columns in the table.
      */
     public List<Column> getColumns() {
-        String query = "SHOW COLUMNS FROM `" + this.name + "` ;";
-        List<Column> columns = executeQuery(query, rs -> {
+        List<List<Column>> results = executeQuery("SHOW COLUMNS FROM `" + this.name + "`;", rs -> {
             List<Column> list = new ArrayList<>();
-            do {
-                list.add(new Column(rs.getString(1), this, mysql));
-            } while (rs.next());
+            list.add(new Column(rs.getString(1), this, mysql));
             return list;
         }, mysql);
-        return columns != null ? columns : new ArrayList<>();
+        return !results.isEmpty() ? results.get(0) : new ArrayList<>();
     }
 
     /**
@@ -210,9 +202,8 @@ public class Table implements QueryHelper {
      * @return {@code true} if the column exists, {@code false} otherwise.
      */
     public boolean existsColumn(String name) {
-        String query = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" + this.name + "' AND COLUMN_NAME = '" + name + "';";
-        Boolean exists = executeQuery(query, rs -> true, mysql);
-        return exists != null && exists;
+        List<Boolean> results = executeQuery("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" + this.getDatabase().getName() + "' AND TABLE_NAME = '" + this.name + "' AND COLUMN_NAME = '" + name + "';", rs -> true, mysql);
+        return !results.isEmpty() && results.get(0);
     }
 
 
@@ -224,9 +215,8 @@ public class Table implements QueryHelper {
      * @return true if the row exists in the table, false otherwise.
      */
     public boolean existsRow(Column column, String item) {
-        String query = "SELECT EXISTS(SELECT * FROM `" + this.getName() + "` WHERE `" + column.getName() + "` = '" + item + "')";
-        Boolean exists = executeQuery(query, rs -> rs.getBoolean(1), mysql);
-        return exists != null && exists;
+        List<Boolean> results = executeQuery("SELECT EXISTS(SELECT * FROM `" + this.getName() + "` WHERE `" + column.getName() + "` = '" + item + "')", rs -> rs.getBoolean(1), mysql);
+        return !results.isEmpty() && results.get(0);
     }
 
 
@@ -376,12 +366,26 @@ public class Table implements QueryHelper {
     }
 
     private Row getRow(Column column, String query) {
-        HashMap<String, SearchResult> exportMap = executeQuery(query, this::fillMap, mysql);
-        String id = exportMap.get("id").getAsString();
-        Row row = new Row(this, column, mysql, id);
-        row.setExportMap(exportMap);
-        return row;
+        List<HashMap<String, SearchResult>> results = executeQuery(query, rs -> {
+            HashMap<String, SearchResult> map = new HashMap<>();
+            ResultSetMetaData rsMetaData = rs.getMetaData();
+            for (int i = 1; i <= rsMetaData.getColumnCount(); i++) {
+                String key = rsMetaData.getColumnName(i);
+                SearchResult value = new SearchResult(rs.getString(i));
+                map.put(key, value);
+            }
+            return map;
+        }, mysql);
+        if (!results.isEmpty()) {
+            HashMap<String, SearchResult> exportMap = results.get(0);
+            String id = exportMap.get("id").getAsString();
+            Row row = new Row(this, column, mysql, id);
+            row.setExportMap(exportMap);
+            return row;
+        }
+        return null; // Or throw an exception if no row is found
     }
+
 
     /**
      * Retrieves a random row from the table.

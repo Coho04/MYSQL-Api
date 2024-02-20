@@ -87,15 +87,9 @@ public class Database implements QueryHelper {
      */
     public List<Table> getTables() {
         String query = "SHOW TABLES;";
-        List<Table> tables = executeQuery(query, rs -> {
-            List<Table> list = new ArrayList<>();
-            do  {
-                list.add(new Table(rs.getString(1), this, mysql));
-            } while (rs.next());
-            return list;
-        }, mysql);
-        return tables != null ? tables : new ArrayList<>();
+        return executeQuery(query, rs -> new Table(rs.getString(1), this, mysql), mysql);
     }
+
 
     /**
      * Creates a new table with the given name.
