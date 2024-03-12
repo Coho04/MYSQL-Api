@@ -212,7 +212,6 @@ public class MYSQL implements QueryHelper {
      * @return The Database object with the given name, or null if it doesn't exist.
      */
     public Database getDatabase(String name) {
-        executeUpdate("use `" + name + "`;", this);
         if (existsDatabase(name))
             return new Database(name, this);
         return null;

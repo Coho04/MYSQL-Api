@@ -63,7 +63,7 @@ public class Database implements QueryHelper {
      * Drops the database.
      */
     public void drop() {
-        executeUpdate("DROP DATABASE `" + this.name + "`;", mysql);
+        executeUpdate("DROP DATABASE `" + this.name + "`;", mysql, this.getName());
     }
 
     /**
@@ -87,7 +87,7 @@ public class Database implements QueryHelper {
      */
     public List<Table> getTables() {
         String query = "SHOW TABLES;";
-        return executeQuery(query, rs -> new Table(rs.getString(1), this, mysql), mysql);
+        return executeQuery(query, rs -> new Table(rs.getString(1), this, mysql), mysql, this.name);
     }
 
 
@@ -97,7 +97,7 @@ public class Database implements QueryHelper {
      * @param name the name of the table to create
      */
     public void createTable(String name) {
-        executeUpdate("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));", mysql);
+        executeUpdate("CREATE TABLE `" + name + "` (id int NOT NULL AUTO_INCREMENT,PRIMARY KEY (id));", mysql, this.name);
     }
 
     /**

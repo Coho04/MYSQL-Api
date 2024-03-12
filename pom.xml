@@ -5,7 +5,7 @@
 
     <groupId>de.goldendeveloper</groupId>
     <artifactId>MYSQL-Api</artifactId>
-    <version>5.7.3</version>
+    <version>5.7.4</version>
     <packaging>jar</packaging>         
     <url>https://github.com/Golden-Developer/MYSQL-Api</url>
 
@@ -123,6 +123,11 @@
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-archiver</artifactId>
             <version>4.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.26.1</version>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>

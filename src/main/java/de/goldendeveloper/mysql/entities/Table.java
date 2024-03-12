@@ -49,7 +49,7 @@ public class Table implements QueryHelper {
                 list.add(rs.getString(1));
             }
             return list;
-        }, mysql).get(0);
+        }, mysql, db.getName()).get(0);
         return description != null ? description : new ArrayList<>();
     }
 
@@ -67,7 +67,7 @@ public class Table implements QueryHelper {
      * This method executes a SQL query to drop the table with the given name.
      */
     public void drop() {
-        this.executeUpdate("DROP TABLE `" + this.name + "`;", mysql);
+        this.executeUpdate("DROP TABLE `" + this.name + "`;", mysql, db.getName());
     }
 
     /**
@@ -93,6 +93,7 @@ public class Table implements QueryHelper {
         int index = 0;
         try {
             Statement statement = mysql.getConnect().createStatement();
+            statement.execute("USE " + db.getName() + ";");
             ResultSet rs = statement.executeQuery("SELECT * FROM " + this.getName() + ";");
             while (rs.next()) {
                 index++;
@@ -127,7 +128,7 @@ public class Table implements QueryHelper {
                 map.put(rsMetaData.getColumnName(i), new SearchResult(rs.getString(i)));
             }
             return map;
-        }, mysql);
+        }, mysql, db.getName());
         return !results.isEmpty() ? results.get(0) : new HashMap<>();
     }
 
@@ -137,7 +138,7 @@ public class Table implements QueryHelper {
      * @return The number of rows in the table.
      */
     public int countRows() {
-        List<Integer> results = executeQuery("SELECT COUNT(*) FROM `" + this.name + "`;", rs -> rs.getInt(1), mysql);
+        List<Integer> results = executeQuery("SELECT COUNT(*) FROM `" + this.name + "`;", rs -> rs.getInt(1), mysql, db.getName());
         return !results.isEmpty() ? results.get(0) : 0;
     }
 
@@ -165,7 +166,7 @@ public class Table implements QueryHelper {
      * @param id The ID of the row to be dropped.
      */
     public void dropRow(int id) {
-        executeUpdate("DELETE FROM `" + this.name + "` where id = " + id + ";", mysql);
+        executeUpdate("DELETE FROM `" + this.name + "` where id = " + id + ";", mysql, db.getName());
     }
 
     /**
@@ -178,7 +179,7 @@ public class Table implements QueryHelper {
             List<Column> list = new ArrayList<>();
             list.add(new Column(rs.getString(1), this, mysql));
             return list;
-        }, mysql);
+        }, mysql, db.getName());
         return !results.isEmpty() ? results.get(0) : new ArrayList<>();
     }
 
@@ -202,7 +203,7 @@ public class Table implements QueryHelper {
      * @return {@code true} if the column exists, {@code false} otherwise.
      */
     public boolean existsColumn(String name) {
-        List<Boolean> results = executeQuery("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" + this.getDatabase().getName() + "' AND TABLE_NAME = '" + this.name + "' AND COLUMN_NAME = '" + name + "';", rs -> true, mysql);
+        List<Boolean> results = executeQuery("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" + db.getName() + "' AND TABLE_NAME = '" + this.name + "' AND COLUMN_NAME = '" + name + "';", rs -> true, mysql, db.getName());
         return !results.isEmpty() && results.get(0);
     }
 
@@ -215,7 +216,7 @@ public class Table implements QueryHelper {
      * @return true if the row exists in the table, false otherwise.
      */
     public boolean existsRow(Column column, String item) {
-        List<Boolean> results = executeQuery("SELECT EXISTS(SELECT * FROM `" + this.getName() + "` WHERE `" + column.getName() + "` = '" + item + "')", rs -> rs.getBoolean(1), mysql);
+        List<Boolean> results = executeQuery("SELECT EXISTS(SELECT * FROM `" + this.getName() + "` WHERE `" + column.getName() + "` = '" + item + "')", rs -> rs.getBoolean(1), mysql, db.getName());
         return !results.isEmpty() && results.get(0);
     }
 
@@ -227,7 +228,7 @@ public class Table implements QueryHelper {
      * @param name The name of the column to set as unique.
      */
     public void setUniqueColumn(String name) {
-        executeUpdate("ALTER IGNORE TABLE `" + this.name + "` ADD UNIQUE (" + name + ");", mysql);
+        executeUpdate("ALTER IGNORE TABLE `" + this.name + "` ADD UNIQUE (" + name + ");", mysql, db.getName());
     }
 
     /**
@@ -236,7 +237,7 @@ public class Table implements QueryHelper {
      * @param name the name of the column to add
      */
     public void addColumn(String name) {
-        executeUpdate("ALTER TABLE `" + this.name + "` ADD `" + name + "` " + MysqlTypes.TEXT.getMysqlTypeName() + " (" + 65555 + ");", mysql);
+        executeUpdate("ALTER TABLE `" + this.name + "` ADD `" + name + "` " + MysqlTypes.TEXT.getMysqlTypeName() + " (" + 65555 + ");", mysql, db.getName());
     }
 
     /**
@@ -295,7 +296,7 @@ public class Table implements QueryHelper {
                 items.append(",'").append(item).append("'");
             }
         });
-        executeUpdate("INSERT INTO `" + this.name + "` (" + keys + ")VALUES (" + items + ");", mysql);
+        executeUpdate("INSERT INTO `" + this.name + "` (" + keys + ")VALUES (" + items + ");", mysql, db.getName());
     }
 
     /**
@@ -375,7 +376,7 @@ public class Table implements QueryHelper {
                 map.put(key, value);
             }
             return map;
-        }, mysql);
+        }, mysql, db.getName());
         if (!results.isEmpty()) {
             HashMap<String, SearchResult> exportMap = results.get(0);
             String id = exportMap.get("id").getAsString();

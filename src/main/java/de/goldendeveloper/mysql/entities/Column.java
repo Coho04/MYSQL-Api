@@ -37,7 +37,7 @@ public class Column implements QueryHelper {
      */
     public SearchResults getAll() {
         List<SearchResult> list = executeQuery("SELECT `" + this.name + "` FROM `" + table.getName() + "`;",
-                rs -> new SearchResult(rs.getString(1)), mysql);
+                rs -> new SearchResult(rs.getString(1)), mysql, db.getName());
         return new SearchResults(list);
     }
 
@@ -46,7 +46,7 @@ public class Column implements QueryHelper {
      * It executes an SQL query to alter the table and drop the specified column.
      */
     public void drop() {
-        executeUpdate("ALTER TABLE `" + this.getTable().getName() + "` DROP COLUMN `" + this.name + "`;", mysql);
+        executeUpdate("ALTER TABLE `" + this.getTable().getName() + "` DROP COLUMN `" + this.name + "`;", mysql, db.getName());
     }
 
     /**
@@ -56,7 +56,7 @@ public class Column implements QueryHelper {
      */
     public Object getRandom() {
         String query = "SELECT " + this.name + " FROM `" + this.table.getName() + "` ORDER BY RAND() LIMIT " + this.table.countRows();
-        return executeQuery(query, (rs) -> rs.getObject(1), mysql);
+        return executeQuery(query, (rs) -> rs.getObject(1), mysql, db.getName());
     }
 
     /**
@@ -65,7 +65,7 @@ public class Column implements QueryHelper {
      * @param id ID of the item to update.
      */
     public void setItemNull(int id) {
-        executeUpdate("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `id` = " + id + ";", mysql);
+        executeUpdate("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `id` = " + id + ";", mysql, db.getName());
     }
 
     /**
@@ -73,7 +73,7 @@ public class Column implements QueryHelper {
      * This method updates the specified column in the table to null for all rows where the column is not already null.
      */
     public void setNull() {
-        executeUpdate("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `" + this.getName() + "` IS NOT NULL;", mysql);
+        executeUpdate("UPDATE `" + this.getTable().getName() + "` SET `" + this.getName() + "` = NULL where `" + this.getName() + "` IS NOT NULL;", mysql, db.getName());
     }
 
     /**
@@ -84,7 +84,7 @@ public class Column implements QueryHelper {
      */
     public boolean getAsBoolean(int id) {
         List<Boolean> results = executeQuery("SELECT `" + this.name + "` FROM `" + table.getName() + "` WHERE id = " + id + ";",
-                rs -> rs.getObject(1).toString().equalsIgnoreCase("true") ? Boolean.TRUE : rs.getObject(1).toString().equalsIgnoreCase("false") ? Boolean.FALSE : null, mysql);
+                rs -> rs.getObject(1).toString().equalsIgnoreCase("true") ? Boolean.TRUE : rs.getObject(1).toString().equalsIgnoreCase("false") ? Boolean.FALSE : null, mysql, db.getName());
         if (!results.isEmpty()) {
             return results.get(0);
         } else {
@@ -100,7 +100,7 @@ public class Column implements QueryHelper {
      */
     public String getAsString(int id) {
         List<String> results = executeQuery("SELECT `" + this.name + "` FROM `" + table.getName() + "` WHERE id = " + id + ";",
-                rs -> rs.getObject(1) != null ? rs.getObject(1).toString() : null, mysql);
+                rs -> rs.getObject(1) != null ? rs.getObject(1).toString() : null, mysql, db.getName());
         if (!results.isEmpty()) {
             return results.get(0);
         } else {
@@ -115,7 +115,7 @@ public class Column implements QueryHelper {
      * @param name The new name for the column.
      */
     public void setName(String name) {
-        executeUpdate("ALTER TABLE `" + this.getTable().getName() + "` CHANGE " + this.name + name + " varchar (50)", mysql);
+        executeUpdate("ALTER TABLE `" + this.getTable().getName() + "` CHANGE " + this.name + name + " varchar (50)", mysql, db.getName());
         this.name = name;
     }
 

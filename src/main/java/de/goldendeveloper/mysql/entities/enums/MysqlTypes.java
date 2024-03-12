@@ -8,9 +8,7 @@ public enum MysqlTypes {
 
     /**
      * Enumeration representing the variable "BIT".
-     *
      * This enumeration is used to represent a bit variable.
-     *
      * The value of this enumeration is a string "bit".
      */
     BIT("bit"),
@@ -49,7 +47,6 @@ public enum MysqlTypes {
     INT("int"),
     /**
      * Represents a variable of type BIGINT.
-     *
      * The BIGINT type in SQL is typically used to represent large integer values.
      */
     BIGINT("bigint"),
@@ -86,9 +83,7 @@ public enum MysqlTypes {
     DOUBLE("double"),
     /**
      * This is a constant variable representing a date.
-     *
      * The variable is stored as a string with the value "date".
-     *
      * Usage example:
      *     String myDate = DATE.getValue();
      */
@@ -125,10 +120,8 @@ public enum MysqlTypes {
      * The CHAR variable represents a character type in Java.
      * It is used to store single characters and occupies 2 bytes in memory.
      * The value of a CHAR variable can be any valid Unicode character.
-     *
      * Usage:
      * CHAR("char")
-     *
      * Example:
      * char myChar = CHAR.getValue();
      */
@@ -151,10 +144,8 @@ public enum MysqlTypes {
     NVARCHAR("nvarchar"),
     /**
      * Represents a binary value.
-     *
      * Usage:
      * BINARY binary = BINARY("binary");
-     *
      * This class can be used to store binary values and perform operations on them.
      *
      */

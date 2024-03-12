@@ -55,7 +55,7 @@ public class Row implements QueryHelper {
                     map.put(rsMetaData.getColumnName(i), rs.getString(i) != null ? new SearchResult(rs.getString(i)) : null);
                 }
                 return map;
-            }, mysql);
+            }, mysql, db.getName());
             if (!results.isEmpty()) {
                 exportMap = results.get(0);
             }
@@ -79,7 +79,7 @@ public class Row implements QueryHelper {
      * @param item   The new value to set for the column.
      */
     public void set(Column column, Object item) {
-        executeUpdate("UPDATE `" + this.getTable().getName() + "` SET `" + column.getName() + "` = '" + item.toString() + "' WHERE `" + this.column.getName() + "` = '" + this.item + "';", mysql);
+        executeUpdate("UPDATE `" + this.getTable().getName() + "` SET `" + column.getName() + "` = '" + item.toString() + "' WHERE `" + this.column.getName() + "` = '" + this.item + "';", mysql, db.getName());
     }
 
     /**
@@ -137,6 +137,6 @@ public class Row implements QueryHelper {
      * @see QueryHelper#executeUpdate(String, MYSQL) for executing the deletion query
      */
     public void drop() {
-        executeUpdate("DELETE FROM `" + this.getTable().getName() + "` WHERE `" + this.column.getName() + "` = '" + this.item + "';", mysql);
+        executeUpdate("DELETE FROM `" + this.getTable().getName() + "` WHERE `" + this.column.getName() + "` = '" + this.item + "';", mysql, db.getName());
     }
 }
