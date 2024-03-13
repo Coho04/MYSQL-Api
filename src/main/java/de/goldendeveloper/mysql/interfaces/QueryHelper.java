@@ -49,7 +49,7 @@ public interface QueryHelper {
         List<T> results = new ArrayList<>();
         try {
             Statement statement = mysql.getConnect().createStatement();
-            statement.execute("USE " + database);
+            statement.execute("use `" + database + "`;");
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 T result = handler.handle(rs);
@@ -89,7 +89,7 @@ public interface QueryHelper {
     default void executeUpdate(String query, MYSQL mysql, String database) {
         try {
             Statement statement = mysql.getConnect().createStatement();
-            statement.execute("USE " + database);
+            statement.execute("use `" + database + "`;");
             statement.execute(query);
             mysql.closeRsAndSt(null, statement);
         } catch (Exception e) {
