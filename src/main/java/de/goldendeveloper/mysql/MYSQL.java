@@ -409,6 +409,7 @@ public class MYSQL implements QueryHelper {
         config.setLeakDetectionThreshold(TimeUnit.SECONDS.toMillis(60));
         config.setUsername(this.username);
         config.setPassword(this.password);
+        config.setConnectionTestQuery("SELECT 1");
         try {
             this.ds = new HikariDataSource(config);
         } catch (Exception e) {
