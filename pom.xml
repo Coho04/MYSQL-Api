@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.goldendeveloper</groupId>
-    <artifactId>MYSQL-Api</artifactId>
-    <version>5.7.7</version>
-    <packaging>jar</packaging>         
-    <url>https://github.com/Golden-Developer/MYSQL-Api</url>
+    <artifactId>mysql-api</artifactId>
+    <version>5.7.8</version>
+    <packaging>jar</packaging>
+    <url>https://github.com/Golden-Developer/mysql-api</url>
 
     <name>MYSQL-Api | JMA</name>
 
@@ -19,32 +19,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>com.github.github</groupId>
-                <artifactId>site-maven-plugin</artifactId>
-                <version>0.12</version>
-                <configuration>
-                    <message>Maven artifacts for ${project.version}</message>
-                    <noJekyll>true</noJekyll>
-                    <outputDirectory>${project.build.directory}/mvn-repo
-                    </outputDirectory>
-                    <branch>refs/heads/mvn-repo</branch>
-                    <includes>
-                        <include>**/*</include>
-                    </includes>
-                    <repositoryName>MYSQL-Api</repositoryName>
-                    <repositoryOwner>Golden-Developer</repositoryOwner>
-                    <server>github</server>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>site</goal>
-                        </goals>
-                        <phase>deploy</phase>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -106,6 +80,13 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/Golden-Developer/mysql-api</url>
+        </repository>
+    </distributionManagement>
 
     <dependencies>
         <dependency>
