@@ -1,4 +1,4 @@
-package de.goldendeveloper.mysql.entities;
+package io.github.coho04.mysql.entities;
 
 /**
  * The SearchResult class represents a single search result item.

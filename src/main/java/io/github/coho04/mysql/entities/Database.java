@@ -1,10 +1,9 @@
-package de.goldendeveloper.mysql.entities;
+package io.github.coho04.mysql.entities;
 
-import de.goldendeveloper.mysql.MYSQL;
-import de.goldendeveloper.mysql.interfaces.QueryHelper;
+import io.github.coho04.mysql.MYSQL;
+import io.github.coho04.mysql.interfaces.QueryHelper;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

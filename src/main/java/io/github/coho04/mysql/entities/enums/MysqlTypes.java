@@ -1,4 +1,4 @@
-package de.goldendeveloper.mysql.entities.enums;
+package io.github.coho04.mysql.entities.enums;
 
 /**
  * The MysqlTypes enum represents the different MySQL data types.

@@ -1,6 +1,6 @@
-package de.goldendeveloper.mysql.interfaces;
+package io.github.coho04.mysql.interfaces;
 
-import de.goldendeveloper.mysql.MYSQL;
+import io.github.coho04.mysql.MYSQL;
 
 import java.sql.ResultSet;
 import java.sql.Statement;

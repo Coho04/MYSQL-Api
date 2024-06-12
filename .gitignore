@@ -1,10 +1,10 @@
 # Project exclude paths
 /target/
-/src/main/java/de/goldendeveloper/mysql/TestClass.java
-/src/main/java/de/goldendeveloper/mysql/ID.java
-/src/main/java/de/goldendeveloper/mysql/TestMain.java
-/src/main/java/de/goldendeveloper/TestMain.java
-/src/main/java/de/goldendeveloper/TestExceptionHandler.java
+***/mysql/TestClass.java
+***/mysql/ID.java
+***/mysql/TestMain.java
+***/TestMain.java
+***/TestExceptionHandler.java
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

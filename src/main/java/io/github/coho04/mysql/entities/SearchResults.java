@@ -1,4 +1,4 @@
-package de.goldendeveloper.mysql.entities;
+package io.github.coho04.mysql.entities;
 
 import java.util.List;
 

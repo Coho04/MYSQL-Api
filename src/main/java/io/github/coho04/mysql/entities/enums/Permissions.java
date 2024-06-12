@@ -1,4 +1,4 @@
-package de.goldendeveloper.mysql.entities.enums;
+package io.github.coho04.mysql.entities.enums;
 
 /**
  * Represents different permissions that can be assigned to a user or database.
@@ -7,7 +7,7 @@ package de.goldendeveloper.mysql.entities.enums;
 public enum Permissions {
     /**
      * Represents the permission for all operations.
-     * The ALL variable is a constant of the Permissions enum class and has a value of 0.
+     * The variable is a constant of the Permissions enum class and has a value of 0.
      * It represents the permission that grants all operations to a user or database.
      * Use this permission to assign all available permissions to a user or database.
      * Example usage:

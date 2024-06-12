@@ -1,14 +1,13 @@
-package de.goldendeveloper.mysql;
+package io.github.coho04.mysql;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import de.goldendeveloper.mysql.entities.Database;
-import de.goldendeveloper.mysql.entities.User;
-import de.goldendeveloper.mysql.errors.ExceptionHandler;
-import de.goldendeveloper.mysql.interfaces.QueryHelper;
+import io.github.coho04.mysql.entities.Database;
+import io.github.coho04.mysql.entities.User;
+import io.github.coho04.mysql.errors.ExceptionHandler;
+import io.github.coho04.mysql.interfaces.QueryHelper;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 

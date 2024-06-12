@@ -1,8 +1,8 @@
-package de.goldendeveloper.mysql.entities;
+package io.github.coho04.mysql.entities;
 
-import de.goldendeveloper.mysql.MYSQL;
-import de.goldendeveloper.mysql.interfaces.QueryHelper;
-import de.goldendeveloper.mysql.entities.enums.Permissions;
+import io.github.coho04.mysql.MYSQL;
+import io.github.coho04.mysql.entities.enums.Permissions;
+import io.github.coho04.mysql.interfaces.QueryHelper;
 
 /**
  * Represents a User in the application.

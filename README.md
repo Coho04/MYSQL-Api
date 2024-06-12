@@ -14,17 +14,10 @@ JMA (Java MYSQL API)
 
 Maven Integration: 
 
-Repository:
-
-        <repository>
-            <id>Golden-Developer</id>
-            <url>https://nexus.golden-developer.de/repository/maven-public/</url>
-        </repository>
-            
 Dependency:
 
     <dependency>
-	    <groupId>de.goldendeveloper</groupId>
+	    <groupId>io.github.coho04</groupId>
 	    <artifactId>MYSQL-Api</artifactId>
 	    <version>{$version}</version>
 	</dependency>

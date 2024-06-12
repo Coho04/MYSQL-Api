@@ -1,4 +1,4 @@
-package de.goldendeveloper.mysql.errors;
+package io.github.coho04.mysql.errors;
 
 /**
  * The ExceptionHandler class handles exceptions and takes action based on the configuration flags.

@@ -1,4 +1,4 @@
-package de.goldendeveloper.mysql.exceptions;
+package io.github.coho04.mysql.exceptions;
 
 /**
  * The NoConnectionException is an exception thrown when there is no connection to the MySQL server.
