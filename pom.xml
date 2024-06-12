@@ -170,7 +170,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
-            <version>1.26.1</version>
+            <version>1.26.2</version>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
@@ -180,12 +180,12 @@
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>8.3.0</version>
+            <version>8.4.0</version>
         </dependency>
         <dependency>
             <groupId>io.sentry</groupId>
             <artifactId>sentry</artifactId>
-            <version>7.6.0</version>
+            <version>7.9.0</version>
         </dependency>
     </dependencies>
 </project>
