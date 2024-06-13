@@ -1,0 +1,71 @@
+name: Generate and Deploy Javadocs
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java version
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      # Import GPG keys
+      - name: Import GPG key
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: |
+          echo "$GPG_PRIVATE_KEY" | gpg --import --batch --yes
+          echo "$GPG_PUBLIC_KEY" | gpg --import --batch --yes
+          # Fetch the key fingerprint
+          GPG_FINGERPRINT=$(gpg --list-secret-keys --with-colons | grep fpr | head -n 1 | cut -d: -f10)
+          echo "$GPG_FINGERPRINT:6" | gpg --import-ownertrust
+          mkdir -p ~/.gnupg
+          echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
+          echo "use-agent" >> ~/.gnupg/gpg.conf
+          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+          gpgconf --kill gpg-agent
+          gpgconf --launch gpg-agent
+
+      # Build with Maven
+      - name: Build with Maven
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: mvn clean install -Dgpg.passphrase="${GPG_PASSPHRASE}"
+
+      - name: Generate Javadocs
+        run: mvn javadoc:javadoc
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Deploy Javadocs to GitHub Pages
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          mv target/site/apidocs $HOME/javadocs
+          cd $HOME
+          git clone --depth 1 --branch gh-pages git@github.com:Coho04/MYSQL-Api.git gh-pages
+          cd gh-pages
+          rm -rf *
+          mv $HOME/javadocs/* .
+          git add .
+          git commit -m "Deploy Javadocs"
+          git push
