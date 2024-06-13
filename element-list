@@ -1,0 +1,6 @@
+io.github.coho04.mysql
+io.github.coho04.mysql.entities
+io.github.coho04.mysql.entities.enums
+io.github.coho04.mysql.errors
+io.github.coho04.mysql.exceptions
+io.github.coho04.mysql.interfaces
